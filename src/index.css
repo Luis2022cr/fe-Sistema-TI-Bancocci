@@ -1,0 +1,100 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.zoom:hover {
+    transform: scale(1.1);
+}
+
+body {
+  background: #ffffff;
+}
+
+body::-webkit-scrollbar {
+    width: 12px;         
+  }
+  
+  body::-webkit-scrollbar-track {
+    background: #1d3634;       
+  }
+  
+  body::-webkit-scrollbar-thumb {
+    background-color: #31756f;   
+    border-radius: 20px;       
+  }
+
+/* Loading */
+
+.container-wave {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh; 
+}
+
+@keyframes audio-wave {
+  0% {
+      height: 6px;
+      transform: translateY(0px);
+      background: #0a1172; /* Azul oscuro */
+  }
+
+  25% {
+      height: 40px;
+      transform: translateY(-5px) scaleY(1.7);
+      background: #3445b4; /* Azul medio */
+  }
+
+  50% {
+      height: 6px;
+      transform: translateY(0px);
+      background: #7f9cf5; /* Azul claro */
+  }
+
+  75% {
+      height: 40px;
+      transform: translateY(-5px) scaleY(1.7);
+      background: #ffc300; /* Amarillo oscuro */
+  }
+
+  100% {
+      height: 6px;
+      transform: translateY(0px);
+      background: #0a1172; /* Azul oscuro */
+  }
+}
+
+.sound-wave {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  width: 3.75rem;
+  height: 2.5rem;
+}
+
+.sound-wave div {
+  height: 2.5rem;
+  display: block;
+  width: 0.6rem;
+  height: 0.4rem;
+  border-radius: 0.5rem;
+  background: #0a1172; /* Color inicial: Azul oscuro */
+  animation: audio-wave 2.2s infinite ease-in-out;
+}
+
+.sound-wave div:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.sound-wave div:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+.sound-wave div:nth-child(4) {
+  animation-delay: 0.6s;
+}
+
+.sound-wave div:nth-child(5) {
+  animation-delay: 0.8s;
+}
