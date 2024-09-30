@@ -1,65 +1,31 @@
 import { Phone, Building, User, Briefcase, Pencil, Trash } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Loading from "../Loading";
-import Pagination from "../Pagination"; // Asegúrate de que la ruta sea correcta
-import { Agencia, ObtenerAgencias } from "@/api conexion/servicios/agencias";
-import { BorrarDirectorios, Directorio, ObtenerDirectorios } from "@/api conexion/servicios/directorio";
+import Pagination from "../Pagination";
+import { BorrarDirectorios } from "@/api conexion/servicios/directorio";
 import { Link } from "react-router-dom";
 import FiltroDirectorio from "./FiltroDirectorio";
+import { ObtenerAgencia } from "@/api conexion/servicios/agencias";
+import { ObtenerDirectorios, Directorio } from '../../api conexion/servicios/directorio';
+import Alert from "../Alert";
 
 export default function PaginaDirectorio() {
-    const [directorio, setDirectorio] = useState<Directorio[]>([]);
-    const [agencias, setAgencias] = useState<Agencia[]>([]);
-    const [loading, setLoading] = useState(true);
+    const [{ data: agenciaData, loading: loadingAgencias }] = ObtenerAgencia();
+    const [{ data: directorioData, loading: loadingDirectorio }] = ObtenerDirectorios();
+    const directorio = Array.isArray(directorioData) ? directorioData : [];
+
     const [error, setError] = useState<string | null>(null);
+
     const [searchTerm, setSearchTerm] = useState<string>(''); // Estado para la búsqueda
     const [selectedAgencia, setSelectedAgencia] = useState<string>(''); // Estado para la agencia seleccionada
 
     const [paginaInicial, setPaginaInicial] = useState(1); // Estado para la paginación
     const itemsPerPage = 12; // Cambia este valor según tus necesidades
 
-    // Obtener los datos del Back-End
-    useEffect(() => {
-        const obtenerDirectorio = async () => {
-            try {
-                const response = await ObtenerDirectorios();
-                setDirectorio(response);
-            } catch (error) {
-                setError("Error al cargar la información del directorio.");
-            } finally {
-                setLoading(false);
-            }
-        };
+    //validacion otencion de datos
+    if (!directorio || !agenciaData) return <div>error al obtener los datos</div>
 
-        const obtenerAgencias = async () => {
-            try {
-                const response = await ObtenerAgencias();
-                setAgencias(response);
-            } catch (error) {
-                setError("Error al cargar la información del directorio.");
-            }
-        };
-
-        obtenerDirectorio();
-        obtenerAgencias();
-    }, []);
-
-    const handleDelete = async (id: number) => {
-        const confirmDelete = window.confirm("¿Estás seguro de que deseas eliminar este registro?");
-        if (confirmDelete) {
-            try {
-                setLoading(true); // Muestra un loading mientras se realiza la acción
-                await BorrarDirectorios(id); // Llamar a la función para borrar el directorio
-                setDirectorio((prevDirectorio) => prevDirectorio.filter((item) => item.id !== id));
-                console.log(`Registro con id ${id} eliminado`);
-            } catch (error) {
-                setError("Error al eliminar el directorio."); // Manejo de errores
-            } finally {
-                setLoading(false); // Finaliza el loading
-            }
-        }
-    };
-
+    //formato para la extension
     function formatExtension(extension: number): string {
         // Asegurarte de que la extensión sea un número válido
         if (typeof extension === 'number') {
@@ -77,9 +43,31 @@ export default function PaginaDirectorio() {
         return ''; // Retorna vacío si no es un número válido
     }
 
+     //Logica borrar directorio
+     const handleDelete = async (id: number) => {
+        const confirmDelete = window.confirm("¿Estás seguro de que deseas eliminar este registro?");
+        if (confirmDelete) {
+            try {
+                 await BorrarDirectorios(id);
+                Alert({
+                    title: 'Éxito',
+                    text: `Se borro el directorio ${id}`,
+                    icon: 'success',
+                    callback: () => window.location.reload()
+                });
+            } catch (error) {
+                <Alert
+                        title="Error"
+                        text="Hubo un problema al eliminar el directorio."
+                        icon="error"
+                    />;
+                setError("Error al eliminar el directorio."); 
+            } 
+        }
+    };
 
-    // Filtrar los directorios según el término de búsqueda y la agencia seleccionada
-    const filteredDirectorio = directorio.filter(data => {
+    // Filtrar los directorios según el término de búsqueda agencia, extension, departamento ingresados
+    const filteredDirectorio = directorio.filter((data: Directorio) => {
         const searchLower = searchTerm.toLowerCase();
         const agencyMatches = selectedAgencia === "" || data.agencia.toLowerCase() === selectedAgencia.toLowerCase();
 
@@ -100,8 +88,8 @@ export default function PaginaDirectorio() {
     const paginatedData = filteredDirectorio.slice((paginaInicial - 1) * itemsPerPage, paginaInicial * itemsPerPage);
 
 
-    // Otros, carga antes de los datos, y mostras errores
-    if (loading) {
+    // Otros, Loadings y errores
+    if (loadingDirectorio || loadingAgencias) {
         return <Loading />;
     }
 
@@ -121,13 +109,13 @@ export default function PaginaDirectorio() {
                 setSearchTerm={setSearchTerm}
                 selectedAgencia={selectedAgencia}
                 setSelectedAgencia={setSelectedAgencia}
-                agencias={agencias}
+                agencias={agenciaData}
             />
             
             {/* Tarjetas de los directorios */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {paginatedData.length > 0 ? (
-                    paginatedData.map((data) => (
+                    paginatedData.map((data: Directorio) => (
                         <div
                             key={data.id}
                             className="relative bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300"

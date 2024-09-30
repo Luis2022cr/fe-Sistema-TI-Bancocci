@@ -4,20 +4,22 @@ import { ObtenerDirectoriosById, Post_Directorio } from '@/api conexion/servicio
 import { useParams, useNavigate } from 'react-router-dom';
 import { ObtenerAgencia } from '@/api conexion/servicios/agencias';
 import { ObtenerDepartamento } from '@/api conexion/servicios/departamentos';
-import { UpdateDirectorios } from '@/api conexion/servicios/directorio'; // Import your update function
+import { UpdateDirectorios } from '@/api conexion/servicios/directorio'; 
 import axios from 'axios';
 import { IoArrowUndoOutline } from "react-icons/io5";
+import { FiLoader } from 'react-icons/fi';
+import Alert from '../Alert';
 
 const UpdateDirectorio: React.FC = () => {
     const { id } = useParams<{ id?: string }>();
     const numericId = id ? parseInt(id, 10) : undefined;
     const navigate = useNavigate(); // Initialize useNavigate
-
+    
     // Obtener los datos de la API usando useAxios
     const [{ data: directorio, loading, error }] = ObtenerDirectoriosById(numericId!);
-    const [{ data: agenciaData, loading: loadingAgencias }] = ObtenerAgencia();
+    const [{ data: agenciaData, loading: loadingAgencias}] = ObtenerAgencia();
     const [{ data: departamentoData, loading: loadingDepartamentos }] = ObtenerDepartamento();
-
+    
     // State for form inputs
     const [formData, setFormData] = useState<Post_Directorio>({
         extension: 0,
@@ -26,11 +28,10 @@ const UpdateDirectorio: React.FC = () => {
         empleado: '',
     });
 
-    // State for success and error messages
     const [message, setMessage] = useState<string | null>(null);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
+    const [isLoading, setIsLoading] = useState(false);
 
-    // Effect to set form data when directorio data is available
     useEffect(() => {
         if (directorio) {
             setFormData({
@@ -42,7 +43,7 @@ const UpdateDirectorio: React.FC = () => {
         }
     }, [directorio]);
 
-    // traer datos de ls input(yaque se actualiza, hay datos ya creados y esos los trae por defecto si es que no que cambiaron)
+    // traer datos de los input(yaque se actualiza, hay datos ya creados y esos los trae por defecto si es que no que cambiaron)
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
         setFormData({
@@ -57,26 +58,33 @@ const UpdateDirectorio: React.FC = () => {
         setMessage(null);
         setErrorMessage(null);
         try {
+            setIsLoading(true);
+
             await UpdateDirectorios(numericId!, formData);
-            setMessage('Directorio actualizado exitosamente.');
-            setTimeout(() => {
-                navigate('/dashboard-empleados/directorio');
-            }, 500);
+            Alert({
+                title: 'Éxito',
+                text: `Se actualizo el directorio ${formData.extension}`,
+                icon: 'success',
+                callback: () => navigate(-1)
+            });
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 const respuestaError = error.response?.data?.error
                 setErrorMessage(respuestaError || "Error al agregar el directorio.");
             }
         }
+        finally {
+            setIsLoading(false);
+          } 
     };
-
+    
     // Verificar si se está cargando
     if (loading || loadingAgencias || loadingDepartamentos) return <Loading />;
     // Manejar error
     if (error) return <div>Error: {error.message}</div>;
     // Verificar si hay datos
     if (!directorio || !agenciaData || !departamentoData) return <div>No se encontraron datos del directorio</div>;
-
+    
     return (
         <>
             <button
@@ -153,13 +161,17 @@ const UpdateDirectorio: React.FC = () => {
                         </select>
                     </div>
 
-                    <div className="flex justify-center items-center mt-11">
-                        <button
-                            type="submit"
-                            className="w-1/2 h-14 hover:bg-green-500 bg-green-700 text-xl text-white py-2 rounded-full"
-                        >
-                            Actualizar
-                        </button>
+                    <div className="flex justify-center items-center mt-5">
+                    <button
+                        className="w-1/2 h-14 hover:bg-green-500 bg-green-700 text-xl text-white py-2 rounded-full"
+                        disabled={isLoading}
+                    >
+                        {isLoading ? (
+                            <FiLoader className="mr-2 animate-spin mx-20" />
+                        ) : (
+                            "Actualizar"
+                        )}
+                    </button>
                     </div>
                 </form>
             </div>
