@@ -6,6 +6,9 @@ import { SlPrinter } from "react-icons/sl";
 import { PiComputerTower } from "react-icons/pi";
 import DashboardButton from "../components/DashboardButton";
 import {  InventarioRouteKeys, inventarioRoutes} from "../api conexion/routesConfig";
+import impresoraFI from "../assets/impresoraFI.svg";
+import telefono from "../assets/telefono.svg";
+import planta from "../assets/planta.svg";
 
 const Dashboard_inventario: React.FC = () => {
   useEffect(() => {
@@ -22,10 +25,11 @@ const Dashboard_inventario: React.FC = () => {
       case "Impresora":
         return <SlPrinter size={62} color="white"/> ;  
       case "Impresora Financiera":
-        return ;
+        return <img src={impresoraFI} alt="impresora financiera" width={62} height={62}  />;
         case "Teléfono":
-        return ;  
-      case "Planta":
+          return <img src={telefono} alt="telefono" width={62} height={62}  />;
+          case "Planta":
+        return <img src={planta} alt="plan" width={62} height={62} />;
         return ;
         case "Monitor":
         return <IoIosDesktop size={62} color="white"/>;  
@@ -39,10 +43,10 @@ const Dashboard_inventario: React.FC = () => {
   };
 
   return (
-    <div className="h-full flex">
-      <div className="flex-1 p-6">
-        <h1 className="text-3xl font-bold mb-8 text-blue-900 text-center">Inventario TI</h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <div className="h-full flex mx-6">
+      <div className="flex-1 p-4">
+        <h1 className="text-3xl font-bold mb-6 text-blue-900 text-center">Inventario TI</h1>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {Object.keys(inventarioRoutes).map((title) => (
             <DashboardButton
               key={title}

@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
-import { FiEdit} from "react-icons/fi";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAddressBook} from '@fortawesome/free-solid-svg-icons';
 import DashboardButton from "../components/DashboardButton";
 import { empleadosRoutes, EmpleadosRouteKeys } from "../api conexion/routesConfig";
+import inventarios from "../assets/inventarios.svg";
+import ups from "../assets/ups.svg";
+import directorio from "../assets/directorio.svg";
 
 const DashboardInicio: React.FC = () => {
   useEffect(() => {
@@ -14,21 +14,21 @@ const DashboardInicio: React.FC = () => {
     switch (title) {
       
       case "Informe UPS":
-        return <FontAwesomeIcon icon= {faAddressBook} />;  
-      case "Directorio TI":
-        return <FontAwesomeIcon icon= {faAddressBook} color="white" />;
-      case "Inventario TI":
-        return <FiEdit size={32} color="white" />;
+        return <img src={ups} alt="ups" width={150} height={150} />;
+        case "Directorio TI":
+          return <img src={directorio} alt="directorio" width={150} height={150}  />;
+          case "Inventario TI":
+        return <img src={inventarios} alt="inventario" width={150} height={150}  />;
       default:
         return null;
     }
   };
 
   return (
-    <div className="h-full flex">
+    <div className="h-full flex mx-6 mt-11">
       <div className="flex-1 p-6">
         <h1 className="text-3xl font-bold mb-8 text-blue-900">Bienvenido</h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-20">
           {Object.keys(empleadosRoutes).map((title) => (
             <DashboardButton
               key={title}

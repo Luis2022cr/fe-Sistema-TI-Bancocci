@@ -4,8 +4,8 @@ import { createContext, useState, ReactNode, useEffect } from 'react';
 export interface AuthContextType {
   accessToken: string | null;
   userRole: number | null;
-  email: string | null;
-  login: (token: string, role: number, email: string) => void;
+  usuario: string | null;
+  login: (token: string, role: number, usuario: string) => void;
   logout: () => void;
 }
 
@@ -17,8 +17,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const role = sessionStorage.getItem('userRole');
     return role ? Number(role) : null;
   });
-  const [email, setEmail] = useState<string | null>(sessionStorage.getItem('email'));
+  const [usuario, setUsuario] = useState<string | null>(sessionStorage.getItem('usuario'));
 
+  // Persistir los valores en sessionStorage cada vez que cambian
   useEffect(() => {
     if (accessToken) {
       sessionStorage.setItem('accessToken', accessToken);
@@ -36,27 +37,37 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, [userRole]);
 
   useEffect(() => {
-    if (email) {
-      sessionStorage.setItem('email', email);
+    if (usuario) {
+      sessionStorage.setItem('usuario', usuario);
     } else {
-      sessionStorage.removeItem('email');
+      sessionStorage.removeItem('usuario');
     }
-  }, [email]);
+  }, [usuario]);
 
-  const login = (token: string, role: number, email: string) => {
+  const login = (token: string, role: number, usuario: string) => {
+    // Guardar los valores en el estado y en sessionStorage
     setAccessToken(token);
     setUserRole(role);
-    setEmail(email);
+    setUsuario(usuario);
+
+    sessionStorage.setItem('accessToken', token);
+    sessionStorage.setItem('userRole', role.toString());
+    sessionStorage.setItem('usuario', usuario);
   };
 
   const logout = () => {
+    // Borrar el estado y el almacenamiento
     setAccessToken(null);
     setUserRole(null);
-    setEmail(null);
+    setUsuario(null);
+
+    sessionStorage.removeItem('accessToken');
+    sessionStorage.removeItem('userRole');
+    sessionStorage.removeItem('usuario');
   };
 
   return (
-    <AuthContext.Provider value={{ accessToken, userRole, email, login, logout }}>
+    <AuthContext.Provider value={{ accessToken, userRole, usuario, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
