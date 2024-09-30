@@ -109,7 +109,7 @@ export default function PaginaDirectorio() {
                 setSearchTerm={setSearchTerm}
                 selectedAgencia={selectedAgencia}
                 setSelectedAgencia={setSelectedAgencia}
-                agencias={agenciaData
+                agencias={agenciaData}
             />
             
             {/* Tarjetas de los directorios */}
