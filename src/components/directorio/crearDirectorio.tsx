@@ -21,7 +21,6 @@ const CrearDirectorio: React.FC = () => {
     const [departamentos, setDepartamentos] = useState<SelectOption[]>([]);
     const [error, setError] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(false);
-
     // Estados para los campos del formulario
     const [extension, setExtension] = useState('');
     const [departamento_id, setDepartamento] = useState<SelectOption | null>(null);
@@ -53,6 +52,7 @@ const CrearDirectorio: React.FC = () => {
     //Logica crear el directorio
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+
         // Validación básica
         if (!extension || !departamento_id || !agencia_id) {
             setError("Por favor, rellena todos los campos.");
@@ -107,6 +107,7 @@ const CrearDirectorio: React.FC = () => {
             <form onSubmit={handleSubmit}>
                 <div className="mb-4">
                     <label className="text-gray-700 hidden">Número Extensión</label>
+
                     <input
                         type="text"
                         value={extension}
@@ -156,7 +157,6 @@ const CrearDirectorio: React.FC = () => {
                             "Agregar"
                         )}
                     </button>
-
                 </div>
             </form>
         </div>

@@ -15,7 +15,6 @@ export default function PaginaDirectorio() {
     const directorio = Array.isArray(directorioData) ? directorioData : [];
 
     const [error, setError] = useState<string | null>(null);
-
     const [searchTerm, setSearchTerm] = useState<string>(''); // Estado para la búsqueda
     const [selectedAgencia, setSelectedAgencia] = useState<string>(''); // Estado para la agencia seleccionada
 
@@ -68,6 +67,7 @@ export default function PaginaDirectorio() {
 
     // Filtrar los directorios según el término de búsqueda agencia, extension, departamento ingresados
     const filteredDirectorio = directorio.filter((data: Directorio) => {
+
         const searchLower = searchTerm.toLowerCase();
         const agencyMatches = selectedAgencia === "" || data.agencia.toLowerCase() === selectedAgencia.toLowerCase();
 
@@ -109,7 +109,7 @@ export default function PaginaDirectorio() {
                 setSearchTerm={setSearchTerm}
                 selectedAgencia={selectedAgencia}
                 setSelectedAgencia={setSelectedAgencia}
-                agencias={agenciaData}
+                agencias={agenciaData
             />
             
             {/* Tarjetas de los directorios */}

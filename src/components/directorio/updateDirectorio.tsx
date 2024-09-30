@@ -14,12 +14,11 @@ const UpdateDirectorio: React.FC = () => {
     const { id } = useParams<{ id?: string }>();
     const numericId = id ? parseInt(id, 10) : undefined;
     const navigate = useNavigate(); // Initialize useNavigate
-    
     // Obtener los datos de la API usando useAxios
     const [{ data: directorio, loading, error }] = ObtenerDirectoriosById(numericId!);
     const [{ data: agenciaData, loading: loadingAgencias}] = ObtenerAgencia();
     const [{ data: departamentoData, loading: loadingDepartamentos }] = ObtenerDepartamento();
-    
+
     // State for form inputs
     const [formData, setFormData] = useState<Post_Directorio>({
         extension: 0,
@@ -42,8 +41,8 @@ const UpdateDirectorio: React.FC = () => {
             });
         }
     }, [directorio]);
-
     // traer datos de los input(yaque se actualiza, hay datos ya creados y esos los trae por defecto si es que no que cambiaron)
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
         setFormData({
@@ -84,7 +83,7 @@ const UpdateDirectorio: React.FC = () => {
     if (error) return <div>Error: {error.message}</div>;
     // Verificar si hay datos
     if (!directorio || !agenciaData || !departamentoData) return <div>No se encontraron datos del directorio</div>;
-    
+
     return (
         <>
             <button
