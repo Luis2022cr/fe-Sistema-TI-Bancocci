@@ -1,0 +1,29 @@
+/* src/components/CalendarPage.css */
+.react-calendar {
+    @apply border-none w-full;
+  }
+  
+  .react-calendar__tile {
+    @apply  text-center h-16; /* Hacemos las celdas más altas */
+  }
+  
+  .react-calendar__tile--active {
+    @apply bg-blue-900 text-white;
+  }
+  
+  .react-calendar__tile--now {
+    @apply bg-green-800 text-white;
+  }
+  
+  .react-calendar__navigation button {
+    @apply bg-transparent hover:bg-gray-300;
+  }
+  
+  .dot {
+    @apply bg-blue-900 rounded-full h-2 w-2 inline-block;
+  }
+  
+  .activity-panel {
+    @apply absolute top-0 left-0 right-0 mx-auto mt-6  bg-white rounded-lg shadow-lg w-full md:w-96 z-20;
+  }
+  

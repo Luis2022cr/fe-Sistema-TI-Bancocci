@@ -1,4 +1,4 @@
-import axiosInstance, { useAxios } from "../axiosInstance";
+import { useAxios } from "../axiosInstance";
 
 export interface Agencia {
 
@@ -9,12 +9,6 @@ export interface Agencia {
     estado_agencias_id: number;
     
 }
-
-export const ObtenerAgencias = async (): Promise<Agencia[]> => {
-    const response = await axiosInstance.get('/agencias');
-    console.log(response.data)
-    return response.data;
-};
 
 export const ObtenerAgencia = () => {
     const response = useAxios<Agencia[]>({

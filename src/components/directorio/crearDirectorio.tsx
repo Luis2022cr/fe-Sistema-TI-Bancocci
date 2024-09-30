@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import Loading from '../Loading';
-import { Agencia, ObtenerAgencias } from '@/api conexion/servicios/agencias';
-import { Departamento, ObtenerDepartamentos } from '@/api conexion/servicios/departamentos';
+import { Agencia, ObtenerAgencia } from '@/api conexion/servicios/agencias';
+import { Departamento, ObtenerDepartamento } from '@/api conexion/servicios/departamentos';
 import { CrearDirectorios, Post_Directorio } from '@/api conexion/servicios/directorio';
 import Select from 'react-select';
 import axios from 'axios';
+import { FiLoader } from 'react-icons/fi';
 
 // Definir tipos para las opciones
 interface SelectOption {
@@ -13,11 +14,13 @@ interface SelectOption {
 }
 
 const CrearDirectorio: React.FC = () => {
+    const [{ data: agenciaData, loading: loadingAgencias }] = ObtenerAgencia();
+    const [{ data: departamentoData, loading: loadingDepartamentos }] = ObtenerDepartamento();
+
     const [agencias, setAgencias] = useState<SelectOption[]>([]);
     const [departamentos, setDepartamentos] = useState<SelectOption[]>([]);
-    const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-
+    const [isLoading, setIsLoading] = useState(false);
     // Estados para los campos del formulario
     const [extension, setExtension] = useState('');
     const [departamento_id, setDepartamento] = useState<SelectOption | null>(null);
@@ -27,35 +30,26 @@ const CrearDirectorio: React.FC = () => {
     const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
     useEffect(() => {
-        const obtenerAgencias = async () => {
-            try {
-                const response = await ObtenerAgencias();
-                setAgencias(response.map((agencia: Agencia) => ({
+        if (agenciaData && !loadingAgencias) {
+            setAgencias(
+                agenciaData.map((agencia: Agencia) => ({
                     value: agencia.id,
                     label: agencia.nombre,
-                })));
-            } catch (error) {
-                setError("Error al cargar las agencias.");
-            }
-        };
-
-        const obtenerDepartamentos = async () => {
-            try {
-                const response = await ObtenerDepartamentos();
-                setDepartamentos(response.map((departamento: Departamento) => ({
+                }))
+            );
+        }
+        if (departamentoData && !loadingDepartamentos) {
+            setDepartamentos(
+                departamentoData.map((departamento: Departamento) => ({
                     value: departamento.id,
                     label: departamento.nombre,
-                })));
-            } catch (error) {
-                setError("Error al cargar los departamentos.");
-            }
-        };
+                }))
+            );
+        }
 
-        setLoading(true);
-        Promise.all([obtenerAgencias(), obtenerDepartamentos()])
-            .finally(() => setLoading(false));
-    }, []);
+    }, [agenciaData, loadingAgencias, departamentoData, loadingDepartamentos]);
 
+    //Logica crear el directorio
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
@@ -74,7 +68,8 @@ const CrearDirectorio: React.FC = () => {
         };
 
         try {
-            setLoading(true);
+            setIsLoading(true);
+
             await CrearDirectorios(nuevoDirectorio);
             setSuccessMessage("Directorio agregado correctamente.");
             setError(null);
@@ -84,20 +79,19 @@ const CrearDirectorio: React.FC = () => {
             setAgencia(null);
             setEmpleado('');
         } catch (error) {
-        if (axios.isAxiosError(error)) {
-            const respuestaError = error.response?.data?.error
-            setError(respuestaError || "Error al agregar el directorio.");
-        } else {
-            setError("Error al agregar el directorio.");
-        }
+            
+            if (axios.isAxiosError(error)) {
+                const respuestaError = error.response?.data?.error
+                setError(respuestaError || "Error al agregar el directorio.");
+            } else {
+                setError("Error al agregar el directorio.");
+            }
         } finally {
-            setLoading(false);
-        }
+            setIsLoading(false);
+          } 
     };
 
-    if (loading) {
-        return <Loading />;
-    }
+    if (loadingAgencias || loadingDepartamentos) return <Loading />;
 
     return (
         <div className="max-w-md mx-auto p-8 -mt-4">
@@ -113,23 +107,24 @@ const CrearDirectorio: React.FC = () => {
             <form onSubmit={handleSubmit}>
                 <div className="mb-4">
                     <label className="text-gray-700 hidden">Número Extensión</label>
-                    <input 
-                        type="text" 
+
+                    <input
+                        type="text"
                         value={extension}
                         onChange={(e) => setExtension(e.target.value)}
-                        className="w-full px-3 py-2 border rounded-full bg-gray-200" 
-                        placeholder="Número Extensión" 
+                        className="w-full px-3 py-2 border rounded-full bg-gray-200"
+                        placeholder="Número Extensión"
                     />
                 </div>
-                
+
                 <div className="mb-4">
                     <label className="hidden text-gray-700">Usuario</label>
-                    <input 
-                        type="text" 
+                    <input
+                        type="text"
                         value={empleado}
                         onChange={(e) => setEmpleado(e.target.value)}
-                        className="w-full px-3 py-2 border rounded-full bg-gray-200" 
-                        placeholder="Usuario" 
+                        className="w-full px-3 py-2 border rounded-full bg-gray-200"
+                        placeholder="Usuario"
                     />
                 </div>
                 <div className="mb-4">
@@ -152,11 +147,15 @@ const CrearDirectorio: React.FC = () => {
                     />
                 </div>
                 <div className="flex justify-center items-center mt-11">
-                    <button 
-                        type="submit" 
+                    <button
                         className="w-1/2 h-14 hover:bg-green-500 bg-green-700 text-xl text-white py-2 rounded-full"
+                        disabled={isLoading}
                     >
-                        Agregar
+                        {isLoading ? (
+                            <FiLoader className="mr-2 animate-spin mx-20" />
+                        ) : (
+                            "Agregar"
+                        )}
                     </button>
                 </div>
             </form>

@@ -11,6 +11,7 @@ import Layout_2 from './layouts/Layout_2';
 import Login from './paginas/Login';
 import Directorio from './components/directorio/directorio';
 import UpdateDirectorio from './components/directorio/updateDirectorio';
+import Calendario from './components/otros/PaginaDeCalendario';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
@@ -33,6 +34,7 @@ root.render(
             <Route path="dashboard-empleados/inventario-ti" element={<Dashboard_inventario />} />
             <Route path="dashboard-empleados/directorio" element={<Directorio />} />
             <Route path="dashboard-empleados/directorio/:id" element={<UpdateDirectorio />} />
+            <Route path="dashboard-empleados/calendario" element={<Calendario />} />
           </Route>
 
         </Routes>
