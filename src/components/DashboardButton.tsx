@@ -27,7 +27,7 @@ const DashboardButton: React.FC<DashboardButtonProps> = ({ title, icon, route })
         <h2 className="text-xl font-bold text-center text-white">{title}</h2>
       </div>
       <div className="flex justify-center mt-4">
-        {icon && <span className="text-5xl" >{icon}</span>}
+        {icon && <span className="text-3xl" >{icon}</span>}
       </div>
     </motion.button>
   );

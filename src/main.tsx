@@ -7,6 +7,10 @@ import { AuthProvider } from './api conexion/AuthContext';
 import DashboardInicio from './paginas/dashboard_empleados';
 import Dashboard_Ups from './paginas/dashboard_ups';
 import Dashboard_inventario from './paginas/dashboard_inventario';
+import Layout_2 from './layouts/Layout_2';
+import Login from './paginas/Login';
+import Directorio from './components/directorio/directorio';
+import UpdateDirectorio from './components/directorio/updateDirectorio';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
@@ -19,14 +23,18 @@ root.render(
           {/* Rutas que utilizan el Layout por defecto */}
           <Route path="/" element={<Layout />}>
             <Route index element={<App />} />
+            <Route path="login" element={<Login />} />
+
           </Route>
 
-          <Route path="dashboard-empleados/main" element={<DashboardInicio />} />
-          <Route path="dashboard-empleados/informes-ups" element={<Dashboard_Ups />} />
-          <Route path="dashboard-empleados/inventario-ti" element={<Dashboard_inventario/>} />
-        
-           
-   
+          <Route path="/" element={<Layout_2 />}>
+            <Route path="dashboard-empleados/main" element={<DashboardInicio />} />
+            <Route path="dashboard-empleados/informes-ups" element={<Dashboard_Ups />} />
+            <Route path="dashboard-empleados/inventario-ti" element={<Dashboard_inventario />} />
+            <Route path="dashboard-empleados/directorio" element={<Directorio />} />
+            <Route path="dashboard-empleados/directorio/:id" element={<UpdateDirectorio />} />
+          </Route>
+
         </Routes>
       </BrowserRouter>
     </AuthProvider>

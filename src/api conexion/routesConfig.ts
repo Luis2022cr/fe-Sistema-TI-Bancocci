@@ -2,7 +2,7 @@
 export const empleadosRoutes = {
 
   "Informe UPS": "/dashboard-empleados/informes-ups",
-  "Directorio TI": "/dashboard-empleados/directorio-ti",
+  "Directorio TI": "/dashboard-empleados/directorio",
   "Inventario TI": "/dashboard-empleados/inventario-ti",
  
 } as const;
