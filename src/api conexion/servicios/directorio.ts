@@ -10,10 +10,14 @@ export interface Directorio {
     departamento_id: number;
 }
 
-export const ObtenerDirectorios = async (): Promise<Directorio[]> => {
-    const response = await axiosInstance.get('/directorios');
-    return response.data;
-};
+export const ObtenerDirectorios = () => {
+    const response = useAxios<Directorio>({
+      url: `/directorios`,
+    },{
+      useCache: false,
+    });
+    return response;
+  };
 
 export const ObtenerDirectoriosById = (id: number) => {
     const response = useAxios<Directorio>({
