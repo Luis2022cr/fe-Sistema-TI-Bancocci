@@ -77,7 +77,7 @@ const Login: React.FC = () => {
                   value={usuario}
                   onChange={(e) => setUsuario(e.target.value)}
                   className="bg-gray-200 pl-12 py-2 md:py-4 text-sm focus:outline-none w-full rounded-md shadow-lg focus:ring-2 focus:ring-blue-500"
-                  placeholder="correo institucional"
+                  placeholder="Usuario"
                 />
               </div>
               <span className=" text-white font-bold">Contraseña</span>

@@ -43,9 +43,9 @@ const Dashboard_inventario: React.FC = () => {
   };
 
   return (
-    <div className="h-full flex mx-6">
+    <div className="h-full flex mx-6 ">
       <div className="flex-1 p-4">
-        <h1 className="text-3xl font-bold mb-6 text-blue-900 text-center">Inventario TI</h1>
+        <h1 className="text-3xl font-bold mb-6 mt-11 text-blue-900 text-center">Inventario TI</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {Object.keys(inventarioRoutes).map((title) => (
             <DashboardButton
