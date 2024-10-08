@@ -5,7 +5,7 @@ export interface Agencia {
     id: number;
     nombre: string;
     ubicacion: string;
-    codigo: string;
+    codigo: number;
     estado_agencias_id: number;
     
 }

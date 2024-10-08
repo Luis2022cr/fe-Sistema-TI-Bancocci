@@ -1,5 +1,5 @@
 import { Phone, Building, User, Briefcase, Pencil, Trash } from "lucide-react";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import Loading from "../Loading";
 import Pagination from "../Pagination";
 import { BorrarDirectorios } from "@/api conexion/servicios/directorio";
@@ -8,6 +8,17 @@ import FiltroDirectorio from "./FiltroDirectorio";
 import { ObtenerAgencia } from "@/api conexion/servicios/agencias";
 import { ObtenerDirectorios, Directorio } from '../../api conexion/servicios/directorio';
 import Alert from "../Alert";
+import formatExtension from "../campos/FormatoExtencion";
+import lista from "../../assets/listaReport.svg";
+
+
+interface ExportData {
+    Extensión: string;
+    Empleado: string;
+    Departamento: string;
+    Agencia: string;
+    codigo: string;
+}
 
 export default function PaginaDirectorio() {
     const [{ data: agenciaData, loading: loadingAgencias }] = ObtenerAgencia();
@@ -24,44 +35,29 @@ export default function PaginaDirectorio() {
     //validacion otencion de datos
     if (!directorio || !agenciaData) return <div>error al obtener los datos</div>
 
-    //formato para la extension
-    function formatExtension(extension: number): string {
-        // Asegurarte de que la extensión sea un número válido
-        if (typeof extension === 'number') {
-            const extensionString = extension.toString();
-            // Verifica la longitud y retorna el formato adecuado
-            if (extensionString.length === 6) {
-                const part1 = extensionString.slice(0, 3);
-                const part2 = extensionString.slice(3, 6);
-                return `${part1}-${part2}`;
-            } else {
-                // Si la longitud no es 9, simplemente retorna la extensión como string
-                return extensionString;
-            }
-        }
-        return ''; // Retorna vacío si no es un número válido
-    }
 
-     //Logica borrar directorio
-     const handleDelete = async (id: number) => {
+
+    //Logica borrar directorio
+    const handleDelete = async (id: number, extension: number) => {
         const confirmDelete = window.confirm("¿Estás seguro de que deseas eliminar este registro?");
         if (confirmDelete) {
             try {
-                 await BorrarDirectorios(id);
+                await BorrarDirectorios(id);
                 Alert({
                     title: 'Éxito',
-                    text: `Se borro el directorio ${id}`,
+                    text: `Se borro el directorio: ${extension}`,
                     icon: 'success',
                     callback: () => window.location.reload()
                 });
             } catch (error) {
-                <Alert
-                        title="Error"
-                        text="Hubo un problema al eliminar el directorio."
-                        icon="error"
-                    />;
-                setError("Error al eliminar el directorio."); 
-            } 
+                Alert({
+                    title: 'Error',
+                    text: `Hubo un problema al eliminar el directorio. ${extension}`,
+                    icon: 'error',
+                    callback: () => window.location.reload()
+                });
+                setError("Error al eliminar el directorio.");
+            }
         }
     };
 
@@ -87,21 +83,97 @@ export default function PaginaDirectorio() {
     const totalPaginas = Math.ceil(filteredDirectorio.length / itemsPerPage);
     const paginatedData = filteredDirectorio.slice((paginaInicial - 1) * itemsPerPage, paginaInicial * itemsPerPage);
 
+    // Generar reporte Excel
+    const exportToExcel = async () => {
+        // Cargar exceljs dinámicamente
+        const ExcelJS = (await import('exceljs')).default;
+    
+        // Agrupar datos por agencia
+        const groupedData: { [key: string]: ExportData[] } = filteredDirectorio.reduce((acc, curr) => {
+            const key = `${curr.agencia} - ${curr.codigo}`;
+            const extension = curr.extension;
+            if (!acc[key]) {
+                acc[key] = [];
+            }
+            acc[key].push({
+                "Extensión": extension,
+                "Departamento": curr.departamento,
+                "Empleado": curr.empleado,
+                "Agencia": key,
+            });
+            return acc;
+        }, {});
+    
+        // Crear un nuevo libro de trabajo
+        const workbook = new ExcelJS.Workbook();
+        const worksheet = workbook.addWorksheet(`Directorio`);
+    
+        // Definir las columnas
+        worksheet.columns = [
+            { header: 'Extensión', key: 'Extensión', width: 25 },
+            { header: 'Departamento', key: 'Departamento', width: 35 },
+            { header: 'Usuario', key: 'Empleado', width: 35 },
+        ];
+    
+        // Agregar datos
+        for (const [agencia, empleados] of Object.entries(groupedData)) {
+            const agenciaRow = worksheet.addRow([agencia, '', '']);
+            agenciaRow.font = { bold: true, color: { argb: 'FFFFFFFF' } };
+            agenciaRow.fill = {
+                type: 'pattern',
+                pattern: 'solid',
+                fgColor: { argb: '22C55E' },
+            };
+            
+    
+            empleados.forEach((empleado: ExportData) => {
+                const row = worksheet.addRow(empleado);
+                row.getCell('Extensión').alignment = { horizontal: 'center' };
+                row.getCell('Departamento').alignment = { horizontal: 'left' };
+                row.getCell('Empleado').alignment = { horizontal: 'left' };
+            });
+        }
+    
+        const buffer = await workbook.xlsx.writeBuffer();
+        const blob = new Blob([buffer], { type: 'application/octet-stream' });
+        const url = URL.createObjectURL(blob);
+    
+        // Crear un nombre dinámico para el archivo
+        const nombreAgencia = selectedAgencia ? selectedAgencia.replace(/\s+/g, '_') : 'directorio'; // Reemplazar espacios por guiones bajos
+        const nombreArchivo = selectedAgencia ? `directorio_${nombreAgencia}.xlsx` : 'directorio.xlsx';
+    
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = nombreArchivo; // Usar el nombre dinámico
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    };
 
     // Otros, Loadings y errores
-    if (loadingDirectorio || loadingAgencias) {
-        return <Loading />;
-    }
-
-    if (error) {
-        return <p>{error}</p>;
-    }
+    if (loadingDirectorio || loadingAgencias) return <Loading />
+    if (error) return <p>{error}</p>;
 
     return (
-        <div className="container mx-auto py-10 px-4">
-            <h1 className="text-3xl font-bold text-center mb-5">
+        <div className="container px-4 py-10 mx-auto">
+            <h1 className="mb-5 text-3xl font-bold text-center">
                 Directorio Telefónico Banco de Occidente
             </h1>
+
+            {/* boton para reportes */}
+            <Suspense fallback={<Loading />}>
+                <div className="flex justify-end mt-5 mb-5">
+                    <button
+                        onClick={exportToExcel}
+                        className="flex items-center gap-2 px-2 py-2 text-blue-900 transition-colors duration-300 bg-blue-100 rounded-full hover:text-white hover:bg-blue-600"
+                    >
+                        <img src={lista} alt="plan" width={40} height={40} />
+                        Generar Reporte
+                    </button>
+                </div>
+            </Suspense>
+
 
             {/* Componente de filtros */}
             <FiltroDirectorio
@@ -111,26 +183,26 @@ export default function PaginaDirectorio() {
                 setSelectedAgencia={setSelectedAgencia}
                 agencias={agenciaData}
             />
-            
+
             {/* Tarjetas de los directorios */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4 ">
                 {paginatedData.length > 0 ? (
                     paginatedData.map((data: Directorio) => (
                         <div
                             key={data.id}
-                            className="relative bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300"
+                            className="relative p-6 transition-shadow duration-300 bg-white rounded-lg shadow-md hover:shadow-lg"
                         >
                             {/* Botones de editar y borrar */}
-                            <div className="absolute top-3 right-3 flex space-x-2 opacity-75 hover:opacity-100 transition-opacity duration-300">
+                            <div className="absolute flex space-x-2 transition-opacity duration-300 opacity-75 top-3 right-3 hover:opacity-100">
                                 <Link
                                     to={`/dashboard-empleados/directorio/${data.id}`}
-                                    className="text-gray-400 hover:text-blue-500 transition-colors duration-300"
+                                    className="text-gray-400 transition-colors duration-300 hover:text-blue-500"
                                 >
                                     <Pencil className="w-5 h-5" />
                                 </Link>
                                 <button
-                                    onClick={() => handleDelete(data.id)}
-                                    className="text-gray-400 hover:text-red-500 transition-colors duration-300"
+                                    onClick={() => handleDelete(data.id, data.extension)}
+                                    className="text-gray-400 transition-colors duration-300 hover:text-red-500"
                                 >
                                     <Trash className="w-5 h-5" />
                                 </button>
@@ -138,20 +210,20 @@ export default function PaginaDirectorio() {
 
                             {/* Formateo de la extensión */}
                             <div className="flex items-center mb-4">
-                                <Phone className="w-6 h-6 text-blue-500 mr-2" />
+                                <Phone className="w-6 h-6 mr-2 text-blue-500" />
                                 <span className="text-xl font-semibold">{formatExtension(data.extension)}</span>
                             </div>
                             <div className="space-y-2">
                                 <div className="flex items-center">
-                                    <Building className="w-5 h-5 text-gray-500 mr-2" />
-                                    <span>{data.agencia}</span>
+                                    <Building className="w-5 h-5 mr-2 text-gray-500" />
+                                    <span>{data.agencia} - {data.codigo}</span>
                                 </div>
                                 <div className="flex items-center">
-                                    <User className="w-5 h-5 text-gray-500 mr-2" />
+                                    <User className="w-5 h-5 mr-2 text-gray-500" />
                                     <span>{data.empleado}</span>
                                 </div>
                                 <div className="flex items-center">
-                                    <Briefcase className="w-5 h-5 text-gray-500 mr-2" />
+                                    <Briefcase className="w-5 h-5 mr-2 text-gray-500" />
                                     <span>{data.departamento}</span>
                                 </div>
                             </div>

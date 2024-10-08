@@ -4,11 +4,11 @@ import { BsProjector } from "react-icons/bs";
 import { ImList2 } from "react-icons/im";
 import { SlPrinter } from "react-icons/sl";
 import { PiComputerTower } from "react-icons/pi";
-import DashboardButton from "../components/DashboardButton";
-import {  InventarioRouteKeys, inventarioRoutes} from "../api conexion/routesConfig";
-import impresoraFI from "../assets/impresoraFI.svg";
-import telefono from "../assets/telefono.svg";
-import planta from "../assets/planta.svg";
+import impresoraFI from "@/assets/impresoraFI.svg";
+import telefono from "@/assets/telefono.svg";
+import planta from "@/assets/planta.svg";
+import { InventarioRouteKeys, inventarioRoutes } from "@/api conexion/routesConfig";
+import DashboardButton from "@/components/DashboardButton";
 
 const Dashboard_inventario: React.FC = () => {
   useEffect(() => {
@@ -17,26 +17,26 @@ const Dashboard_inventario: React.FC = () => {
 
   const getIconByTitle = (title: InventarioRouteKeys) => {
     switch (title) {
-      
+
       case "Desktop":
-        return <PiComputerTower size={62} color="white"/>;  
+        return <PiComputerTower size={62} color="white" />;
       case "Laptop":
-        return <IoIosLaptop size={62} color="white"/>;
+        return <IoIosLaptop size={62} color="white" />;
       case "Impresora":
-        return <SlPrinter size={62} color="white"/> ;  
+        return <SlPrinter size={62} color="white" />;
       case "Impresora Financiera":
-        return <img src={impresoraFI} alt="impresora financiera" width={62} height={62}  />;
-        case "Teléfono":
-          return <img src={telefono} alt="telefono" width={62} height={62}  />;
-          case "Planta":
+        return <img src={impresoraFI} alt="impresora financiera" width={62} height={62} />;
+      case "Teléfono":
+        return <img src={telefono} alt="telefono" width={62} height={62} />;
+      case "Planta":
         return <img src={planta} alt="plan" width={62} height={62} />;
-        return ;
-        case "Monitor":
-        return <IoIosDesktop size={62} color="white"/>;  
+        return;
+      case "Monitor":
+        return <IoIosDesktop size={62} color="white" />;
       case "Proyector":
-        return <BsProjector size={62} color="white"/>;
-        case "Otros":
-        return <ImList2 size={32} color="white"/>; 
+        return <BsProjector size={62} color="white" />;
+      case "Otros":
+        return <ImList2 size={32} color="white" />;
       default:
         return null;
     }

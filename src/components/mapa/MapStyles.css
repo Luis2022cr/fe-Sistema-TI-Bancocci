@@ -1,0 +1,50 @@
+/* MapStyles.css */
+
+/* Estilo del contenedor del mapa */
+.container {
+  max-width: 1200px; /* Limita el ancho máximo del contenedor */
+  margin: 0 auto; /* Centra el contenedor en la página */
+  padding: 20px; /* Espaciado interno */
+}
+
+/* Estilo del mapa */
+.leaflet-container {
+  border: 2px solid #007bff; /* Añade un borde azul al mapa */
+  border-radius: 8px; /* Esquinas redondeadas */
+}
+
+/* Estilo de los íconos personalizados */
+.custom-div-icon {
+  background: transparent; /* Fondo transparente */
+  border: none; /* Sin borde */
+  box-shadow: none; /* Sin sombra */
+  text-align: center; /* Centra el contenido del ícono */
+}
+
+/* Efecto hover para los marcadores */
+.leaflet-marker-icon {
+  transition: transform 0.3s ease; /* Transición suave para el efecto de hover */
+}
+
+.leaflet-marker-icon:hover {
+  transform: scale(1.2); /* Aumenta el tamaño del ícono al pasar el mouse */
+}
+
+/* Estilo de las popups */
+.leaflet-popup {
+  background-color: #fff; /* Fondo blanco para las popups */
+  border: 1px solid #007bff; /* Borde azul */
+  border-radius: 8px; /* Esquinas redondeadas */
+}
+
+/* Títulos dentro de la popup */
+.leaflet-popup h3 {
+  margin: 0; /* Sin margen para el título */
+  color: #007bff; /* Color del texto azul */
+}
+
+/* Estilo del texto en la popup */
+.leaflet-popup p {
+  margin: 5px 0; /* Margen en el párrafo */
+  color: #333; /* Color del texto gris oscuro */
+}

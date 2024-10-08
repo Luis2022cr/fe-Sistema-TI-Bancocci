@@ -7,6 +7,7 @@ export interface Directorio {
     agencia: string;
     empleado: string;
     agenciaId: number;
+    codigo: number;
     departamento_id: number;
 }
 

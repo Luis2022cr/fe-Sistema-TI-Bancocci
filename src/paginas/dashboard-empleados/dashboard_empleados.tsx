@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
-import DashboardButton from "../components/DashboardButton";
-import { empleadosRoutes, EmpleadosRouteKeys } from "../api conexion/routesConfig";
-import inventarios from "../assets/inventarios.svg";
-import ups from "../assets/ups.svg";
-import directorio from "../assets/directorio.svg";
+import inventarios from "@/assets/inventarios.svg";
+import ups from "@/assets/ups.svg";
+import directorio from "@/assets/directorio.svg";
+import { EmpleadosRouteKeys, empleadosRoutes } from "@/api conexion/routesConfig";
+import DashboardButton from "@/components/DashboardButton";
 
 const DashboardInicio: React.FC = () => {
   useEffect(() => {

@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
-import DashboardButton from "../components/DashboardButton";
-import {AdminRouteKeys, adminRoutes } from "../api conexion/routesConfig";
-import inventarios from "../assets/inventarios.svg";
-import ups from "../assets/ups.svg";
-import usuario from "../assets/usuario.svg";
-import directorio from "../assets/directorio.svg";
+import inventarios from "@/assets/inventarios.svg";
+import ups from "@/assets/ups.svg";
+import usuario from "@/assets/usuario.svg";
+import directorio from "@/assets/directorio.svg";
+import { AdminRouteKeys, adminRoutes } from "@/api conexion/routesConfig";
+import DashboardButton from "@/components/DashboardButton";
 
 const DashboardAdmin: React.FC = () => {
   useEffect(() => {
@@ -30,8 +30,8 @@ const DashboardAdmin: React.FC = () => {
   return (
     <div className="h-full flex mx-6">
       <div className="flex-1 p-6">
-        <h1 className="text-3xl font-bold mb-8 text-blue-900">Bienvenido</h1>
-        <div className="grid grid-cols-1 md:grid-cols-2  gap-8 mt-20">
+        <h1 className="text-3xl font-bold  text-blue-900">Bienvenido</h1>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
           {Object.keys(adminRoutes).map((title) => (
             <DashboardButton
               key={title}

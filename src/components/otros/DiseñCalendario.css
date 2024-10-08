@@ -4,7 +4,7 @@
   }
   
   .react-calendar__tile {
-    @apply  text-center h-16; /* Hacemos las celdas más altas */
+    @apply  text-center h-20; /* Hacemos las celdas más altas */
   }
   
   .react-calendar__tile--active {

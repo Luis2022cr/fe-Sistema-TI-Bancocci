@@ -76,7 +76,62 @@ const Sidebar: React.FC = () => {
               </li>
             </>
           )}
-          
+          {location.pathname.includes("dashboard-admin") && (
+            <>
+              <li>
+                <NavLink
+                  to="/dashboard-admin/main"
+                  className={({ isActive }) =>
+                    `flex items-center py-3 px-6 hover:bg-gray-700 ${
+                      isActive ? "bg-gray-700" : ""
+                    }`
+                  }
+                >
+                  <LuLayoutDashboard className="h-6 w-6 mr-2" />
+                  Dashboard
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/dashboard-admin/Notificaciones"
+                  className={({ isActive }) =>
+                    `flex items-center py-3 px-4 hover:bg-gray-700 ${
+                      isActive ? "bg-gray-700" : ""
+                    }`
+                  }
+                >
+                  <FaRegCalendarAlt className="h-6 w-6 mr-2" />
+                  Notificaciones
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/dashboard-admin/perfil"
+                  className={({ isActive }) =>
+                    `flex items-center py-3 px-6 hover:bg-gray-700 ${
+                      isActive ? "bg-gray-700" : ""
+                    }`
+                  }
+                >
+                  <CiUser className="h-6 w-6 mr-2" />
+                  Perfil
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/dashboard-admin/calendario"
+                  className={({ isActive }) =>
+                    `flex items-center py-3 px-6 hover:bg-gray-700 ${
+                      isActive ? "bg-gray-700" : ""
+                    }`
+                  }
+                >
+                  <FaRegCalendarAlt className="h-6 w-6 mr-2" />
+                  Calendario
+                </NavLink>
+              </li>
+            </>
+          )}
           <hr className="my-4 border-t border-gray-300" />
           <li>
             <button

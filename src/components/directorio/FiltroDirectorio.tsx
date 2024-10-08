@@ -9,7 +9,7 @@ interface FiltroDirectorioProps {
     setSearchTerm: (term: string) => void;
     selectedAgencia: string;
     setSelectedAgencia: (agencia: string) => void;
-    agencias: { id: number; nombre: string }[];
+    agencias: { id: number; nombre: string, codigo: number }[];
 }
 
 const FiltroDirectorio: React.FC<FiltroDirectorioProps> = ({
@@ -70,7 +70,7 @@ const FiltroDirectorio: React.FC<FiltroDirectorioProps> = ({
                         <option value="">Todas las Agencias</option>
                         {agencias.map((agencia) => (
                             <option key={agencia.id} value={agencia.nombre}>
-                                {agencia.nombre}
+                                {agencia.nombre} - {agencia.codigo}
                             </option>
                         ))}
                     </select>

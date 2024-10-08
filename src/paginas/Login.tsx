@@ -36,6 +36,8 @@ const Login: React.FC = () => {
 
       // Redirigir al usuario en función de su rol
       if (rol_id === 1) {
+        navigate("/dashboard-admin/main");
+      } else if (rol_id === 2) {
         navigate("/dashboard-empleados/main");
       } else {
         navigate("/");

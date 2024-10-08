@@ -2,17 +2,23 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
 import compression from 'vite-plugin-compression';
 import path from 'path';
-import svgr from 'vite-plugin-svgr';
+// import { visualizer } from 'rollup-plugin-visualizer';  
 
 export default defineConfig({
   plugins: [
     react(),
-    svgr(),
     compression({
-      algorithm: 'gzip',
+      algorithm: 'brotliCompress', // Brotli 
+      ext: '.br',                 
       threshold: 10240,
-      ext: '.gz'
-    })
+      compressionOptions: { level: 11 },
+    }),
+    // visualizer({
+    //   open: true, // Abre automáticamente en el navegador
+    //   filename: 'bundle-analysis.html', // Archivo de análisis generado
+    //   gzipSize: true, // Mostrar el tamaño gzip también
+    //   brotliSize: true, // Mostrar el tamaño brotli también
+    // }),
   ],
   resolve: {
     alias: {
