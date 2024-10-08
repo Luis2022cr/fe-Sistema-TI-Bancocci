@@ -1,4 +1,15 @@
-// rutas de dashboard 
+
+export const adminRoutes = {
+
+  "Gestion Usuarios": "/dashboard-admin/gestion-usuarios",
+  "Informe UPS": "/dashboard-admin/informes-ups",
+  "Directorio TI": "/dashboard-admin/directorio",
+  "Inventario TI": "/dashboard-admin/inventario",
+ 
+} as const;
+
+export type AdminRouteKeys = keyof typeof adminRoutes;
+
 export const empleadosRoutes = {
 
   "Informe UPS": "/dashboard-empleados/informes-ups",
