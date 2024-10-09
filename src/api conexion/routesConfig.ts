@@ -44,6 +44,7 @@ export const empleadosRoutes = {
   "Informe UPS": "/dashboard-empleados/informes-ups",
   "Directorio TI": "/dashboard-empleados/directorio",
   "Inventario TI": "/dashboard-empleados/inventario-ti",
+  "Reporte E/S Equipo": "/dashboard-empleados/reporte-equipo",
  
 } as const;
 

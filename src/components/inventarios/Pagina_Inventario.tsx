@@ -5,6 +5,8 @@ import { useParams } from "react-router-dom";
 import { ObtenerInventarios } from "@/api conexion/servicios/inventarios";
 import { FaPlusCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { IoArrowUndoOutline } from "react-icons/io5";
 
 const tipoInventarioMap: { [key: number]: string } = {
   1: "Desktop",
@@ -21,6 +23,7 @@ const tipoInventarioMap: { [key: number]: string } = {
 export default function Pagina_Inventario() {
   const { tipoInventarioId } = useParams<{ tipoInventarioId?: string }>();
   const Id = tipoInventarioId ? parseInt(tipoInventarioId, 10) : undefined;
+  const navigate = useNavigate();
 
   const [{ data: inventarioData, loading: loadingInventario }] = ObtenerInventarios(Id);
 
@@ -40,10 +43,20 @@ export default function Pagina_Inventario() {
   // Obtener el nombre del tipo de inventario usando el Id
   const inventarioNombre = tipoInventarioMap[Id!];
 
+  
   return (
+  <>
+    <button
+      onClick={() => navigate(-1)}
+      className="flex items-center mt-6 mb-4 ml-2 text-xl text-blue-500 hover:underline"
+    >
+    <IoArrowUndoOutline />
+    Regresar
+    </button>      
+
     <div className="container p-4 mx-auto mt-10">
       <h1 className="mb-5 text-3xl font-bold text-center">Inventarios: {inventarioNombre}</h1>
-
+     
       {/* Barra de búsqueda */}
       <div className="flex mb-6 space-x-4">
         <div className="relative flex-1">
@@ -129,5 +142,6 @@ export default function Pagina_Inventario() {
         )}
       </div>
     </div>
+    </>
   );
 }
