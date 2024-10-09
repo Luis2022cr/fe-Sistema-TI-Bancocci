@@ -16,7 +16,7 @@ export default function PaginaGestionUsuarios() {
     const [selectedRol, setSelectedRol] = useState<string>(''); // Estado para el rol seleccionado
 
     const [paginaInicial, setPaginaInicial] = useState(1); // Estado para la paginación
-    const itemsPerPage = 10; // Cambia este valor según tus necesidades
+    const itemsPerPage = 12; // Cambia este valor según tus necesidades
 
     // Obtener los datos del Back-End
     useEffect(() => {

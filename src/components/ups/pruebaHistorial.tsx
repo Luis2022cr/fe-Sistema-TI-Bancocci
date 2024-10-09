@@ -110,7 +110,7 @@ const UpsCard = () => {
                     </div>
                 </div>
             </div>
-        </>
+            </>
     );
 };
 

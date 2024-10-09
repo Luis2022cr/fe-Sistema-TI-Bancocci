@@ -51,7 +51,6 @@ root.render(
             <Route path="dashboard-empleados/historial_ups" element={<UpsCard />} />
             <Route path="dashboard-empleados/mapa/ups" element={<MapaCopan />} />
 
-
             <Route path="dashboard-admin/main" element={<DashboardAdmin />} />
             <Route path="dashboard-admin/informes-ups" element={<Dashboard_UpsAdmin />} />
             <Route path="dashboard-admin/inventario-ti" element={<Dashboard_inventarioAdmin />} />

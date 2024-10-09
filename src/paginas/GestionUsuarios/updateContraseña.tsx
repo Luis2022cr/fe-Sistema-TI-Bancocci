@@ -4,6 +4,36 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { IoArrowUndoOutline } from "react-icons/io5";
 
+// Componente Modal
+interface UsuarioCreadoModalProps {
+    isOpen: boolean;
+    onClose: () => void;
+    contraseña: string;
+}
+
+const EditContraseñaModal: React.FC<UsuarioCreadoModalProps> = ({ isOpen, contraseña }) => {
+    const navigate = useNavigate(); 
+    if (!isOpen) return null;
+
+    const handleClose = () => {
+        navigate('/dashboard-admin/gestion-usuarios'); 
+    };
+
+    return (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div className="bg-white p-8 rounded-lg shadow-lg max-w-sm w-full">
+                <h2 className="text-xl font-bold mb-4">Contraseña modificada con éxito</h2>
+                <p><strong>Nueva Contraseña:</strong> {contraseña}</p>
+                <button
+                    onClick={handleClose}
+                    className="mt-6 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700"
+                >
+                    Cerrar
+                </button>
+            </div>
+        </div>
+    );
+};
 
 const UpdateUsuario: React.FC = () => {
     const { id } = useParams<{ id?: string }>();
@@ -16,10 +46,9 @@ const UpdateUsuario: React.FC = () => {
         nuevaContraseña: '',
         confirmarContraseña: '',
     });
-
-
     const [message, setMessage] = useState<string | null>(null);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
         if (usuario) {
@@ -44,11 +73,10 @@ const UpdateUsuario: React.FC = () => {
         setErrorMessage(null);
 
         try {
-            await UpdateContraseña(numericId! , formData); // Solo actualiza la contraseña
+            await UpdateContraseña(numericId!, formData);
             setMessage('Contraseña actualizada exitosamente.');
-            setTimeout(() => {
-                navigate('/dashboard-admin/gestion-usuarios');
-            }, 500);
+            setIsModalOpen(true); // Abrir modal
+           
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 const respuestaError = error.response?.data?.error;
@@ -109,6 +137,12 @@ const UpdateUsuario: React.FC = () => {
                         </button>
                     </div>
                 </form>
+
+                <EditContraseñaModal
+                    isOpen={isModalOpen}
+                    onClose={() => setIsModalOpen(false)}
+                    contraseña={formData.nuevaContraseña} // Pasamos la nueva contraseña directamente desde el formulario
+                />
             </div>
         </>
     );

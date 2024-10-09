@@ -69,8 +69,7 @@ const CrearUsuario: React.FC = () => {
 
         try {
             setLoading(true);
-            const resultado = await CrearUsuarios(nuevoUsuario); // Usamos el nuevo tipo
-            // Asigna los datos devueltos al estado
+            const resultado = await CrearUsuarios(nuevoUsuario);
             setNuevoUsuarioData({
                 nombre: resultado.usuario ?? '', // Si resultado.usuario es undefined, asigna ''
                 contraseña: resultado.contraseña ?? '' // Si resultado.contraseña es undefined, asigna ''
