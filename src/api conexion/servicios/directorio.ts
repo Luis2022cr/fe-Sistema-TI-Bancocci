@@ -20,7 +20,7 @@ export const ObtenerDirectorios = () => {
     return response;
   };
 
-export const ObtenerDirectoriosById = (id: number) => {
+  export const ObtenerDirectoriosById = (id: number) => {
     const response = useAxios<Directorio>({
       url: `/directorios/${id}`,
     },{
@@ -44,8 +44,8 @@ export const CrearDirectorios = async (nuevoDirectorio: Post_Directorio): Promis
 
 
 export const UpdateDirectorios = async (id: number, nuevoDirectorio: Post_Directorio): Promise<Post_Directorio> => {
-    const response = await axiosInstance.put(`/directorios/${id}`, nuevoDirectorio);
-    return response.data;
+  const response = await axiosInstance.put(`/directorios/${id}`, nuevoDirectorio);
+  return response.data;
 };
 
 // export const UpdateDirectorios = (id: number, nuevoDirectorio: Post_Directorio) => {
