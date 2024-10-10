@@ -157,12 +157,14 @@ const EditarInventario: React.FC = () => {
 
                 <form onSubmit={handleSubmit}>
                     <InputText
+                    type='text'
                         name="codigo"
                         value={formState.codigo}
                         placeholder="Código de Inventario"
                         onChange={handleChange}
                     />
                     <InputText
+                    type='text'
                         name="serie"
                         value={formState.serie}
                         placeholder="Número de Serie"
@@ -205,6 +207,7 @@ const EditarInventario: React.FC = () => {
                         onChange={(option) => handleSelectChange('estado_id', option)}
                     />
                     <InputText
+                    type='text'
                         name="comentarios"
                         value={formState.comentarios}
                         placeholder="Comentarios"
