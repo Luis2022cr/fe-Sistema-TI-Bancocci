@@ -14,13 +14,15 @@ interface SelectFieldProps {
 }
 
 const SelectOptions: React.FC<SelectFieldProps> = ({ value, options, placeholder, onChange }) => (
-    <div className="mb-4">
+    <div className="mb-4 text-xs">
         <Select
             value={value}
             options={options}
             onChange={onChange}
             placeholder={placeholder}
             classNamePrefix="react-select"
+            className="w-full px-3 py-2 border rounded-full bg-gray-200"
+
         />
     </div>
 );

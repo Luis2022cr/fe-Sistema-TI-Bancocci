@@ -5,11 +5,11 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { ObtenerAgencia } from '@/api conexion/servicios/agencias';
 import { ObtenerDepartamento } from '@/api conexion/servicios/departamentos';
 import axios from 'axios';
-import { IoArrowUndoOutline } from "react-icons/io5";
 import { FiLoader } from 'react-icons/fi';
 import Alert from '../Alert';
 import InputText from '../campos/InputForm';
 import SelectOptions, { SelectOption } from '../campos/SelectOptionsForm';
+import BotonRegresar from '../Regresar';
 
 const UpdateDirectorio: React.FC = () => {
     const { id } = useParams<{ id?: string }>();
@@ -90,13 +90,7 @@ const UpdateDirectorio: React.FC = () => {
 
     return (
         <>
-            <button
-                onClick={() => navigate(-1)}
-                className="mb-4 ml-2 text-blue-500 hover:underline mt-6 flex items-center text-xl"
-            >
-                <IoArrowUndoOutline />
-                Regresar
-            </button>
+            <BotonRegresar />
             <div className="max-w-md mx-auto p-8 -mt-14">
                 <h2 className="text-2xl font-bold mb-6 text-center">Actualizar Directorio</h2>
 
@@ -104,12 +98,14 @@ const UpdateDirectorio: React.FC = () => {
 
                 <form onSubmit={manejoDeEnvio}>
                     <InputText
+                        type='text'
                         name="extension"
                         value={String(formData.extension)}
                         placeholder="Número Extensión"
                         onChange={manejarCambio}
                     />
                     <InputText
+                        type='text'
                         name="empleado"
                         value={formData.empleado}
                         placeholder="Usuario"

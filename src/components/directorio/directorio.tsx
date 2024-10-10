@@ -36,7 +36,6 @@ export default function PaginaDirectorio() {
     if (!directorio || !agenciaData) return <div>error al obtener los datos</div>
 
 
-
     //Logica borrar directorio
     const handleDelete = async (id: number, extension: number) => {
         const confirmDelete = window.confirm("¿Estás seguro de que deseas eliminar este registro?");

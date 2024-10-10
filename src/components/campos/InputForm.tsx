@@ -1,16 +1,17 @@
 import React from 'react';
 
 interface TextFieldProps {
+    type: string;
     name: string;
     value: string;
     placeholder: string;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const InputText: React.FC<TextFieldProps> = ({ name, value, placeholder, onChange }) => (
+const InputText: React.FC<TextFieldProps> = ({type, name, value, placeholder, onChange }) => (
     <div className="mb-4">
         <input
-            type="text"
+            type={type}
             name={name}
             value={value}
             onChange={onChange}

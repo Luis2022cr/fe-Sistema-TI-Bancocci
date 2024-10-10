@@ -1,4 +1,4 @@
-import React, {  useState, useCallback, useMemo } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import Loading from '../Loading';
 import { CrearDirectorios, Post_Directorio } from '@/api conexion/servicios/directorio';
 import axios from 'axios';
@@ -83,12 +83,14 @@ const CrearDirectorio: React.FC = () => {
 
             <form onSubmit={handleSubmit}>
                 <InputText
+                    type='text'
                     name="extension"
                     value={formState.extension}
                     placeholder="Número Extensión"
                     onChange={handleChange}
                 />
                 <InputText
+                    type='text'
                     name="empleado"
                     value={formState.empleado}
                     placeholder="Usuario"
