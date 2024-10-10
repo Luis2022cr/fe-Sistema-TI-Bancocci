@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { PencilIcon, TrashIcon, ClockIcon, Search, X } from "lucide-react";
+import { PencilIcon, ClockIcon, Search, X } from "lucide-react";
 import Loading from "../Loading";
 import { useParams } from "react-router-dom";
 import { ObtenerInventarios } from "@/api conexion/servicios/inventarios";
@@ -7,6 +7,7 @@ import { FaPlusCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { IoArrowUndoOutline } from "react-icons/io5";
+import Pagination from "../Pagination";
 
 const tipoInventarioMap: { [key: number]: string } = {
   1: "Desktop",
@@ -24,11 +25,12 @@ export default function Pagina_Inventario() {
   const { tipoInventarioId } = useParams<{ tipoInventarioId?: string }>();
   const Id = tipoInventarioId ? parseInt(tipoInventarioId, 10) : undefined;
   const navigate = useNavigate();
-
   const [{ data: inventarioData, loading: loadingInventario }] = ObtenerInventarios(Id);
 
   // Estado para el término de búsqueda
   const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 8;
 
   if (loadingInventario) return <Loading />;
   if (!inventarioData) return <div>Error al obtener los datos</div>;
@@ -36,16 +38,20 @@ export default function Pagina_Inventario() {
   // Filtrar los inventarios según el término de búsqueda
   const filteredInventario = inventarioData.filter((data) =>
     (data.codigo?.toLowerCase() || "").includes(searchTerm.toLowerCase()) ||
-    (data.serie?.toLowerCase() || "").includes(searchTerm.toLowerCase()) ||
-    (data.modelo?.toLowerCase() || "").includes(searchTerm.toLowerCase())
+    (data.serie?.toLowerCase() || "").includes(searchTerm.toLowerCase())
   );
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredInventario.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(filteredInventario.length / itemsPerPage);
 
   // Obtener el nombre del tipo de inventario usando el Id
   const inventarioNombre = tipoInventarioMap[Id!];
 
   
   return (
-  <>
+    <>
     <button
       onClick={() => navigate(-1)}
       className="flex items-center mt-6 mb-4 ml-2 text-xl text-blue-500 hover:underline"
@@ -82,8 +88,8 @@ export default function Pagina_Inventario() {
           </div>
         </div>
         <div className="flex-none">
-          <Link
-            to='/'
+        <Link
+            to='/dashboard-empleados/agregar-inventario'
             className="flex items-center gap-3 p-1 mt-1 text-center text-white bg-green-700 rounded-full w-28 hover:bg-green-600"
           >
             <FaPlusCircle />
@@ -94,12 +100,13 @@ export default function Pagina_Inventario() {
 
       {/* Tabla de inventarios */}
       <div className="overflow-x-auto">
-        {filteredInventario.length > 0 ? (
+        {currentItems.length > 0 ? (
           <table className="w-full border-collapse">
             <thead>
               <tr className="text-white bg-blue-900">
                 <th className="p-2 text-left border-r-2 border-blue-300">Nº Inventario</th>
                 <th className="p-2 text-left border-r-2 border-blue-300">Serie</th>
+                <th className="p-2 text-left border-r-2 border-blue-300">Marca</th>
                 <th className="p-2 text-left border-r-2 border-blue-300">Modelo</th>
                 <th className="p-2 text-left border-r-2 border-blue-300">Agencia Origen</th>
                 <th className="p-2 text-left border-r-2 border-blue-300">Agencia Actual</th>
@@ -110,10 +117,11 @@ export default function Pagina_Inventario() {
               </tr>
             </thead>
             <tbody>
-              {filteredInventario.map((data, index) => (
+              {currentItems.map((data, index) => (
                 <tr key={index} className="text-center bg-blue-50 hover:bg-gray-300 even:bg-blue-100">
                   <td className="p-2 border-t border-r-2 border-blue-300">{data.codigo}</td>
                   <td className="p-2 border-t border-r-2 border-blue-300">{data.serie}</td>
+                  <td className="p-2 border-t border-r-2 border-blue-300">{data.marca}</td>
                   <td className="p-2 border-t border-r-2 border-blue-300">{data.modelo}</td>
                   <td className="p-2 border-t border-r-2 border-blue-300">{data.agencia_origen}</td>
                   <td className="p-2 border-t border-r-2 border-blue-300">{data.agencia_actual}</td>
@@ -122,15 +130,16 @@ export default function Pagina_Inventario() {
                   <td className="p-2 border-t border-r-2 border-blue-300">{data.comentarios}</td>
                   <td className="p-2 border-t border-blue-300">
                     <div className="flex space-x-2">
-                      <button className="p-1 text-white bg-orange-500 rounded-full">
+                      <Link
+                        to={`/dashboard-empleados/actualizar_inventario/${data.id}`}
+                       className="p-1 text-white bg-orange-500 rounded-full">
                         <PencilIcon className="w-4 h-4" />
-                      </button>
-                      <button className="p-1 text-white bg-red-500 rounded-full">
-                        <TrashIcon className="w-4 h-4" />
-                      </button>
-                      <button className="p-1 text-white bg-yellow-700 rounded-full">
+                      </Link>
+                      <Link
+                        to={`/dashboard-empleados/historial_inventario/${data.id}`}
+                        className="p-1 text-white bg-yellow-700 rounded-full">
                         <ClockIcon className="w-4 h-4" />
-                      </button>
+                      </Link>
                     </div>
                   </td>
                 </tr>
@@ -141,6 +150,12 @@ export default function Pagina_Inventario() {
           <p>No se encontraron registros en el inventario.</p>
         )}
       </div>
+      {/* Paginación */}
+        <Pagination
+          PaginaInicial={currentPage}
+          TotalPaginas={totalPages}
+          onPageChange={setCurrentPage}
+        />
     </div>
     </>
   );

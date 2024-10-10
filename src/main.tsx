@@ -23,6 +23,9 @@ import Dashboard_inventarioAdmin from './paginas/dashboard-admin/dashboard_inven
 import DashboardInicio from './paginas/dashboard-empleados/dashboard_empleados';
 import Dashboard_inventario from './paginas/dashboard-empleados/dashboard_inventario';
 import Dashboard_Ups from './paginas/dashboard-empleados/dashboard_ups';
+import HistorialInventario from './components/inventarios/historial_Inventario';
+import CrearInventarios from './components/inventarios/crear_Inventario';
+import EditarInventario from './components/inventarios/update_Inventario';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
@@ -50,6 +53,9 @@ root.render(
             <Route path="dashboard-empleados/inventario-ti/:tipoInventarioId" element={<Pagina_Inventario />} />
             <Route path="dashboard-empleados/historial_ups" element={<UpsCard />} />
             <Route path="dashboard-empleados/mapa/ups" element={<MapaCopan />} />
+            <Route path="dashboard-empleados/agregar-inventario" element={<CrearInventarios />} />
+            <Route path="dashboard-empleados/actualizar_inventario/:id" element={<EditarInventario />} />
+            <Route path="dashboard-empleados/historial_inventario/:id" element={<HistorialInventario />} />
 
             <Route path="dashboard-admin/main" element={<DashboardAdmin />} />
             <Route path="dashboard-admin/informes-ups" element={<Dashboard_UpsAdmin />} />
