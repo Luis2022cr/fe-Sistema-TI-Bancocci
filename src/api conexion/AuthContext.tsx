@@ -1,6 +1,7 @@
 // api/AuthContext.tsx
 import { createContext, useState, ReactNode, useEffect } from 'react';
 
+
 export interface AuthContextType {
   accessToken: string | null;
   userRole: number | null;
@@ -18,6 +19,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     return role ? Number(role) : null;
   });
   const [usuario, setUsuario] = useState<string | null>(sessionStorage.getItem('usuario'));
+  
 
   // Persistir los valores en sessionStorage cada vez que cambian
   useEffect(() => {
@@ -49,6 +51,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setAccessToken(token);
     setUserRole(role);
     setUsuario(usuario);
+
 
     sessionStorage.setItem('accessToken', token);
     sessionStorage.setItem('userRole', role.toString());

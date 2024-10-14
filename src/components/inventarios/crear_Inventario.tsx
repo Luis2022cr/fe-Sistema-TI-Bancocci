@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo, useContext } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import Loading from '../Loading';
 import { CrearInventario, Post_Inventario } from '@/api conexion/servicios/inventarios';
 import axios from 'axios';
@@ -10,13 +10,10 @@ import { ObtenerModelo, Modelo } from '@/api conexion/servicios/modelo';
 import { ObtenerEstado, Estado } from '@/api conexion/servicios/estado';
 import InputText from '../campos/InputForm';
 import SelectOptions, { SelectOption } from '../campos/SelectOptionsForm';
-import { AuthContext } from '@/api conexion/AuthContext'; // Importa el AuthContext
 import { IoArrowUndoOutline } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
 
 const CrearInventarios: React.FC = () => {
-  // Obtener el contexto de autenticación
-  const authContext = useContext(AuthContext);
 
   // Obtener agencias y tipos de inventario
   const navigate = useNavigate();
@@ -91,8 +88,6 @@ const CrearInventarios: React.FC = () => {
       return;
     }
 
-    const usuarioId = authContext?.usuario ? Number(authContext.usuario) : 0; 
-
     const nuevoInventario: Post_Inventario = {
       codigo,
       serie,
@@ -102,7 +97,7 @@ const CrearInventarios: React.FC = () => {
       agencias_id_origen: agencias_id_origen!.value,
       agencias_id_actual: agencias_id_actual!.value,
       estado_id: estado_id!.value,
-      usuario_id: usuarioId, // Obtén el usuario desde el contexto
+
       comentarios,
       fecha_creacion: new Date().toISOString(),
       fecha_modificacion: new Date().toISOString(),

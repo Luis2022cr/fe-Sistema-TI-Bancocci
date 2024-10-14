@@ -13,7 +13,7 @@ import SelectOptions, { SelectOption } from '../campos/SelectOptionsForm';
 import { AuthContext } from '@/api conexion/AuthContext'; 
 import { IoArrowUndoOutline } from 'react-icons/io5';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Actualizar_Inventario } from '@/api conexion/servicios/inventarios'; // Importa la interfaz aquí
+import { Actualizar_Inventario } from '@/api conexion/servicios/inventarios'; 
 
 const EditarInventario: React.FC = () => {
     const { id } = useParams<{ id?: string }>();
@@ -51,12 +51,12 @@ const EditarInventario: React.FC = () => {
             setFormState({
                 codigo: inventario.codigo,
                 serie: inventario.serie,
-                marca_id: { value: inventario.marca_id, label: inventario.marca }, // Usa la propiedad correcta
-                modelo_id: { value: inventario.modelo_id, label: inventario.modelo }, // Usa la propiedad correcta
-                tipo_inventario_id: { value: inventario.tipo_inventario_id, label: inventario.tipo_inventario }, // Usa la propiedad correcta
-                agencias_id_origen: { value: inventario.agencias_id_origen, label: inventario.agencia_origen }, // Usa la propiedad correcta
-                agencias_id_actual: { value: inventario.agencias_id_actual, label: inventario.agencia_actual }, // Usa la propiedad correcta
-                estado_id: { value: inventario.estado_id, label: inventario.estado }, // Usa la propiedad correcta
+                marca_id: { value: inventario.marca_id, label: inventario.marca }, 
+                modelo_id: { value: inventario.modelo_id, label: inventario.modelo }, 
+                tipo_inventario_id: { value: inventario.tipo_inventario_id, label: inventario.tipo_inventario }, 
+                agencias_id_origen: { value: inventario.agencias_id_origen, label: inventario.agencia_origen }, 
+                agencias_id_actual: { value: inventario.agencias_id_actual, label: inventario.agencia_actual }, 
+                estado_id: { value: inventario.estado_id, label: inventario.estado }, 
                 comentarios: inventario.comentarios || '',
             });
         }
