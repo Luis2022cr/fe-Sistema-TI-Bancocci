@@ -12,16 +12,19 @@ const Sidebar: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [{ data, loading, error }] = ObtenerNotificacionesCheck();
-  const [notificacionesVistas, setNotificacionesVistas] = useState(false);
-
+  const [notificacionesVistas, setNotificacionesVistas] = useState(
+    () => JSON.parse(sessionStorage.getItem("notificacionesVistas") || "false")
+  );
   const handleLogout = () => {
     logout();
     navigate("/");
   };
 
   useEffect(() => {
+    // Si el usuario está en la página de notificaciones, marcarlas como vistas
     if (location.pathname.includes("notificaciones")) {
-      setNotificacionesVistas(true); // Marca las notificaciones como vistas
+      setNotificacionesVistas(true);
+      sessionStorage.setItem("notificacionesVistas", "true"); // Guardar en localStorage
     }
   }, [location.pathname]);
 
@@ -91,6 +94,13 @@ const Sidebar: React.FC = () => {
               </li>
             </>
           )}
+
+
+
+          {/* DASHBOARD DE ADMINITRADOR */}
+
+
+
           {location.pathname.includes("dashboard-admin") && (
             <>
               <li>

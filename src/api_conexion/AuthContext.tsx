@@ -27,6 +27,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       sessionStorage.setItem('accessToken', accessToken);
     } else {
       sessionStorage.removeItem('accessToken');
+      // sessionStorage.removeItem('notificacionesVistas'); 
+
     }
   }, [accessToken]);
 
