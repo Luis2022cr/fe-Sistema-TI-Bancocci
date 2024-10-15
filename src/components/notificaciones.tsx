@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { NewspaperIcon } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { ObtenerNotificaciones, Notificacion } from '@/api conexion/servicios/notifcaciones';
+import { ObtenerNotificaciones, Notificacion } from '@/api_conexion/servicios/notifcaciones';
 
 const NotificationList = () => {
 

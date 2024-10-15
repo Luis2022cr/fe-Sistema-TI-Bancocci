@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import Loading from '../../components/Loading';
 import Select from 'react-select';
 import axios from 'axios';
-import { Rol, ObtenerRoles } from '@/api conexion/servicios/roles';
-import { CrearUsuarios, Post_Usuario } from '@/api conexion/servicios/usuarios';
+import { Rol, ObtenerRoles } from '@/api_conexion/servicios/roles';
+import { CrearUsuarios, Post_Usuario } from '@/api_conexion/servicios/usuarios';
 
 // Definir tipos para las opciones
 interface SelectOption {

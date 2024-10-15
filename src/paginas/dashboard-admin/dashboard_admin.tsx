@@ -3,7 +3,7 @@ import inventarios from "@/assets/inventarios.svg";
 import ups from "@/assets/ups.svg";
 import usuario from "@/assets/usuario.svg";
 import directorio from "@/assets/directorio.svg";
-import { AdminRouteKeys, adminRoutes } from "@/api conexion/routesConfig";
+import { AdminRouteKeys, adminRoutes } from "@/api_conexion/routesConfig";
 import DashboardButton from "@/components/DashboardButton";
 
 const DashboardAdmin: React.FC = () => {

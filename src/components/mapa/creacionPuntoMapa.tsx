@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { FiLoader } from 'react-icons/fi';
 import InputText from '../campos/InputForm';
-import { CrearPuntoMapa, POST_Mapa } from '@/api conexion/servicios/ups-mapa';
-import { ObtenerUps_Select } from '@/api conexion/servicios/ups';
+import { CrearPuntoMapa, POST_Mapa } from '@/api_conexion/servicios/ups-mapa';
+import { ObtenerUps_Select } from '@/api_conexion/servicios/ups';
 import Loading from '../Loading';
 import SelectOptions, { SelectOption } from '../campos/SelectOptionsForm';
 

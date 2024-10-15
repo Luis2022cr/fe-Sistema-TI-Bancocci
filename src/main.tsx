@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import App from './App';
 import './index.css';
 import Layout from './layouts/Layout';
-import { AuthProvider } from './api conexion/AuthContext';
+import { AuthProvider } from './api_conexion/AuthContext';
 import Layout_2 from './layouts/Layout_2';
 import Login from './paginas/Login';
 import Directorio from './components/directorio/directorio';
@@ -77,6 +77,7 @@ root.render(
             <Route path="dashboard-admin/historial_ups/:id" element={<Historial_Ups />} />
             <Route path="dashboard-admin/mapa/ups" element={<MapaCopan />} />
             <Route path="dashboard-admin/crear/ups" element={<CrearUpsForm />} />
+            <Route path="dashboard-admin/notificaciones" element={<NotificationList />} />
 
           </Route>
         </Routes>

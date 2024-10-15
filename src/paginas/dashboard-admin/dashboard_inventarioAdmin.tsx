@@ -7,7 +7,7 @@ import { PiComputerTower } from "react-icons/pi";
 import impresoraFI from "@/assets/impresoraFI.svg";
 import telefono from "@/assets/telefono.svg";
 import planta from "@/assets/planta.svg";
-import { InventarioAdminRouteKeys, inventarioAdminRoutes } from "@/api conexion/routesConfig";
+import { InventarioAdminRouteKeys, inventarioAdminRoutes } from "@/api_conexion/routesConfig";
 import DashboardButton from "@/components/DashboardButton";
 
 const Dashboard_inventarioAdmin: React.FC = () => {

@@ -2,7 +2,7 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import { FaPlusCircle, FaTrash } from 'react-icons/fa';
-import { BorrarPuntoMapa, ObtenerMapaUps, UPS_MAPA } from '@/api conexion/servicios/ups-mapa';
+import { BorrarPuntoMapa, ObtenerMapaUps, UPS_MAPA } from '@/api_conexion/servicios/ups-mapa';
 import Loading from '../Loading';
 import Alert from '../Alert';
 import { useState } from 'react';

@@ -1,4 +1,4 @@
-import { ObtenerUPS } from "@/api conexion/servicios/ups";
+import { ObtenerUPS } from "@/api_conexion/servicios/ups";
 import { PencilIcon, ClockIcon, BatteryIcon, CalendarIcon, ZapIcon, Search, X, Globe, CpuIcon, MapPin } from "lucide-react"
 import Loading from '../Loading';
 import { Link, useParams } from "react-router-dom";

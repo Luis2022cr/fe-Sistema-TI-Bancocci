@@ -1,4 +1,4 @@
-import { ObtenerUPSConHistorial } from "@/api conexion/servicios/ups";
+import { ObtenerUPSConHistorial } from "@/api_conexion/servicios/ups";
 import { ZapIcon, ServerIcon, CalendarIcon, ClockIcon, CpuIcon, BatteryIcon, MapPinIcon } from "lucide-react";
 import { useParams } from "react-router-dom";
 import Loading from "../Loading";
