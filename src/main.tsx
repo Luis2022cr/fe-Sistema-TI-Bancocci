@@ -27,6 +27,7 @@ import CrearInventarios from './components/inventarios/crear_Inventario';
 import EditarInventario from './components/inventarios/update_Inventario';
 import Historial_Ups from './components/ups/Historial_Ups';
 import CrearUpsForm from './components/ups/crear-ups';
+import NotificationList from './components/notificaciones';
 
 
 
@@ -44,8 +45,9 @@ root.render(
             <Route path="login" element={<Login />} />
 
           </Route>
-
+         
           <Route path="/" element={<Layout_2 />}>
+          
             <Route path="dashboard-empleados/main" element={<DashboardInicio />} />
             <Route path="dashboard-empleados/informes-ups" element={<Dashboard_Ups />} />
             <Route path="dashboard-empleados/inventario-ti" element={<Dashboard_inventario />} />
@@ -59,7 +61,7 @@ root.render(
             <Route path="dashboard-empleados/agregar-inventario" element={<CrearInventarios />} />
             <Route path="dashboard-empleados/actualizar_inventario/:id" element={<EditarInventario />} />
             <Route path="dashboard-empleados/historial_inventario/:id" element={<HistorialInventario />} />
-            
+            <Route path="dashboard-empleados/notificaciones" element={<NotificationList />} />
 
             <Route path="dashboard-admin/main" element={<DashboardAdmin />} />
             <Route path="dashboard-admin/informes-ups" element={<Dashboard_UpsAdmin />} />
