@@ -2,8 +2,8 @@ import React, {  useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logo1 from "@/assets/logoBancocci.png";
 import { FiLoader } from "react-icons/fi";
-import axiosInstance from "@/api conexion/axiosInstance";
-import useAuth from "@/api conexion/useAuth";
+import axiosInstance from "@/api_conexion/axiosInstance";
+import useAuth from "@/api_conexion/useAuth";
 
 const Login: React.FC = () => {
   const [usuario, setUsuario] = useState("");

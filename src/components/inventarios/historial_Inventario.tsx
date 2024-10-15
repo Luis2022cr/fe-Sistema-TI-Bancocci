@@ -1,4 +1,4 @@
-import { ObtenerInventarioConHistorial } from "@/api conexion/servicios/inventarios"; // Asegúrate de que esta función esté correctamente implementada
+import { ObtenerInventarioConHistorial } from "@/api_conexion/servicios/inventarios"; // Asegúrate de que esta función esté correctamente implementada
 import { ServerIcon, MapPinIcon, CirclePower, CpuIcon, Hash, ServerCrash } from "lucide-react";
 import { useParams } from "react-router-dom";
 import Loading from "../Loading";

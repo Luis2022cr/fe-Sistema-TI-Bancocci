@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import axios from 'axios';
 import { FiLoader } from 'react-icons/fi';
 import InputText from '../campos/InputForm';
-import { Post_Historial_Ups, CrearHistorialUps } from '@/api conexion/servicios/ups';
+import { Post_Historial_Ups, CrearHistorialUps } from '@/api_conexion/servicios/ups';
 import Alert from '../Alert';
 
 const Crear_HistorialUps: React.FC<{ upsId?: string, upsNombre?: string }> = ({ upsId, upsNombre }) => {

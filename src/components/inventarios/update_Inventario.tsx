@@ -1,19 +1,19 @@
 import React, { useState, useEffect, useCallback, useMemo, useContext } from 'react';
 import Loading from '../Loading';
-import { ObtenerInventariosById, UpdateInventario } from '@/api conexion/servicios/inventarios';
+import { ObtenerInventariosById, UpdateInventario } from '@/api_conexion/servicios/inventarios';
 import axios from 'axios';
 import { FiLoader } from 'react-icons/fi';
-import { ObtenerAgencia, Agencia } from '@/api conexion/servicios/agencias';
-import { ObtenerTipoInventario, TipoInventario } from '@/api conexion/servicios/tipoInventario';
-import { ObtenerMarca, Marca } from '@/api conexion/servicios/marca';
-import { ObtenerModelo, Modelo } from '@/api conexion/servicios/modelo';
-import { ObtenerEstado, Estado } from '@/api conexion/servicios/estado';
+import { ObtenerAgencia, Agencia } from '@/api_conexion/servicios/agencias';
+import { ObtenerTipoInventario, TipoInventario } from '@/api_conexion/servicios/tipoInventario';
+import { ObtenerMarca, Marca } from '@/api_conexion/servicios/marca';
+import { ObtenerModelo, Modelo } from '@/api_conexion/servicios/modelo';
+import { ObtenerEstado, Estado } from '@/api_conexion/servicios/estado';
 import InputText from '../campos/InputForm';
 import SelectOptions, { SelectOption } from '../campos/SelectOptionsForm';
-import { AuthContext } from '@/api conexion/AuthContext'; 
+import { AuthContext } from '@/api_conexion/AuthContext'; 
 import { IoArrowUndoOutline } from 'react-icons/io5';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Actualizar_Inventario } from '@/api conexion/servicios/inventarios'; 
+import { Actualizar_Inventario } from '@/api_conexion/servicios/inventarios'; 
 
 const EditarInventario: React.FC = () => {
     const { id } = useParams<{ id?: string }>();

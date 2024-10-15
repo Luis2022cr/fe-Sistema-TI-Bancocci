@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ObtenerUsuariosById, Update_Contraseña, UpdateContraseña } from '@/api conexion/servicios/usuarios';
+import { ObtenerUsuariosById, Update_Contraseña, UpdateContraseña } from '@/api_conexion/servicios/usuarios';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { IoArrowUndoOutline } from "react-icons/io5";

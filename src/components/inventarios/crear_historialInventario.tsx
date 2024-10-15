@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import axios from 'axios';
 import { FiLoader } from 'react-icons/fi';
 import InputText from '../campos/InputForm';
-import { Post_Historial_Inventario, CrearHistorialInventario } from '@/api conexion/servicios/inventarios'; 
+import { Post_Historial_Inventario, CrearHistorialInventario } from '@/api_conexion/servicios/inventarios'; 
 import Alert from '../Alert';
 import usuario from '@/assets/usuario.svg';
 

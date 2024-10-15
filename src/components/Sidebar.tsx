@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { CiLogout, CiUser } from "react-icons/ci";
-import { FaRegCalendarAlt, FaBell } from "react-icons/fa"; // Importa FaBell
+import { FaRegCalendarAlt, FaCircle } from "react-icons/fa"; // Importa FaBell
 import { LuLayoutDashboard } from "react-icons/lu";
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
-import useAuth from "@/api conexion/useAuth";
-import { ObtenerNotificacionesCheck } from "@/api conexion/servicios/notifcaciones";
+import useAuth from "@/api_conexion/useAuth";
+import { ObtenerNotificacionesCheck } from "@/api_conexion/servicios/notifcaciones";
+import { IoIosNotificationsOutline } from "react-icons/io";
 
 const Sidebar: React.FC = () => {
   const { logout } = useAuth();
@@ -50,15 +51,15 @@ const Sidebar: React.FC = () => {
                 <NavLink
                   to="/dashboard-empleados/notificaciones"
                   className={({ isActive }) =>
-                    `flex items-center py-3 px-4 hover:bg-gray-700 ${
+                    `flex items-center py-3 px-6  hover:bg-gray-700 ${
                       isActive ? "bg-gray-700" : ""
                     }`
                   }
                 >
-                  <FaRegCalendarAlt className="h-6 w-6 mr-2" />
+                  <IoIosNotificationsOutline className="h-6 w-6 -ml-4" />
                   Notificaciones
                   {!notificacionesVistas && data?.hayNotificaciones && (
-                    <FaBell className="text-red-500 h-4 w-4 ml-2" /> // Icono de notificación
+                    <FaCircle className="text-red-800 h-3 w-3 animate-pulse ml-1 " /> 
                   )}
                 </NavLink>
               </li>
@@ -109,15 +110,15 @@ const Sidebar: React.FC = () => {
                 <NavLink
                   to="/dashboard-admin/notificaciones"
                   className={({ isActive }) =>
-                    `flex items-center py-3 px-4 hover:bg-gray-700 ${
+                    `flex items-center py-3 px-6 hover:bg-gray-700 ${
                       isActive ? "bg-gray-700" : ""
                     }`
                   }
                 >
-                  <FaRegCalendarAlt className="h-6 w-6 mr-2" />
+                   <IoIosNotificationsOutline className="h-6 w-6 -ml-4" />
                   Notificaciones
                   {!notificacionesVistas && data?.hayNotificaciones && (
-                    <FaBell className="text-red-500 h-4 w-4 ml-2" /> // Icono de notificación
+                    <FaCircle className="text-red-800 h-3 w-3 animate-pulse ml-1 " /> 
                   )}
                 </NavLink>
               </li>

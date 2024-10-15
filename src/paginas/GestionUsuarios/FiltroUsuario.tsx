@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Search, X } from "lucide-react";
 import { FaPlusCircle } from "react-icons/fa";
 import Modal from "../../components/Modal";
-import { Rol } from "@/api conexion/servicios/roles";
+import { Rol } from "@/api_conexion/servicios/roles";
 import CrearUsuario from "./crearUsuario";
 
 interface FiltroUsuariosProps {

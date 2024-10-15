@@ -1,4 +1,4 @@
-import useAuth from "@/api conexion/useAuth";
+import useAuth from "@/api_conexion/useAuth";
 import logoBancocci from "@/assets/logoBancocci.png";
 import { useState } from "react";
 import { CiLogout, CiUser } from "react-icons/ci";

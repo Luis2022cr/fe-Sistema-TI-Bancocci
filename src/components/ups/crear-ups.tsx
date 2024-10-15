@@ -1,12 +1,12 @@
 import React, { useState, useMemo, useCallback } from 'react';
 import { FiLoader } from 'react-icons/fi';
-import { CrearUps, Post_Ups } from '@/api conexion/servicios/ups';
+import { CrearUps, Post_Ups } from '@/api_conexion/servicios/ups';
 import { useNavigate } from 'react-router-dom';
 import Alert from '../Alert';
 import InputText from '../campos/InputForm';
 import SelectOptions, { SelectOption } from '../campos/SelectOptionsForm'; // Importar SelectOptions
-import { EstadoUps, ObtenerEstadoUps, ObtenerTipoTamaño, TipoTamaño } from '@/api conexion/servicios/estados';
-import { Agencia, ObtenerAgencia } from '@/api conexion/servicios/agencias';
+import { EstadoUps, ObtenerEstadoUps, ObtenerTipoTamaño, TipoTamaño } from '@/api_conexion/servicios/estados';
+import { Agencia, ObtenerAgencia } from '@/api_conexion/servicios/agencias';
 import Loading from '../Loading';
 import BotonRegresar from '../Regresar';
 import axios from 'axios';

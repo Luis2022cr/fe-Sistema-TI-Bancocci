@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { ObtenerUsuariosById, UpdateUsuarios } from '@/api conexion/servicios/usuarios';
-import { ObtenerRoles, Rol } from '@/api conexion/servicios/roles'; 
+import { ObtenerUsuariosById, UpdateUsuarios } from '@/api_conexion/servicios/usuarios';
+import { ObtenerRoles, Rol } from '@/api_conexion/servicios/roles'; 
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { IoArrowUndoOutline } from "react-icons/io5";

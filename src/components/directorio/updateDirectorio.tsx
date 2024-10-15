@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import Loading from '../Loading';
-import { ObtenerDirectoriosById, UpdateDirectorios, Post_Directorio } from '@/api conexion/servicios/directorio';
+import { ObtenerDirectoriosById, UpdateDirectorios, Post_Directorio } from '@/api_conexion/servicios/directorio';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ObtenerAgencia } from '@/api conexion/servicios/agencias';
-import { ObtenerDepartamento } from '@/api conexion/servicios/departamentos';
+import { ObtenerAgencia } from '@/api_conexion/servicios/agencias';
+import { ObtenerDepartamento } from '@/api_conexion/servicios/departamentos';
 import axios from 'axios';
 import { FiLoader } from 'react-icons/fi';
 import Alert from '../Alert';

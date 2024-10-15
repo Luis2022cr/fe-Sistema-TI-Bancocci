@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import ups from "@/assets/ups.svg";
 import mapa from "@/assets/mapa.svg";
-import { UpsAdminRouteKeys, upsAdminRoutes } from "@/api conexion/routesConfig";
+import { UpsAdminRouteKeys, upsAdminRoutes } from "@/api_conexion/routesConfig";
 import DashboardButton from "@/components/DashboardButton";
 
 const Dashboard_UpsAdmin: React.FC = () => {

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { PencilIcon, ClockIcon, Search, X } from "lucide-react";
 import Loading from "../Loading";
 import { useParams } from "react-router-dom";
-import { ObtenerInventarios } from "@/api conexion/servicios/inventarios";
+import { ObtenerInventarios } from "@/api_conexion/servicios/inventarios";
 import { FaPlusCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";

@@ -1,10 +1,10 @@
 import React, { useState, useCallback, useMemo } from 'react';
 import Loading from '../Loading';
-import { CrearDirectorios, Post_Directorio } from '@/api conexion/servicios/directorio';
+import { CrearDirectorios, Post_Directorio } from '@/api_conexion/servicios/directorio';
 import axios from 'axios';
 import { FiLoader } from 'react-icons/fi';
-import { Agencia, ObtenerAgencia } from '@/api conexion/servicios/agencias';
-import { Departamento, ObtenerDepartamento } from '@/api conexion/servicios/departamentos';
+import { Agencia, ObtenerAgencia } from '@/api_conexion/servicios/agencias';
+import { Departamento, ObtenerDepartamento } from '@/api_conexion/servicios/departamentos';
 import InputText from '../campos/InputForm';
 import SelectOptions, { SelectOption } from '../campos/SelectOptionsForm';
 

@@ -2,8 +2,8 @@ import { User, Mail, Pencil, KeyRound, UserRoundCog, CircleUserRound} from "luci
 import { useState, useEffect } from "react";
 import Loading from "../../components/Loading";
 import Pagination from "../../components/Pagination"; 
-import { Rol , ObtenerRoles } from "@/api conexion/servicios/roles";
-import {  Usuario, ObtenerUsuarios } from "@/api conexion/servicios/usuarios"; 
+import { Rol , ObtenerRoles } from "@/api_conexion/servicios/roles";
+import {  Usuario, ObtenerUsuarios } from "@/api_conexion/servicios/usuarios"; 
 import { Link } from "react-router-dom";
 import FiltroUsuarios from "../GestionUsuarios/FiltroUsuario";
 
