@@ -22,12 +22,12 @@ import Dashboard_inventarioAdmin from './paginas/dashboard-admin/dashboard_inven
 import DashboardInicio from './paginas/dashboard-empleados/dashboard_empleados';
 import Dashboard_inventario from './paginas/dashboard-empleados/dashboard_inventario';
 import Dashboard_Ups from './paginas/dashboard-empleados/dashboard_ups';
-
 import HistorialInventario from './components/inventarios/historial_Inventario';
 import CrearInventarios from './components/inventarios/crear_Inventario';
 import EditarInventario from './components/inventarios/update_Inventario';
 import Historial_Ups from './components/ups/Historial_Ups';
 import CrearUpsForm from './components/ups/crear-ups';
+
 
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
@@ -59,6 +59,7 @@ root.render(
             <Route path="dashboard-empleados/agregar-inventario" element={<CrearInventarios />} />
             <Route path="dashboard-empleados/actualizar_inventario/:id" element={<EditarInventario />} />
             <Route path="dashboard-empleados/historial_inventario/:id" element={<HistorialInventario />} />
+            
 
             <Route path="dashboard-admin/main" element={<DashboardAdmin />} />
             <Route path="dashboard-admin/informes-ups" element={<Dashboard_UpsAdmin />} />

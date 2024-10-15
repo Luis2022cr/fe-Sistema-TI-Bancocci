@@ -1,6 +1,6 @@
 import axiosInstance, { useAxios } from "../axiosInstance";
 
-// Definimos la interfaz para los datos del inventario
+
 export interface Inventario {
     id: number;
     codigo: string;
@@ -21,23 +21,23 @@ export interface InventarioById {
     id: number;
     codigo: string;
     serie: string;
-    tipo_inventario_id: number; // ID del tipo de inventario
-    marca_id: number;            // ID de la marca
-    modelo_id: number;           // ID del modelo
-    agencias_id_origen: number;  // ID de la agencia de origen
-    agencias_id_actual: number;   // ID de la agencia actual
-    estado_id: number;            // ID del estado
-    usuario_id: number;           // ID del usuario
-    comentarios: string | null;   // Comentarios, puede ser nulo
-    fecha_creacion: string;       // Fecha de creación en formato ISO
-    fecha_modificacion: string;    // Fecha de modificación en formato ISO
-    tipo_inventario: string;      // Nombre del tipo de inventario
-    marca: string;                // Nombre de la marca
-    modelo: string;               // Nombre del modelo
-    agencia_origen: string;       // Nombre de la agencia de origen
-    agencia_actual: string;       // Nombre de la agencia actual
-    estado: string;               // Estado del inventario
-    usuario: string;              // Nombre del usuario
+    tipo_inventario_id: number; 
+    marca_id: number;            
+    modelo_id: number;           
+    agencias_id_origen: number; 
+    agencias_id_actual: number;   
+    estado_id: number;            
+    usuario_id: number;           
+    comentarios: string | null;   
+    fecha_creacion: string;       
+    fecha_modificacion: string;    
+    tipo_inventario: string;      
+    marca: string;                
+    modelo: string;              
+    agencia_origen: string;       
+    agencia_actual: string;       
+    estado: string;               
+    usuario: string;              
 }
 
 
@@ -50,7 +50,6 @@ export interface Post_Inventario {
     agencias_id_origen: number;
     agencias_id_actual: number;
     estado_id: number;
-    usuario_id: number;
     comentarios?: string | null;
     fecha_creacion: string;
     fecha_modificacion: string;
@@ -70,7 +69,7 @@ export interface Actualizar_Inventario {
     fecha_modificacion: string;
 }
 
-// Función para obtener la lista de inventarios, con un filtro opcional por tipo de inventario
+
 export const ObtenerInventarios = (tipoInventarioId?: number) => {
     const queryParams = tipoInventarioId ? `?tipo_inventario_id=${tipoInventarioId}` : '';
     const response = useAxios<Inventario[]>({
@@ -97,5 +96,58 @@ export const CrearInventario = async (nuevoInventario: Post_Inventario): Promise
 
 export const UpdateInventario = async (id: number, nuevoInventario: Actualizar_Inventario): Promise<Actualizar_Inventario> => {
     const response = await axiosInstance.put(`/inventarios/${id}`, nuevoInventario);
+    return response.data;
+};
+
+export interface HistorialCambioInventario {
+
+    cambio_realizado: string;
+    fecha_cambio: string;
+    usuario_id: number;
+    usuario: string;
+}
+
+export interface InventarioConHistorial {
+    id: number;
+    codigo: string;
+    serie: string;
+    tipo_inventario_id: number; 
+    marca_id: number;            
+    modelo_id: number;           
+    agencias_id_origen: number; 
+    agencias_id_actual: number;   
+    estado_id: number;            
+    usuario_id: number;           
+    comentarios: string | null;   
+    fecha_creacion: string;       
+    fecha_modificacion: string;    
+    tipo_inventario: string;      
+    marca: string;                
+    modelo: string;              
+    agencia_origen: string;       
+    agencia_actual: string;       
+    estado: string;               
+    usuario: string;  
+    historial: HistorialCambioInventario[]; 
+}
+
+export interface Post_Historial_Inventario {
+    inventario_id: number;
+    cambio_realizado: string;
+    fecha_cambio: string;
+}
+
+
+export const ObtenerInventarioConHistorial = (id?: number) => {
+    const response = useAxios<InventarioConHistorial>({
+        url: `/inventario/${id}`, 
+    }, {
+        useCache: false,
+    });
+    return response;
+};
+
+export const CrearHistorialInventario = async (nuevoHistorial: Post_Historial_Inventario): Promise<[Post_Historial_Inventario]> => {
+    const response = await axiosInstance.post('/historial_inventario', nuevoHistorial);
     return response.data;
 };
