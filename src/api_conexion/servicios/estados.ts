@@ -27,3 +27,20 @@ export const ObtenerTipoTamaño = () => {
     });
     return response;
 };
+
+export interface CalendarioUps {
+    id: number;
+    ups: string;
+    modelo: string;
+    proximo_cambio: Date;
+    agencia: string;
+}
+
+export const ObtenerDatosUpsCalendario = () => {
+    const response = useAxios<CalendarioUps[]>({
+        url: `/calendario/ups`,
+    }, {
+        useCache: false,
+    });
+    return response;
+};
