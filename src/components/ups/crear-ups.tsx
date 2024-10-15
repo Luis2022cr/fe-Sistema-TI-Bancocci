@@ -9,6 +9,7 @@ import { EstadoUps, ObtenerEstadoUps, ObtenerTipoTamaño, TipoTamaño } from '@/
 import { Agencia, ObtenerAgencia } from '@/api conexion/servicios/agencias';
 import Loading from '../Loading';
 import BotonRegresar from '../Regresar';
+import axios from 'axios';
 
 const CrearUpsForm: React.FC = () => {
     const navigate = useNavigate();
@@ -74,8 +75,8 @@ const CrearUpsForm: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        // Validación de los campos
-        if (
+         // Validación de los campos
+         if (
             !formState.agencias_id ||
             !formState.nombre ||
             !formState.modelo ||
@@ -146,12 +147,9 @@ const CrearUpsForm: React.FC = () => {
             });
 
         } catch (error) {
-            console.error('Error al agregar el UPS:', error);
-            setStatus({
-                isLoading: false,
-                errorMessage: 'Error al agregar el UPS.',
-                successMessage: null
-            });
+            const errorMessage = axios.isAxiosError(error) ? error.response?.data?.error
+                || "Error al agregar el directorio." : "Error al agregar el directorio.";
+            setStatus({ ...status, errorMessage: errorMessage, isLoading: false });
         }
     };
 
@@ -202,7 +200,6 @@ const CrearUpsForm: React.FC = () => {
                             value={formState.modelo}
                             placeholder="Modelo"
                             onChange={handleChange}
-
                         />
                     </div>
 

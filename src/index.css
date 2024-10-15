@@ -36,31 +36,31 @@ body::-webkit-scrollbar {
   0% {
       height: 6px;
       transform: translateY(0px);
-      background: #0a1172; /* Azul oscuro */
+      background: #F97316; /* Azul oscuro */
   }
 
   25% {
       height: 40px;
       transform: translateY(-5px) scaleY(1.7);
-      background: #3445b4; /* Azul medio */
+      background: #F97316; /* Azul medio */
   }
 
   50% {
       height: 6px;
       transform: translateY(0px);
-      background: #7f9cf5; /* Azul claro */
+      background: #F97316; /* Azul claro */
   }
 
   75% {
       height: 40px;
       transform: translateY(-5px) scaleY(1.7);
-      background: #ffc300; /* Amarillo oscuro */
+      background: #14532D; /* verde oscuro */
   }
 
   100% {
       height: 6px;
       transform: translateY(0px);
-      background: #0a1172; /* Azul oscuro */
+      background: #14532D; /* Azul oscuro */
   }
 }
 
@@ -79,7 +79,7 @@ body::-webkit-scrollbar {
   width: 0.6rem;
   height: 0.4rem;
   border-radius: 0.5rem;
-  background: #0a1172; /* Color inicial: Azul oscuro */
+  background: #F97316; /* Color inicial: Azul oscuro */
   animation: audio-wave 2.2s infinite ease-in-out;
 }
 
