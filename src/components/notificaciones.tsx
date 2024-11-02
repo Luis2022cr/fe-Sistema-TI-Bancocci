@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { NewspaperIcon } from 'lucide-react';
-import { Link } from 'react-router-dom';
 import { ObtenerNotificaciones, Notificacion } from '@/api_conexion/servicios/notifcaciones';
 
 const NotificationList = () => {
@@ -35,11 +34,6 @@ const NotificationList = () => {
                 ) : (
                     <p>No hay notificaciones disponibles.</p>
                 )}
-            </div>
-            <div className="mt-4 text-center">
-                <Link to="/" className="text-blue-500 hover:underline">
-                    Ver Más...
-                </Link>
             </div>
         </div>
     );

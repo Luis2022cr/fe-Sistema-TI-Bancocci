@@ -1,5 +1,12 @@
 import axiosInstance, { useAxios } from "../axiosInstance";
 
+export interface ObtenerUsuariosById {
+    id: number;
+    nombre: string;
+    correo: string;
+    rol_id: number;
+    rol: string; 
+}
 export interface Usuario {
     id: number;
     nombre: string;
@@ -9,18 +16,12 @@ export interface Usuario {
     rol: string; 
 }
 
-export interface ObtenerUsuariosById {
-    id: number;
-    nombre: string;
-    correo: string;
-    rol_id: number;
-    rol: string; 
-}
 
 export const ObtenerUsuarios = async (): Promise<Usuario[]> => {
     const response = await axiosInstance.get('/usuarios');
     return response.data;
 };
+
 
 export const ObtenerUsuariosById = (id: number) => {
     const response = useAxios<Usuario>({
@@ -82,4 +83,8 @@ export const UpdateContraseña = async (id: number, nuevaContraseña: Update_Con
     return response.data;
 };
   
+export const PUpdateContraseña = async (nuevaContraseña: Update_Contraseña): Promise<Update_Contraseña> => {
+    const response = await axiosInstance.put(`/auth/cambio-contrasena`, nuevaContraseña);
+    return response.data;
+};
 

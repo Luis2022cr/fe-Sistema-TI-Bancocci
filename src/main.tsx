@@ -28,6 +28,8 @@ import EditarInventario from './components/inventarios/update_Inventario';
 import Historial_Ups from './components/ups/Historial_Ups';
 import CrearUpsForm from './components/ups/crear-ups';
 import NotificationList from './components/notificaciones';
+import ProfileCard from './components/perfil';
+import UpdateContraseñaP from './components/updateContraseña';
 
 
 
@@ -62,6 +64,9 @@ root.render(
             <Route path="dashboard-empleados/actualizar_inventario/:id" element={<EditarInventario />} />
             <Route path="dashboard-empleados/historial_inventario/:id" element={<HistorialInventario />} />
             <Route path="dashboard-empleados/notificaciones" element={<NotificationList />} />
+            <Route path="dashboard-empleados/perfil" element={<ProfileCard />} />
+            <Route path="dashboard-empleados/perfil/cambiar-contraseña" element={<UpdateContraseñaP />} />
+          
 
             <Route path="dashboard-admin/main" element={<DashboardAdmin />} />
             <Route path="dashboard-admin/informes-ups" element={<Dashboard_UpsAdmin />} />
@@ -78,6 +83,8 @@ root.render(
             <Route path="dashboard-admin/mapa/ups" element={<MapaCopan />} />
             <Route path="dashboard-admin/crear/ups" element={<CrearUpsForm />} />
             <Route path="dashboard-admin/notificaciones" element={<NotificationList />} />
+            <Route path="dashboard-admin/perfil" element={<ProfileCard />} />
+            <Route path="dashboard-admin/perfil/cambiar-contraseña" element={<UpdateContraseñaP />} />
 
           </Route>
         </Routes>
