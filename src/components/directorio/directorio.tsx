@@ -4,12 +4,12 @@ import Loading from "../Loading";
 import Pagination from "../Pagination";
 import { BorrarDirectorios } from "@/api_conexion/servicios/directorio";
 import { Link } from "react-router-dom";
-import FiltroDirectorio from "./FiltroDirectorio";
 import { ObtenerAgencia } from "@/api_conexion/servicios/agencias";
 import { ObtenerDirectorios, Directorio } from '../../api_conexion/servicios/directorio';
 import Alert from "../Alert";
 import formatExtension from "../campos/FormatoExtencion";
 import lista from "../../assets/listaReport.svg";
+import FiltroDirectorio from "./FiltroDirectorio";
 
 
 interface ExportData {

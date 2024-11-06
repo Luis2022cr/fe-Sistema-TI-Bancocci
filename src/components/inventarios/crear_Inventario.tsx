@@ -131,80 +131,111 @@ const CrearInventarios: React.FC = () => {
     <IoArrowUndoOutline />
     Regresar
     </button>
-    <div className="max-w-md mx-auto p-8 -mt-16">
+    <div className=" mx-auto p-6 -mt-14">
       <h2 className="text-2xl font-bold mb-6 text-center text-blue-900">Agregar Inventario</h2>
 
       {status.successMessage && <p className="text-green-500 text-center mb-4">{status.successMessage}</p>}
       {status.error && <div className="bg-red-200 text-red-800 p-4 mb-4 rounded">{status.error}</div>}
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="col-span-1">
+
+      <label className="block text-sm font-medium text-gray-700" htmlFor="nombre">Código de Inventario</label>
         <InputText
         type='text'
-          name="codigo"
-          value={formState.codigo}
-          placeholder="Código de Inventario"
-          onChange={handleChange}
+        name="codigo"
+        value={formState.codigo}
+        placeholder="Código de Inventario"
+        onChange={handleChange}
         />
+        </div>
+        <div className="col-span-1">
+          <label className="block text-sm font-medium text-gray-700" htmlFor="nombre">Número de Serie</label>
         <InputText
         type='text'
-          name="serie"
-          value={formState.serie}
-          placeholder="Número de Serie"
-          onChange={handleChange}
+        name="serie"
+        value={formState.serie}
+        placeholder="Número de Serie"
+        onChange={handleChange}
         />
+        </div>
+        <div className="col-span-1">
+        <label className="block text-sm font-medium text-gray-700" htmlFor="nombre">Selecciona un Tipo de Inventario</label>
         <SelectOptions
           value={formState.tipo_inventario_id}
           options={tiposInventario}
           placeholder="Selecciona un Tipo de Inventario"
           onChange={(option) => handleSelectChange('tipo_inventario_id', option)}
-        />
+          />
+        </div>
+        <div className="col-span-1">
+
+        <label className="block text-sm font-medium text-gray-700" htmlFor="nombre">Selecciona una Marca</label>
         <SelectOptions
           value={formState.marca_id}
           options={marcas}
           placeholder="Selecciona una Marca"
           onChange={(option) => handleSelectChange('marca_id', option)}
-        />
+          />
+        </div>
+        <div className="col-span-1">
+          
+        <label className="block text-sm font-medium text-gray-700" htmlFor="nombre">Selecciona un Modelo</label>
         <SelectOptions
           value={formState.modelo_id}
           options={modelos}
           placeholder="Selecciona un Modelo"
           onChange={(option) => handleSelectChange('modelo_id', option)}
-        />
+          />
+          </div>
+          <div className="col-span-1">
+        <label className="block text-sm font-medium text-gray-700" htmlFor="nombre">Selecciona la Agencia de Origen</label>
         <SelectOptions
           value={formState.agencias_id_origen}
           options={agencias}
           placeholder="Selecciona la Agencia de Origen"
           onChange={(option) => handleSelectChange('agencias_id_origen', option)}
-        />
+          />
+          </div>
+          <div className="col-span-1">
+
+        <label className="block text-sm font-medium text-gray-700" htmlFor="nombre">Selecciona la Agencia Actual</label>
         <SelectOptions
           value={formState.agencias_id_actual}
           options={agencias}
           placeholder="Selecciona la Agencia Actual"
           onChange={(option) => handleSelectChange('agencias_id_actual', option)}
-        />
+          />
+          </div>
+          <div className="col-span-1">
+
+        <label className="block text-sm font-medium text-gray-700" htmlFor="nombre">Selecciona un Estado</label>
         <SelectOptions
           value={formState.estado_id}
           options={estados}
           placeholder="Selecciona un Estado"
           onChange={(option) => handleSelectChange('estado_id', option)}
-        />
+          />
+          </div>
+          <div className="col-span-1">
+
+        <label className="block text-sm font-medium text-gray-700" htmlFor="nombre">Comentarios</label>
         <InputText
         type='text'
-          name="comentarios"
-          value={formState.comentarios}
-          placeholder="Comentarios"
-          onChange={handleChange}
+        name="comentarios"
+        value={formState.comentarios}
+        placeholder="Comentarios"
+        onChange={handleChange}
         />
-        <div className="flex justify-center items-center mt-11">
-          <button
-            className="w-1/2 h-12 hover:bg-green-500 bg-green-700 text-xl text-white py-2 rounded-full"
+        </div>
+        <div className="flex justify-center items-center mt-20 col-span-2">
+        <button
+            className="w-1/2 h-14 hover:bg-green-500 bg-green-700 text-xl text-white py-2 rounded-full"
             disabled={status.isLoading}
           >
-            {status.isLoading ? (
-              <FiLoader className="mr-2 animate-spin mx-20" />
-            ) : (
-              'Agregar'
-            )}
+            {status.isLoading ? 
+              <FiLoader className="mr-2 animate-spin mx-20" /> : 'Agregar'
+            }
           </button>
         </div>
       </form>
