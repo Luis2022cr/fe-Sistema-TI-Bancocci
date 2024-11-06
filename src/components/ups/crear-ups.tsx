@@ -181,7 +181,7 @@ const CrearUpsForm: React.FC = () => {
                     </div>
 
                     <div className="col-span-1">
-                        <label className="block text-sm font-medium text-gray-700" htmlFor="nombre">Nombre</label>
+                    <label className="block text-sm font-medium text-gray-700" htmlFor="nombre">Nombre</label>
                         <InputText
                             type="text"
                             name="nombre"
