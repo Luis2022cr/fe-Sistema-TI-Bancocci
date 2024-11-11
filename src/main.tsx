@@ -30,6 +30,8 @@ import CrearUpsForm from './components/ups/crear-ups';
 import NotificationList from './components/notificaciones';
 import ProfileCard from './components/perfil';
 import UpdateContraseñaP from './components/updateContraseña';
+import UdpateUps from './components/ups/update_ups';
+import ControlEquiposV2 from './components/pdf/plantilla_reporte_v2';
 
 
 
@@ -46,7 +48,7 @@ root.render(
           <Route path="/" element={<Layout />}>
             <Route index element={<App />} />
             <Route path="login" element={<Login />} />
-
+            <Route path="dashboard-empleados/reportes" element={<ControlEquiposV2 />} />
           </Route>
          
           <Route path="/" element={<Layout_2 />}>
@@ -67,8 +69,8 @@ root.render(
             <Route path="dashboard-empleados/notificaciones" element={<NotificationList />} />
             <Route path="dashboard-empleados/perfil" element={<ProfileCard />} />
             <Route path="dashboard-empleados/perfil/cambiar-contraseña" element={<UpdateContraseñaP />} />
-           
-          
+            <Route path="dashboard-empleados/ups/editar-ups/:id" element={<UdpateUps />} />
+
 
             <Route path="dashboard-admin/main" element={<DashboardAdmin />} />
             <Route path="dashboard-admin/informes-ups" element={<Dashboard_UpsAdmin />} />
@@ -87,6 +89,8 @@ root.render(
             <Route path="dashboard-admin/notificaciones" element={<NotificationList />} />
             <Route path="dashboard-admin/perfil" element={<ProfileCard />} />
             <Route path="dashboard-admin/perfil/cambiar-contraseña" element={<UpdateContraseñaP />} />
+            <Route path="dashboard-admin/ups/editar-ups/:id" element={<UdpateUps />} />
+
 
           </Route>
         </Routes>

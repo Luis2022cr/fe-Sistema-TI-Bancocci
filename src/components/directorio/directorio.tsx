@@ -11,7 +11,6 @@ import formatExtension from "../campos/FormatoExtencion";
 import lista from "../../assets/listaReport.svg";
 import FiltroDirectorio from "./FiltroDirectorio";
 
-
 interface ExportData {
     Extensión: string;
     Empleado: string;

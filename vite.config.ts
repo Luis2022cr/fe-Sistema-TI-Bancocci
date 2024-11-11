@@ -23,6 +23,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src'), 
+      'react-pdf': 'react-pdf/dist/esm/entry.webpack',
     },
   },
   build: {

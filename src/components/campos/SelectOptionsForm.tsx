@@ -14,7 +14,7 @@ interface SelectFieldProps {
 }
 
 const SelectOptions: React.FC<SelectFieldProps> = ({ value, options, placeholder, onChange }) => (
-    <div className="mb-4 text-xs">
+    <div className="mb-4 text-xs ">
         <Select
             value={value}
             options={options}

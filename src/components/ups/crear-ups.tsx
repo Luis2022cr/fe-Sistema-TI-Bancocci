@@ -10,6 +10,7 @@ import { Agencia, ObtenerAgencia } from '@/api_conexion/servicios/agencias';
 import Loading from '../Loading';
 import BotonRegresar from '../Regresar';
 import axios from 'axios';
+import { Asterisk } from 'lucide-react';
 
 const CrearUpsForm: React.FC = () => {
     const navigate = useNavigate();
@@ -171,7 +172,7 @@ const CrearUpsForm: React.FC = () => {
                     {/* Grupo de datos generales */}
                     {/* Select para Agencia */}
                     <div className="col-span-1">
-                        <label className="block text-sm font-medium text-gray-700" htmlFor="agencias_id">Agencia</label>
+                        <label className=" text-lg font-medium text-gray-700 flex" htmlFor="agencias_id">Agencia<Asterisk className='text-red-600 h-3 w-3' /></label>
                         <SelectOptions
                             value={formState.agencias_id}
                             options={agenciasOptions}
@@ -181,7 +182,7 @@ const CrearUpsForm: React.FC = () => {
                     </div>
 
                     <div className="col-span-1">
-                    <label className="block text-sm font-medium text-gray-700" htmlFor="nombre">Nombre</label>
+                    <label className="block text-lg font-medium text-gray-700" htmlFor="nombre">Nombre</label>
                         <InputText
                             type="text"
                             name="nombre"
@@ -193,7 +194,7 @@ const CrearUpsForm: React.FC = () => {
                     </div>
 
                     <div className="col-span-1">
-                        <label className="block text-sm font-medium text-gray-700" htmlFor="modelo">Modelo</label>
+                        <label className="block text-lg font-medium text-gray-700" htmlFor="modelo">Modelo</label>
                         <InputText
                             type="text"
                             name="modelo"
@@ -204,7 +205,7 @@ const CrearUpsForm: React.FC = () => {
                     </div>
 
                     <div className="col-span-1">
-                        <label className="block text-sm font-medium text-gray-700" htmlFor="direccion_ip">Dirección IP</label>
+                        <label className="block text-lg font-medium text-gray-700" htmlFor="direccion_ip">Dirección IP</label>
                         <InputText
                             type="text"
                             name="direccion_ip"
@@ -216,7 +217,7 @@ const CrearUpsForm: React.FC = () => {
                     </div>
 
                     <div className="col-span-1">
-                        <label className="block text-sm font-medium text-gray-700" htmlFor="kva">KVA</label>
+                        <label className="block text-lg font-medium text-gray-700" htmlFor="kva">KVA</label>
                         <InputText
                             type="text"
                             name="kva"
@@ -228,7 +229,7 @@ const CrearUpsForm: React.FC = () => {
                     </div>
 
                     <div className="col-span-1">
-                        <label className="block text-sm font-medium text-gray-700" htmlFor="fecha_instalacion">Fecha Instalación</label>
+                        <label className="block text-lg font-medium text-gray-700" htmlFor="fecha_instalacion">Fecha Instalación</label>
                         <input
                             type="date"
                             name="fecha_instalacion"
@@ -240,7 +241,7 @@ const CrearUpsForm: React.FC = () => {
                     </div>
 
                     <div className="col-span-1">
-                        <label className="block text-sm font-medium text-gray-700" htmlFor="años_uso">Años de Uso</label>
+                        <label className="block text-lg font-medium text-gray-700" htmlFor="años_uso">Años de Uso</label>
                         <InputText
                             type="number"
                             name="años_uso"
@@ -252,7 +253,7 @@ const CrearUpsForm: React.FC = () => {
                     </div>
 
                     <div className="col-span-1">
-                        <label className="block text-sm font-medium text-gray-700" htmlFor="proximo_cambio">Próximo Cambio</label>
+                        <label className="block text-lg font-medium text-gray-700" htmlFor="proximo_cambio">Próximo Cambio</label>
                         <input
                             type="date"
                             name="proximo_cambio"
@@ -265,7 +266,7 @@ const CrearUpsForm: React.FC = () => {
 
                     {/* Select para Estado UPS */}
                     <div className="col-span-1">
-                        <label className="block text-sm font-medium text-gray-700" htmlFor="estado_ups_id">Estado UPS</label>
+                        <label className="block text-lg font-medium text-gray-700" htmlFor="estado_ups_id">Estado UPS</label>
                         <SelectOptions
                             value={formState.estado_ups_id}
                             options={estadosUpsOptions}
@@ -275,7 +276,7 @@ const CrearUpsForm: React.FC = () => {
                     </div>
 
                     <div className="col-span-1">
-                        <label className="block text-sm font-medium text-gray-700" htmlFor="modulos">Módulos</label>
+                        <label className="block text-lg font-medium text-gray-700" htmlFor="modulos">Módulos</label>
                         <InputText
                             type="number"
                             name="modulos"
@@ -287,7 +288,7 @@ const CrearUpsForm: React.FC = () => {
                     </div>
 
                     <div className="col-span-1">
-                        <label className="block text-sm font-medium text-gray-700" htmlFor="baterias">Baterías</label>
+                        <label className="block text-lg font-medium text-gray-700" htmlFor="baterias">Baterías</label>
                         <InputText
                             type="number"
                             name="baterias"
@@ -300,7 +301,7 @@ const CrearUpsForm: React.FC = () => {
 
                     {/* Select para Tipo y Tamaño */}
                     <div className="col-span-1">
-                        <label className="block text-sm font-medium text-gray-700" htmlFor="tipo_tamano_id">Tipo y Tamaño</label>
+                        <label className="block text-lg font-medium text-gray-700" htmlFor="tipo_tamano_id">Tipo y Tamaño</label>
                         <SelectOptions
                             value={formState.tipo_tamano_id}
                             options={tipoTamañoOptions}
@@ -310,7 +311,7 @@ const CrearUpsForm: React.FC = () => {
                     </div>
 
                     <div className="col-span-1">
-                        <label className="block text-sm font-medium text-gray-700" htmlFor="observacion">Observación</label>
+                        <label className="block text-lg font-medium text-gray-700" htmlFor="observacion">Observación</label>
                         <InputText
                             type="text"
                             name="observacion"
