@@ -9,6 +9,8 @@ import Modal from "../Modal";
 import BotonRegresar from "../Regresar";
 import Crear_HistorialInventario from "./crear_historialInventario";
 import lista from "../../assets/listaReport.svg";
+import Pagination from "../Pagination";
+
 
 
 
@@ -16,14 +18,23 @@ const Historial_Inventario = () => {
     const { id } = useParams<{ id?: string }>();
     const NumericId = id ? parseInt(id, 10) : undefined;
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [{ data: inventarioData, loading: loadingInventario }] = ObtenerInventarioConHistorial(NumericId);
+
+    const [paginaActual, setPaginaActual] = useState(1);
+    const elementosPorPagina = 5;
 
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => setIsModalOpen(false);
-    const [{ data: inventarioData, loading: loadingInventario }] = ObtenerInventarioConHistorial(NumericId);
 
     if (loadingInventario) return <Loading />;
     if (!inventarioData) return <div>Error al obtener los datos.</div>;
 
+    const inicio = (paginaActual - 1) * elementosPorPagina;
+    const fin = inicio + elementosPorPagina;
+    const historialPaginaActual = inventarioData.historial.slice(inicio, fin);
+
+    const totalPaginas = Math.ceil(inventarioData.historial.length / elementosPorPagina);
+    
     const exportToExcel = async () => {
         const ExcelJS = (await import("exceljs")).default;
     
@@ -36,10 +47,16 @@ const Historial_Inventario = () => {
        
     
         // Agregar una fila con el título "Información de Equipo"
-        const infoEquipoRow = worksheet.addRow(['', 'Información de Equipo']);
-        infoEquipoRow.font = { bold: true };
-        infoEquipoRow.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '22C55E' } };
-    
+        const infoTitleRow = worksheet.addRow(["Información de Equipo"]);
+        worksheet.mergeCells(infoTitleRow.number, 1, infoTitleRow.number, 3);
+        infoTitleRow.alignment = { horizontal: "center", vertical: "middle" };
+        infoTitleRow.font = { bold: true };
+
+        infoTitleRow.fill = { 
+            type: 'pattern', 
+            pattern: 'solid', 
+            fgColor: { argb: '4CAF50' }  // El color verde
+          };
         // Agregar información general del inventario en las primeras filas
         const informacionGeneral = [
             { campo: 'Nº Inventario', valor: inventarioData.codigo },
@@ -53,9 +70,12 @@ const Historial_Inventario = () => {
         ];
     
         informacionGeneral.forEach((data) => {
-            worksheet.addRow([data.campo, data.valor]);
+            const row = worksheet.addRow([data.campo, data.valor]);
+            row.eachCell((cell) => {
+                cell.font = { color: { argb: '000000' } }; // Aplica color negro a cada celda de la fila
+            });
         });
-    
+        
         // Ajustar el tamaño de las columnas después de agregar todas las filas
         worksheet.columns.forEach((column) => {
             let maxLength = 0;
@@ -70,22 +90,31 @@ const Historial_Inventario = () => {
         worksheet.eachRow((row, rowNumber) => {
             if (rowNumber === 1) {
                 row.font = { bold: true, color: { argb: 'FFFFFF' } }; // Encabezado con fondo blanco y texto en negrita
-                row.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '4F81BD' } }; // Color de fondo
+                row.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '4CAF50' } }; // Color de fondo
+                row.alignment =  { horizontal: "center" };
             } else {
                 row.font = { color: { argb: '000000' } }; // Texto negro para el resto de las filas
             }
         });
+
     
         // Agregar una fila vacía para separar la información del inventario del historial
         worksheet.addRow({});
     
         // Agregar una fila con el título "Historial de cambios"
-        const historialRow = worksheet.addRow(['', 'Historial de cambios']);
-        historialRow.font = { bold: true };
-        historialRow.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '22C55E' } };
-    
-        // Agregar los encabezados de la tabla de historial de cambios
-        worksheet.addRow(['Cambio', 'Fecha de Cambio', 'Usuario']);
+        const historialTitleRow = worksheet.addRow(["Historial de Cambios"]);
+        worksheet.mergeCells(historialTitleRow.number, 1, historialTitleRow.number, 3);
+        historialTitleRow.alignment = { horizontal: "center", vertical: "middle" };
+        historialTitleRow.font = { bold: true };
+       // Encabezado de la tabla "Historial de cambios"
+      const historialHeaderRow = worksheet.addRow(["Cambio", "Fecha de Cambio", "Usuario"]);
+
+      // Aplicar estilo a los encabezados de "Historial de cambios"
+      historialHeaderRow.eachCell((cell) => {
+        cell.font = { bold: true, color: { argb: "FFFFFF" } }; // Texto en negrita y blanco
+        cell.fill = { type: "pattern", pattern: "solid", fgColor: { argb: "F97316" } }; // Fondo azul
+        cell.alignment = { horizontal: "center" }; // Centrado de texto
+      });
         
         // Agregar las filas de historial de cambios
         inventarioData.historial.forEach((data) => {
@@ -207,8 +236,8 @@ const Historial_Inventario = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {inventarioData.historial && inventarioData.historial.length > 0 ? (
-                                    inventarioData.historial.map((data, index) => (
+                                {historialPaginaActual.length > 0 ? (
+                                     historialPaginaActual.map((data, index) => (
                                         <tr key={index} className="border-b">
                                             <td className="px-4 py-2">{data.cambio_realizado}</td>
                                             <td className="px-4 py-2">{formatearFecha(data.fecha_cambio)}</td>
@@ -225,7 +254,14 @@ const Historial_Inventario = () => {
                             </tbody>
                         </table>
                     </div>
+                    {/* Componente de paginación */}
+                    <Pagination
+                        PaginaInicial={paginaActual}
+                        TotalPaginas={totalPaginas}
+                        onPageChange={setPaginaActual}
+                    />
                 </div>
+                
             </div>
             {/* Modal para agregar nuevo cambio */}
             {isModalOpen && (

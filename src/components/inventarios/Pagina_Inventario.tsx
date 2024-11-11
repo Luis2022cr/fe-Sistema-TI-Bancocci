@@ -10,6 +10,9 @@ import { IoArrowUndoOutline } from "react-icons/io5";
 import Pagination from "../Pagination";
 import FiltroInventario from "./FiltroInventario";
 import { ObtenerAgencia } from "@/api_conexion/servicios/agencias";
+import ExcelReportInventario from "./reporte_Historial";
+
+
 
 
 const tipoInventarioMap: { [key: number]: string } = {
@@ -37,11 +40,15 @@ interface ExportData {
 }
 
 export default function Pagina_Inventario() {
+
+  
+
   const [{ data: agenciaData, loading: loadingAgencias }] = ObtenerAgencia();
   const { tipoInventarioId } = useParams<{ tipoInventarioId?: string }>();
   const Id = tipoInventarioId ? parseInt(tipoInventarioId, 10) : undefined;
   const navigate = useNavigate();
   const [{ data: inventarioData, loading: loadingInventario }] = ObtenerInventarios(Id);
+  
 
   const [selectedAgencia, setSelectedAgencia] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState("");
@@ -157,6 +164,7 @@ export default function Pagina_Inventario() {
   };
 
   
+  
   return (
     <>
       <button
@@ -173,15 +181,28 @@ export default function Pagina_Inventario() {
            {/* boton para reportes */}
            <Suspense fallback={<Loading />}>
                 <div className="flex justify-end mt-5 mb-5">
-                    <button
+                <button
                         onClick={exportToExcel}
-                        className="flex items-center gap-2 px-2 py-2 text-blue-900 transition-colors duration-300 bg-blue-100 rounded-full hover:text-white hover:bg-blue-600"
+                        className="flex items-center gap-2 px-2 py-2 text-blue-900 transition-colors duration-300
+                         bg-blue-100 rounded-full hover:text-white hover:bg-blue-600"
                     >
-                        <img src={lista} alt="plan" width={40} height={40} />
-                        Generar Reporte
+                    <img src={lista} alt="plan" width={40} height={40} />
+                    Generar Reporte     
                     </button>
                 </div>
             </Suspense>
+
+            <Suspense fallback={<Loading />}>
+            <div className="flex justify-end mt-5 mb-5">
+            <button
+             className="flex items-center gap-2 px-2 py-2 text-blue-900 transition-colors duration-300
+             bg-blue-100 rounded-full hover:text-white hover:bg-blue-600">
+              
+              <img src={lista} alt="plan" width={40} height={40} /> 
+              {Id && ( <ExcelReportInventario tipo_inventario_id={Id} data={filteredInventario} selectedAgencia={selectedAgencia}/>)}
+            </button> 
+            </div>
+        </Suspense>
             
           <FiltroInventario
             searchTerm={searchTerm}
