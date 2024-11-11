@@ -12,9 +12,6 @@ import FiltroInventario from "./FiltroInventario";
 import { ObtenerAgencia } from "@/api_conexion/servicios/agencias";
 import ExcelReportInventario from "./reporte_Historial";
 
-
-
-
 const tipoInventarioMap: { [key: number]: string } = {
   1: "Desktop",
   2: "Laptop",
@@ -44,8 +41,10 @@ export default function Pagina_Inventario() {
   
 
   const [{ data: agenciaData, loading: loadingAgencias }] = ObtenerAgencia();
+
   const { tipoInventarioId } = useParams<{ tipoInventarioId?: string }>();
   const Id = tipoInventarioId ? parseInt(tipoInventarioId, 10) : undefined;
+  
   const navigate = useNavigate();
   const [{ data: inventarioData, loading: loadingInventario }] = ObtenerInventarios(Id);
   
@@ -175,7 +174,7 @@ export default function Pagina_Inventario() {
         Regresar
       </button>      
 
-      <div className="container p-4 mx-auto mt-10">
+      <div className="container p-4 mx-auto -mt-10">
         <h1 className="mb-5 text-3xl font-bold text-center">Inventarios: {inventarioNombre}</h1>       
           
            {/* boton para reportes */}

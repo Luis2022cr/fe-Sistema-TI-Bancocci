@@ -6,6 +6,7 @@ import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import useAuth from "@/api_conexion/useAuth";
 import { ObtenerNotificacionesCheck } from "@/api_conexion/servicios/notifcaciones";
 import { IoIosNotificationsOutline } from "react-icons/io";
+import { Settings } from "lucide-react";
 
 const Sidebar: React.FC = () => {
   const { logout } = useAuth();
@@ -92,14 +93,23 @@ const Sidebar: React.FC = () => {
                   Calendario
                 </NavLink>
               </li>
+              <li>
+                <NavLink
+                  to="/dashboard-empleados/configuraciones"
+                  className={({ isActive }) =>
+                    `flex items-center py-3 px-6 hover:bg-gray-700 ${
+                      isActive ? "bg-gray-700" : ""
+                    }`
+                  }
+                >
+                  <Settings className="h-6 w-6 " />
+                  Configuracion
+                </NavLink>
+              </li>
             </>
           )}
 
-
-
           {/* DASHBOARD DE ADMINITRADOR */}
-
-
 
           {location.pathname.includes("dashboard-admin") && (
             <>
@@ -156,6 +166,19 @@ const Sidebar: React.FC = () => {
                 >
                   <FaRegCalendarAlt className="h-6 w-6 mr-2" />
                   Calendario
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/dashboard-admin/configuraciones"
+                  className={({ isActive }) =>
+                    `flex items-center py-3 px-6 hover:bg-gray-700 ${
+                      isActive ? "bg-gray-700" : ""
+                    }`
+                  }
+                >
+                  <Settings className="h-6 w-6 " />
+                  Configuracion
                 </NavLink>
               </li>
             </>

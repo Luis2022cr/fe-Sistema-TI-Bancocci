@@ -52,9 +52,9 @@ const Crear_HistorialUps: React.FC<{ upsId?: string, upsNombre?: string }> = ({ 
                 title: 'Éxito',
                 text: `Se realizo un cambio: "${formState.cambio}", al UPS: "${upsNombre}" `,
                 icon: 'success',
-                callback: () =>  window.location.reload()
+                callback: () => window.location.reload()
             });
-           
+
         } catch (error) {
             const errorMessage = axios.isAxiosError(error) ? error.response?.data?.error || "Error al agregar el historial." : "Error al agregar el historial.";
             setStatus({ ...status, error: errorMessage, isLoading: false });
@@ -70,6 +70,8 @@ const Crear_HistorialUps: React.FC<{ upsId?: string, upsNombre?: string }> = ({ 
                 {status.error && <div className="bg-red-200 text-red-800 p-4 mb-4 rounded">{status.error}</div>}
 
                 <form onSubmit={handleSubmit}>
+                    <label className="block text-base font-medium text-gray-700" htmlFor="cambio">Cambio:</label>
+
                     <InputText
                         type="text"
                         name="cambio"
@@ -77,6 +79,8 @@ const Crear_HistorialUps: React.FC<{ upsId?: string, upsNombre?: string }> = ({ 
                         placeholder="Cambio"
                         onChange={handleChange}
                     />
+                    <label className="block text-base font-medium text-gray-700" htmlFor="fecha_instalacion">Fecha instalacion:</label>
+
                     <InputText
                         type="date"
                         name="fecha_instalacion"
@@ -84,6 +88,8 @@ const Crear_HistorialUps: React.FC<{ upsId?: string, upsNombre?: string }> = ({ 
                         placeholder="Fecha de Instalación"
                         onChange={handleChange}
                     />
+                    <label className="block text-base font-medium text-gray-700" htmlFor="proximo_cambio">Proximo cambio:</label>
+
                     <InputText
                         type="date"
                         name="proximo_cambio"

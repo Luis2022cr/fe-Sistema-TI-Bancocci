@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react';
 import Loading from '../Loading';
 import { ObtenerDirectoriosById, UpdateDirectorios, Post_Directorio } from '@/api_conexion/servicios/directorio';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ObtenerAgencia } from '@/api_conexion/servicios/agencias';
-import { ObtenerDepartamento } from '@/api_conexion/servicios/departamentos';
+import { Agencia, ObtenerAgencia } from '@/api_conexion/servicios/agencias';
+import { Departamento, ObtenerDepartamento } from '@/api_conexion/servicios/departamentos';
 import axios from 'axios';
 import { FiLoader } from 'react-icons/fi';
 import Alert from '../Alert';
 import InputText from '../campos/InputForm';
-import SelectOptions, { SelectOption } from '../campos/SelectOptionsForm';
+import SearchableSelect from '../Pruebas/SearchableSelect';
+
 import BotonRegresar from '../Regresar';
 
 const UpdateDirectorio: React.FC = () => {
@@ -30,7 +31,25 @@ const UpdateDirectorio: React.FC = () => {
 
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(false);
+    
+    const agenciasSelect = agenciaData?.map((agencia: Agencia) => ({
+        id: agencia.id,
+        label: agencia.nombre + ' - ' + agencia.codigo,
+    })) || [];
 
+    const DepartamentosSelect = departamentoData?.map((departamento: Departamento) => ({
+        id: departamento.id,
+        label: departamento.nombre,
+    })) || [];
+
+    
+    const handleSelectChange = (field: 'departamento_id' | 'agencia_id', option: { id: number; label: string } | null) => {
+        if (option) {
+            setFormData((prev) => ({ ...prev, [field]: option.id })); // Almacena la opción seleccionada
+        } else {
+            setFormData((prev) => ({ ...prev, [field]: 0 })); // Resetea si no se selecciona nada
+        }
+    };
     useEffect(() => {
         if (directorio) {
             setFormData({
@@ -47,13 +66,6 @@ const UpdateDirectorio: React.FC = () => {
         setFormData(prev => ({
             ...prev,
             [name]: value,
-        }));
-    };
-
-    const manejarCambioSelect = (name: keyof Post_Directorio) => (option: SelectOption | null) => {
-        setFormData(prev => ({
-            ...prev,
-            [name]: option ? option.value : 0, // Asigna 0 si no hay opción seleccionada
         }));
     };
 
@@ -84,9 +96,6 @@ const UpdateDirectorio: React.FC = () => {
     if (error) return <div>Error: {error.message}</div>;
     if (!directorio || !agenciaData || !departamentoData) return <div>No se encontraron datos del directorio</div>;
 
-    // Convertir las opciones para react-select
-    const agenciaOptions = agenciaData.map(agencia => ({ value: agencia.id, label: agencia.nombre }));
-    const departamentoOptions = departamentoData.map(departamento => ({ value: departamento.id, label: departamento.nombre }));
 
     return (
         <>
@@ -97,6 +106,8 @@ const UpdateDirectorio: React.FC = () => {
                 {errorMessage && <div className="text-red-500 mb-4">{errorMessage}</div>}
 
                 <form onSubmit={manejoDeEnvio}>
+                    <label htmlFor="extension" className='ml-3'>Extension</label>
+
                     <InputText
                         type='text'
                         name="extension"
@@ -104,6 +115,8 @@ const UpdateDirectorio: React.FC = () => {
                         placeholder="Número Extensión"
                         onChange={manejarCambio}
                     />
+                    <label htmlFor="empleado" className='ml-3'>Empleado</label>
+
                     <InputText
                         type='text'
                         name="empleado"
@@ -111,18 +124,20 @@ const UpdateDirectorio: React.FC = () => {
                         placeholder="Usuario"
                         onChange={manejarCambio}
                     />
-                    <SelectOptions
-                        value={departamentoOptions.find(option => option.value === formData.departamento_id) || null}
-                        options={departamentoOptions}
-                        placeholder="Selecciona un Departamento"
-                        onChange={manejarCambioSelect('departamento_id')}
-                    />
-                    <SelectOptions
-                        value={agenciaOptions.find(option => option.value === formData.agencias_id) || null}
-                        options={agenciaOptions}
-                        placeholder="Selecciona una Agencia"
-                        onChange={manejarCambioSelect('agencias_id')}
-                    />
+                     <label htmlFor="Departamento" className='ml-3'>Departamento</label>
+                <SearchableSelect
+                    options={DepartamentosSelect}
+                    onSelect={(option) => handleSelectChange('departamento_id', option)}
+                    selected={DepartamentosSelect.find(depto => depto.id === formData.departamento_id) || null}
+                />
+
+                <label htmlFor="Agencia" className='ml-3'>Agencia</label>
+                <SearchableSelect
+                    options={agenciasSelect}
+                    onSelect={(option) => handleSelectChange('agencia_id', option)}
+                    selected={agenciasSelect.find(agencia => agencia.id === formData.agencias_id) || null}
+                />
+
                     <div className="flex justify-center items-center mt-5">
                         <button
                             className="w-1/2 h-14 hover:bg-green-500 bg-green-700 text-xl text-white py-2 rounded-full"

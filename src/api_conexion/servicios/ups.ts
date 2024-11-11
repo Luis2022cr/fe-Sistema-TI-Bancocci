@@ -18,6 +18,7 @@ export interface UPS {
     tipo_tamano: string;
 }
 
+
 // Función para obtener la lista de UPS, con un filtro opcional por tipo de tamaño
 export const ObtenerUPS = (tipoTamanoId?: number) => {
     const queryParams = tipoTamanoId ? `?tipo_tamano_id=${tipoTamanoId}` : '';
@@ -69,10 +70,47 @@ export interface UPSConHistorial {
     historial: HistorialCambioUPS[]; 
 }
 
+export interface UPSid {
+    id: number;                // ID de la UPS
+    nombre: string;            // Nombre de la UPS
+    modelo: string;            // Modelo de la UPS
+    direccion_ip: string;      // Dirección IP de la UPS
+    kva: number;               // Capacidad en KVA
+    fecha_instalacion: string; // Fecha de instalación de la UPS
+    años_uso: number;          // Años de uso de la UPS
+    proximo_cambio: string;    // Fecha del próximo cambio
+    modulos: number;           // Cantidad de módulos
+    baterias: number;          // Cantidad de baterías
+    observacion: string;       // Observaciones adicionales
+
+    // Campos adicionales relacionados
+    agencia_id: number;       // ID de la agencia
+    agencia_nombre: string;           // Nombre de la agencia
+    ubicacion: string;         // Ubicación específica de la agencia
+    codigo: number;            // Código de la agencia
+    estado_agencias_id: number; // ID del estado de la agencia
+
+    estado_ups_id: number;     // ID del estado de la UPS
+    estado_ups_nombre: string;        // Nombre del estado de la UPS
+
+    tipo_tamano_id: number;    // ID del tipo de tamaño
+    tipo_tamano_nombre: string;       // Nombre del tipo de tamaño
+}
+
+
+export const ObtenerUpsById = (id: number) => {
+    const response = useAxios<UPSid>({
+      url: `/ups/${id}`,
+    },{
+      useCache: false,
+    });
+    return response;
+};
+
 // Obtener datos ups con hisotrial por ID
 export const ObtenerUPSConHistorial = (id?: number) => {
     const response = useAxios<UPSConHistorial>({
-        url: `/ups/${id}`, 
+        url: `/ups/${id}/historial`, 
     }, {
         useCache: false,
     });
@@ -98,9 +136,9 @@ export interface Post_Ups {
     modelo: string;           // Modelo del UPS
     direccion_ip: string;     // Dirección IP del UPS
     kva: number;              // Capacidad en KVA
-    fecha_instalacion: string; // Fecha de instalación (en formato ISO)
+    fecha_instalacion?: string; // Fecha de instalación (en formato ISO)
     años_uso: number;         // Años de uso
-    proximo_cambio: string;   // Fecha del próximo cambio (en formato ISO)
+    proximo_cambio?: string;   // Fecha del próximo cambio (en formato ISO)
     estado_ups_id: number;    // ID del estado del UPS
     modulos: number;          // Cantidad de módulos
     baterias: number;         // Cantidad de baterías
@@ -112,3 +150,9 @@ export const CrearUps = async (nuevoUps: Post_Ups): Promise<Post_Ups> => {
     const response = await axiosInstance.post('/ups', nuevoUps);
     return response.data;
 };
+
+export const ActualizarUps = async (nuevoUps: Post_Ups, id: number): Promise<Post_Ups> => {
+    const response = await axiosInstance.put(`/ups/${id}`, nuevoUps);
+    return response.data;
+};
+

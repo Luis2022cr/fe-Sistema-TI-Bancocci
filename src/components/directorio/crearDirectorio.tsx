@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useState, useCallback } from 'react';
 import Loading from '../Loading';
 import { CrearDirectorios, Post_Directorio } from '@/api_conexion/servicios/directorio';
 import axios from 'axios';
@@ -6,7 +6,7 @@ import { FiLoader } from 'react-icons/fi';
 import { Agencia, ObtenerAgencia } from '@/api_conexion/servicios/agencias';
 import { Departamento, ObtenerDepartamento } from '@/api_conexion/servicios/departamentos';
 import InputText from '../campos/InputForm';
-import SelectOptions, { SelectOption } from '../campos/SelectOptionsForm';
+import SearchableSelect from '../Pruebas/SearchableSelect';
 
 const CrearDirectorio: React.FC = () => {
     const [{ data: agenciaData, loading: loadingAgencias }] = ObtenerAgencia();
@@ -14,39 +14,41 @@ const CrearDirectorio: React.FC = () => {
 
     const [formState, setFormState] = useState({
         extension: '',
-        departamento_id: null as SelectOption | null,
-        agencia_id: null as SelectOption | null,
+        departamento_id: 0,
+        agencia_id: 0,
         empleado: ''
     });
 
     const [status, setStatus] = useState({ error: null as string | null, isLoading: false, successMessage: null as string | null });
 
-    // Memoizar opciones de Select para evitar recalcular en cada render
-    const agencias = useMemo(
-        () => (agenciaData ? agenciaData.map((agencia: Agencia) => ({ value: agencia.id, label: agencia.nombre })) : []),
-        [agenciaData]
-    );
+    const agenciasSelect = agenciaData?.map((agencia: Agencia) => ({
+        id: agencia.id,
+        label: agencia.nombre + ' - ' + agencia.codigo,
+    })) || [];
 
-    const departamentos = useMemo(
-        () => (departamentoData ? departamentoData.map((departamento: Departamento) => ({ value: departamento.id, label: departamento.nombre })) : []),
-        [departamentoData]
-    );
+    const DepartamentosSelect = departamentoData?.map((departamento: Departamento) => ({
+        id: departamento.id,
+        label: departamento.nombre,
+    })) || [];
 
     const handleChange = useCallback(
         (e: React.ChangeEvent<HTMLInputElement>) => setFormState((prev) => ({ ...prev, [e.target.name]: e.target.value })),
         []
     );
 
-    const handleSelectChange = useCallback(
-        (field: string, option: SelectOption | null) => setFormState((prev) => ({ ...prev, [field]: option })),
-        []
-    );
+    const handleSelectChange = (field: 'departamento_id' | 'agencia_id', option: { id: number; label: string } | null) => {
+        if (option) {
+            setFormState((prev) => ({ ...prev, [field]: option.id })); // Almacena la opción seleccionada
+        } else {
+            setFormState((prev) => ({ ...prev, [field]: 0 })); // Resetea si no se selecciona nada
+        }
+    };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
         const { extension, departamento_id, agencia_id, empleado } = formState;
-
+        console.log(formState)
         if (!extension || !departamento_id || !agencia_id) {
             setStatus({ ...status, error: "Por favor, rellena todos los campos." });
             return;
@@ -54,8 +56,8 @@ const CrearDirectorio: React.FC = () => {
 
         const nuevoDirectorio: Post_Directorio = {
             extension: parseInt(extension, 10),
-            departamento_id: departamento_id!.value,
-            agencias_id: agencia_id!.value,
+            departamento_id,
+            agencias_id: agencia_id,
             empleado
         };
 
@@ -65,7 +67,8 @@ const CrearDirectorio: React.FC = () => {
             await CrearDirectorios(nuevoDirectorio);
 
             setStatus({ error: null, isLoading: false, successMessage: "Directorio agregado correctamente." });
-            setFormState({ extension: '', departamento_id: null, agencia_id: null, empleado: '' });
+            setFormState({ extension: '', departamento_id: 0, agencia_id: 0, empleado: '' });
+            // window.location.reload();
         } catch (error) {
             const errorMessage = axios.isAxiosError(error) ? error.response?.data?.error || "Error al agregar el directorio." : "Error al agregar el directorio.";
             setStatus({ ...status, error: errorMessage, isLoading: false });
@@ -82,6 +85,7 @@ const CrearDirectorio: React.FC = () => {
             {status.error && <div className="bg-red-200 text-red-800 p-4 mb-4 rounded">{status.error}</div>}
 
             <form onSubmit={handleSubmit}>
+                <label htmlFor="Extension" className='ml-3'>Extension</label>
                 <InputText
                     type='text'
                     name="extension"
@@ -89,25 +93,28 @@ const CrearDirectorio: React.FC = () => {
                     placeholder="Número Extensión"
                     onChange={handleChange}
                 />
+                <label htmlFor="Usuario" className='ml-3'>Usuario</label>
                 <InputText
                     type='text'
                     name="empleado"
                     value={formState.empleado}
                     placeholder="Usuario"
                     onChange={handleChange}
+                /> 
+                <label htmlFor="Departamento" className='ml-3'>Departamento</label>
+                <SearchableSelect
+                    options={DepartamentosSelect}
+                    onSelect={(option) => handleSelectChange('departamento_id', option)}
+                    selected={DepartamentosSelect.find(depto => depto.id === formState.departamento_id) || null}
                 />
-                <SelectOptions
-                    value={formState.departamento_id}
-                    options={departamentos}
-                    placeholder="Selecciona un Departamento"
-                    onChange={(option) => handleSelectChange('departamento_id', option)}
+
+                <label htmlFor="Agencia" className='ml-3'>Agencia</label>
+                <SearchableSelect
+                    options={agenciasSelect}
+                    onSelect={(option) => handleSelectChange('agencia_id', option)}
+                    selected={agenciasSelect.find(agencia => agencia.id === formState.agencia_id) || null}
                 />
-                <SelectOptions
-                    value={formState.agencia_id}
-                    options={agencias}
-                    placeholder="Selecciona una Agencia"
-                    onChange={(option) => handleSelectChange('agencia_id', option)}
-                />
+
                 <div className="flex justify-center items-center mt-11">
                     <button
                         className="w-1/2 h-14 hover:bg-green-500 bg-green-700 text-xl text-white py-2 rounded-full"
@@ -124,6 +131,5 @@ const CrearDirectorio: React.FC = () => {
         </div>
     );
 };
-
 
 export default CrearDirectorio;

@@ -12,8 +12,6 @@ import lista from "../../assets/listaReport.svg";
 import Pagination from "../Pagination";
 
 
-
-
 const Historial_Inventario = () => {
     const { id } = useParams<{ id?: string }>();
     const NumericId = id ? parseInt(id, 10) : undefined;

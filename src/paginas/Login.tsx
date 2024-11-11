@@ -100,7 +100,7 @@ const Login: React.FC = () => {
                 <div className="text-red-600 mb-4 text-center">{error}</div>
               )}
               <button
-                className="bg-gradient-to-b from-blue-900 to-blue-900 font-medium p-2 md:p-4 text-white uppercase w-full rounded-md shadow-xl hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 flex items-center justify-center"
+                className="bg-gradient-to-b from-green-900 to-green-700 font-medium p-2 md:p-4 text-white uppercase w-full rounded-md shadow-xl hover:from-green-700 hover:to-green-800 focus:outline-none focus:ring-2 focus:ring-offset-2  flex items-center justify-center"
                 disabled={isLoading}
               >
                 {isLoading ? (
