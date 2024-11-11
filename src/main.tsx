@@ -33,6 +33,7 @@ import UpdateContraseñaP from './components/updateContraseña';
 
 
 
+
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
 root.render(
@@ -66,6 +67,7 @@ root.render(
             <Route path="dashboard-empleados/notificaciones" element={<NotificationList />} />
             <Route path="dashboard-empleados/perfil" element={<ProfileCard />} />
             <Route path="dashboard-empleados/perfil/cambiar-contraseña" element={<UpdateContraseñaP />} />
+           
           
 
             <Route path="dashboard-admin/main" element={<DashboardAdmin />} />

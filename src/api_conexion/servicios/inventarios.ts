@@ -137,6 +137,15 @@ export interface Post_Historial_Inventario {
     fecha_cambio: string;
 }
 
+export const ObtenerInventariosPorTipoConHistorial = (tipo_inventario_id: number) => {
+    const response = useAxios<InventarioConHistorial[]>({
+        url: `/inventarios/${tipo_inventario_id}/historial`, 
+    }, {
+        useCache: false,
+    });
+    return response;
+};
+
 
 export const ObtenerInventarioConHistorial = (id?: number) => {
     const response = useAxios<InventarioConHistorial>({
