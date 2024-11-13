@@ -41,11 +41,18 @@ const tipoInventarioMap: { [key: number]: string } = {
 
 const ExcelReportInventario: React.FC<ExcelReportProps> = ({ tipo_inventario_id, selectedAgencia }) => {
   const [{ data: inventarioData }] = ObtenerInventariosPorTipoConHistorial(tipo_inventario_id);
+ 
 
   // Filtrar los equipos según la agencia seleccionada
-  const filteredData = selectedAgencia
-    ? inventarioData?.filter((equipo) => equipo.agencia_actual === selectedAgencia)
-    : inventarioData;
+
+  const filteredData = inventarioData?.filter((equipo) => {
+    // Aplicar todos los filtros opcionalmente
+    const matchesAgencia = selectedAgencia ? equipo.agencia_actual === selectedAgencia : true;
+    
+    // Retornar true solo si todos los filtros son válidos
+    return matchesAgencia;
+  });
+  
 
   // Función para formatear la fecha en "10 noviembre 2024"
   const formatDate = (dateString: string): string => {

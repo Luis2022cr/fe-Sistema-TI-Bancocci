@@ -50,6 +50,8 @@ export default function Pagina_Inventario() {
   
 
   const [selectedAgencia, setSelectedAgencia] = useState<string>("");
+
+  
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 8;
@@ -198,7 +200,7 @@ export default function Pagina_Inventario() {
              bg-blue-100 rounded-full hover:text-white hover:bg-blue-600">
               
               <img src={lista} alt="plan" width={40} height={40} /> 
-              {Id && ( <ExcelReportInventario tipo_inventario_id={Id} data={filteredInventario} selectedAgencia={selectedAgencia}/>)}
+              {Id && ( <ExcelReportInventario tipo_inventario_id={Id} data={filteredInventario} selectedAgencia={selectedAgencia} />)}
             </button> 
             </div>
         </Suspense>
