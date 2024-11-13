@@ -155,6 +155,14 @@ export const ObtenerInventarioConHistorial = (id?: number) => {
     });
     return response;
 };
+export const ObtenerInventarioHistorial = (id?: number) => {
+    const response = useAxios<InventarioConHistorial>({
+        url: `/inventario/${id}`, 
+    }, {
+        useCache: false,
+    });
+    return response;
+};
 
 export const CrearHistorialInventario = async (nuevoHistorial: Post_Historial_Inventario): Promise<[Post_Historial_Inventario]> => {
     const response = await axiosInstance.post('/historial_inventario', nuevoHistorial);
