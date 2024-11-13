@@ -26,7 +26,6 @@ const ControlEquiposV2: React.FC = () => {
         fecha2: '',
         tecnico: '',
         agencia: '',
-        infraestructura: false,
         ticketAyuda: '',
         id1: '',
         id2: '',
@@ -37,6 +36,7 @@ const ControlEquiposV2: React.FC = () => {
         devolucionEquipo: false,
         entregaEquipo: false,
         equipoReparado: false,
+        infraestructura: false,
         soporte: false,
         equipos: Array(8).fill({
             descripcionEquipo: '',
@@ -129,7 +129,7 @@ const ControlEquiposV2: React.FC = () => {
 
     const captureAndShowPreview = () => {
         setIsLoading(true);
-    
+        console.log(formData)
         setTimeout(() => {
             const input = document.getElementById('pdf-content');
             if (input) {
@@ -249,8 +249,8 @@ const ControlEquiposV2: React.FC = () => {
                                             <input
                                                 type="checkbox"
                                                 name="infraestructura"
-                                                checked={formData.infraestructura}
-                                                onChange={handleInputChange}
+                                                checked={formData.infraestructura as boolean}
+                                                onChange={handleInputChange2}
                                                 className="absolute opacity-0 w-full h-full cursor-pointer "
                                             />
                                             {formData.infraestructura && (
@@ -268,8 +268,8 @@ const ControlEquiposV2: React.FC = () => {
                                             <input
                                                 type="checkbox"
                                                 name="soporte"
-                                                checked={formData.soporte}
-                                                onChange={handleInputChange}
+                                                checked={formData.soporte as boolean}
+                                                onChange={handleInputChange2}
                                                 className="absolute opacity-0 w-full h-full cursor-pointer"
                                             />
                                             {formData.soporte && (

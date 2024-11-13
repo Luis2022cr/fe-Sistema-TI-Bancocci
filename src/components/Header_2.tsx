@@ -10,7 +10,7 @@ import { NavLink, useLocation, useNavigate } from "react-router-dom";
 export default function Header_2() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
-  const { usuario, logout } = useAuth();
+  const { logout } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -31,7 +31,7 @@ export default function Header_2() {
           </span>
         </span>
         <nav className="ml-auto hidden md:flex gap-4 text-white">
-          <h2 className="text-sm">@{usuario}</h2>
+          <h2 className="text-sm">@user</h2>
         </nav>
         <button
           className="ml-auto md:hidden text-white focus:outline-none"

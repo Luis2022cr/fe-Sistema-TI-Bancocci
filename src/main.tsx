@@ -32,6 +32,7 @@ import ProfileCard from './components/perfil';
 import UpdateContraseñaP from './components/updateContraseña';
 import UdpateUps from './components/ups/update_ups';
 import ControlEquiposV2 from './components/pdf/plantilla_reporte_v2';
+import Dashboard_ConfigAdmin from './paginas/dashboard-admin/dashboard_configuraciones';
 
 
 
@@ -74,6 +75,7 @@ root.render(
 
             <Route path="dashboard-admin/main" element={<DashboardAdmin />} />
             <Route path="dashboard-admin/informes-ups" element={<Dashboard_UpsAdmin />} />
+            <Route path="dashboard-admin/configuraciones" element={<Dashboard_ConfigAdmin />} />
             <Route path="dashboard-admin/inventario-ti" element={<Dashboard_inventarioAdmin />} />
             <Route path="dashboard-admin/gestion-usuarios" element={<GestionUsuarios />} />
             <Route path="dashboard-admin/gestion-usuarios/editar-usuario/:id" element={<UpdateUsuario />} />

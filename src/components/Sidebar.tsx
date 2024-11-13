@@ -93,19 +93,7 @@ const Sidebar: React.FC = () => {
                   Calendario
                 </NavLink>
               </li>
-              <li>
-                <NavLink
-                  to="/dashboard-empleados/configuraciones"
-                  className={({ isActive }) =>
-                    `flex items-center py-3 px-6 hover:bg-gray-700 ${
-                      isActive ? "bg-gray-700" : ""
-                    }`
-                  }
-                >
-                  <Settings className="h-6 w-6 " />
-                  Configuracion
-                </NavLink>
-              </li>
+              
             </>
           )}
 
