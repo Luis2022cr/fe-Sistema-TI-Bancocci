@@ -80,9 +80,9 @@ export type InventarioRouteKeys = keyof typeof inventarioRoutes;
 
 export const configAdminRoutes = {
 
-  "Agencias": "/dashboard-admin/informes-ups/1",
-  "Departamentos": "/dashboard-admin/mapa/ups",
-  "Marca - Modelo": "/dashboard-admin/informes-ups/2", 
+  "Agencias": "/dashboard-admin/agencias",
+  "Departamentos": "/dashboard-admin/departamentos",
+  "Marca - Modelo": "/dashboard-admin/marca-modelo", 
  
  
 } as const;
