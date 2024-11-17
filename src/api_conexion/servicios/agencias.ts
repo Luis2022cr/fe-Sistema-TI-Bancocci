@@ -1,4 +1,4 @@
-import { useAxios } from "../axiosInstance";
+import axiosInstance, { useAxios } from "../axiosInstance";
 
 export interface Agencia {
 
@@ -10,6 +10,14 @@ export interface Agencia {
     
 }
 
+export interface Post_Agencia {
+
+    nombre: string;
+    ubicacion: string;
+    codigo: number;
+    
+}
+
 export const ObtenerAgencia = () => {
     const response = useAxios<Agencia[]>({
         url: `/agencias`,
@@ -17,4 +25,9 @@ export const ObtenerAgencia = () => {
         useCache: false,
     });
     return response;
+};
+
+export const CrearAgencias = async (nuevaAgencia: Post_Agencia): Promise<Post_Agencia> => {
+    const response = await axiosInstance.post('/crear_agencias', nuevaAgencia);
+    return response.data;
 };

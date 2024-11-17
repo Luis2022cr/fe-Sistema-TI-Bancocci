@@ -33,6 +33,14 @@ import UpdateContraseñaP from './components/updateContraseña';
 import UdpateUps from './components/ups/update_ups';
 import ControlEquiposV2 from './components/pdf/plantilla_reporte_v2';
 import Dashboard_ConfigAdmin from './paginas/dashboard-admin/dashboard_configuraciones';
+import PaginaAgencias from './paginas/dashboard-admin/Agencia/agencias';
+import CrearAgencia from './paginas/dashboard-admin/Agencia/crearAgencia';
+import PaginaDepartamento from './paginas/dashboard-admin/Departamento/departamento';
+import CrearDepartamentos from './paginas/dashboard-admin/Departamento/crearDepto';
+import PaginaMarca from './paginas/dashboard-admin/Marca-Modelo/marca';
+import CrearMarca from './paginas/dashboard-admin/Marca-Modelo/crearMarca';
+import CrearModelo from './paginas/dashboard-admin/Marca-Modelo/crearModelo';
+
 
 
 
@@ -92,6 +100,13 @@ root.render(
             <Route path="dashboard-admin/perfil" element={<ProfileCard />} />
             <Route path="dashboard-admin/perfil/cambiar-contraseña" element={<UpdateContraseñaP />} />
             <Route path="dashboard-admin/ups/editar-ups/:id" element={<UdpateUps />} />
+            <Route path="dashboard-admin/agencias" element={<PaginaAgencias />} />
+            <Route path="dashboard-admin/crear-agencias" element={<CrearAgencia />} />
+            <Route path="dashboard-admin/departamentos" element={<PaginaDepartamento />} />
+            <Route path="dashboard-admin/crear-departamentos" element={<CrearDepartamentos />} />
+            <Route path="dashboard-admin/marca-modelo" element={<PaginaMarca />} />
+            <Route path="dashboard-admin/crear-marcas" element={<CrearMarca />} />
+            <Route path="dashboard-admin/crear-modelos" element={<CrearModelo />} />
 
 
           </Route>

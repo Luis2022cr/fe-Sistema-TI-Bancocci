@@ -168,7 +168,7 @@ const ExcelReportInventario: React.FC<ExcelReportProps> = ({ tipo_inventario_id,
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = `Reporte_Inventario_${tipoInventarioNombre}_${NombreAgencia}.xlsx`; // Nombre dinámico del archivo
+    a.download = `Reporte_Inventario_${tipoInventarioNombre}_${NombreAgencia}.xlsx`; 
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
