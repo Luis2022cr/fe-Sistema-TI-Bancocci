@@ -80,7 +80,7 @@ const SearchableSelect: React.FC<SelectProps> = ({ options, onSelect, selected }
                 <ul className="absolute z-10 w-full py-1 mt-1 bg-gray-200 border border-gray-300 rounded-lg shadow-lg max-h-40 overflow-y-auto">
                     {filteredOptions.map((option) => (
                         <li
-                            key={option.id}
+                            key={`${option.id}-${option.label}`}
                             onClick={() => handleOptionClick(option)}
                             className="px-3 py-2 hover:bg-white cursor-pointer bg-gray-200"
                         >

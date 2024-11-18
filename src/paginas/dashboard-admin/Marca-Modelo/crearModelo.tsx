@@ -1,32 +1,36 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import axios from 'axios';
 import { FiLoader } from 'react-icons/fi';
 import InputText from '@/components/campos/InputForm';
-import {  ObtenerMarca } from '@/api_conexion/servicios/marca';
-import Loading from '@/components/Loading';
 import { CrearModelos, Post_Modelo } from '@/api_conexion/servicios/modelo';
-import Select from 'react-select';
+import { Marca, ObtenerMarca } from '@/api_conexion/servicios/marca';
+import SearchableSelect from '@/components/Pruebas/SearchableSelect';
 
-interface SelectOption {
-  value: number;
-  label: string;
-}
-
-interface Marca {
-  id: number;
-  nombre: string;
-}
 
 const CrearModelo: React.FC = () => {
+  const [{ data: marcaData }] = ObtenerMarca();
+
   const [formState, setFormState] = useState({
     nombre: '',
     marca_id: 0, 
   });
 
-  const [loading, setLoading] = useState(true);
+  const marcasSelect = useMemo(() => {
+    return marcaData?.map((marca: Marca) => ({
+      id: marca.id,
+      label: marca.nombre,
+    })) || [];
+  }, [marcaData]);
+  
+  const handleSelectChange2 = (field: 'marca_id', option: { id: number; label: string } | null) => {
+    if (option) {
+      setFormState((prev) => ({ ...prev, [field]: option.id })); // Almacena la opción seleccionada
+    } else {
+      setFormState((prev) => ({ ...prev, [field]: 0 })); // Resetea si no se selecciona nada
+    }
+  };
+
   const [error, setError] = useState<string | null>(null);
-  const [marca_id, setMarcaId] = useState<SelectOption | null>(null); 
-  const [marca, setMarcas] = useState<SelectOption[]>([]);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [status, setStatus] = useState({
     error: null as string | null,
@@ -35,25 +39,7 @@ const CrearModelo: React.FC = () => {
   });
 
   // Obtener las marcas al montar el componente
-  useEffect(() => {
-    const obtenerMarca = async () => {
-      try {
-        const response = await ObtenerMarca(); // Suponiendo que es un array de marcas
-        setMarcas(
-          response.map((marca: Marca) => ({
-            value: marca.id,
-            label: marca.nombre,
-          }))
-        );
-      } catch (error) {
-        setError('Error al cargar las marcas.');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    obtenerMarca();
-  }, []);
+  
 
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -82,7 +68,6 @@ const CrearModelo: React.FC = () => {
       setSuccessMessage('Modelo agregado correctamente.');
       setError(null);
       setFormState({ nombre: '', marca_id: 0 });
-      setMarcaId(null); // Reset select value
       window.location.reload();
       
     } catch (error) {
@@ -92,10 +77,6 @@ const CrearModelo: React.FC = () => {
       setStatus({ ...status, error: errorMessage, isLoading: false });
     }
   };
-
-  if (loading) {
-    return <Loading />;
-  }
 
   return (
     <div className="max-w-md mx-auto p-8 -mt-4">
@@ -126,21 +107,11 @@ const CrearModelo: React.FC = () => {
         </label>
         <div className="mb-4">
           <label className="text-gray-700 hidden">Marca</label>
-          <Select
-            value={marca_id}
-            onChange={(selectedOption) => {
-              if (selectedOption) {
-                setMarcaId(selectedOption);
-                setFormState((prev) => ({
-                  ...prev,
-                  marca_id: selectedOption.value,
-                }));
-              }
-            }}
-            options={marca}
-            placeholder="Selecciona una marca"
-            classNamePrefix="react-select"
-          />
+          <SearchableSelect
+              options={marcasSelect}
+              onSelect={(option) => handleSelectChange2('marca_id', option)}
+              selected={marcasSelect.find(marca => marca.id === formState.marca_id) || null}
+            />
         </div>
 
         <div className="flex justify-center items-center mt-11">

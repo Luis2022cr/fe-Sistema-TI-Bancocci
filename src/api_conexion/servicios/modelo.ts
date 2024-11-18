@@ -17,10 +17,9 @@ export interface Post_Modelo{
 }
 
 
-export const ObtenerModelo = (modeloId?: number) => {
-    const queryParams = modeloId ? `?modelo_id=${modeloId}` : '';
+export const ObtenerModelo = () => {
     const response = useAxios<Modelo[]>({
-        url: `/modelos${queryParams}`,
+        url: `/modelos`,
     }, {
         useCache: false,
     });

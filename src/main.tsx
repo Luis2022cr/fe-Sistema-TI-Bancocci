@@ -40,6 +40,7 @@ import CrearDepartamentos from './paginas/dashboard-admin/Departamento/crearDept
 import PaginaMarca from './paginas/dashboard-admin/Marca-Modelo/marca';
 import CrearMarca from './paginas/dashboard-admin/Marca-Modelo/crearMarca';
 import CrearModelo from './paginas/dashboard-admin/Marca-Modelo/crearModelo';
+import LogViewer from './components/Pruebas/logs';
 
 
 
@@ -107,6 +108,7 @@ root.render(
             <Route path="dashboard-admin/marca-modelo" element={<PaginaMarca />} />
             <Route path="dashboard-admin/crear-marcas" element={<CrearMarca />} />
             <Route path="dashboard-admin/crear-modelos" element={<CrearModelo />} />
+            <Route path="dashboard-admin/logs" element={<LogViewer />} />
 
 
           </Route>

@@ -30,9 +30,7 @@ export default function Header_2() {
             TI Bancocci
           </span>
         </span>
-        <nav className="ml-auto hidden md:flex gap-4 text-white">
-          <h2 className="text-sm">@user</h2>
-        </nav>
+      
         <button
           className="ml-auto md:hidden text-white focus:outline-none"
           aria-label="Abrir menu"

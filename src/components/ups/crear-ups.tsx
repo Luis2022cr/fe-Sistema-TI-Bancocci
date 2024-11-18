@@ -1,16 +1,15 @@
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState, useMemo } from 'react';
 import { FiLoader } from 'react-icons/fi';
 import { CrearUps, Post_Ups } from '@/api_conexion/servicios/ups';
 import { useNavigate } from 'react-router-dom';
 import Alert from '../Alert';
 import InputText from '../campos/InputForm';
-import SelectOptions, { SelectOption } from '../campos/SelectOptionsForm'; // Importar SelectOptions
 import { EstadoUps, ObtenerEstadoUps, ObtenerTipoTamaño, TipoTamaño } from '@/api_conexion/servicios/estados';
 import { Agencia, ObtenerAgencia } from '@/api_conexion/servicios/agencias';
 import Loading from '../Loading';
 import BotonRegresar from '../Regresar';
 import axios from 'axios';
-import { Asterisk } from 'lucide-react';
+import SearchableSelect from '../Pruebas/SearchableSelect';
 
 const CrearUpsForm: React.FC = () => {
     const navigate = useNavigate();
@@ -20,7 +19,7 @@ const CrearUpsForm: React.FC = () => {
 
     // Estado para los campos del formulario
     const [formState, setFormState] = useState({
-        agencias_id: null as SelectOption | null,
+        agencias_id: 0,
         nombre: '',
         modelo: '',
         direccion_ip: '',
@@ -28,10 +27,10 @@ const CrearUpsForm: React.FC = () => {
         fecha_instalacion: '',
         años_uso: '',
         proximo_cambio: '',
-        estado_ups_id: null as SelectOption | null,
+        estado_ups_id: 0,
         modulos: '',
         baterias: '',
-        tipo_tamano_id: null as SelectOption | null,
+        tipo_tamano_id: 0,
         observacion: ''
     });
 
@@ -42,27 +41,35 @@ const CrearUpsForm: React.FC = () => {
         errorMessage: null as string | null
     });
 
-    // Memoizar opciones para los select
-    const agenciasOptions = useMemo(
-        () => (agenciaData ? agenciaData.map((agencia: Agencia) => ({ value: agencia.id, label: agencia.nombre })) : []),
-        [agenciaData]
-    );
+    const agencias_idSelect = useMemo(() => {
+        return agenciaData?.map((agencia: Agencia) => ({
+            id: agencia.id,
+            label: agencia.nombre,
+        })) || [];
+    }, [agenciaData]);
 
-    const estadosUpsOptions = useMemo(
-        () => (estadosUpsData ? estadosUpsData.map((estado: EstadoUps) => ({ value: estado.id, label: estado.nombre })) : []),
-        [estadosUpsData]
-    );
+    const estado_ups_idSelect = useMemo(() => {
+        return estadosUpsData?.map((estado: EstadoUps) => ({
+            id: estado.id,
+            label: estado.nombre,
+        })) || [];
+    }, [estadosUpsData]);
 
-    const tipoTamañoOptions = useMemo(
-        () => (estadosTipoTamaño ? estadosTipoTamaño.map((tipo: TipoTamaño) => ({ value: tipo.id, label: tipo.nombre })) : []),
-        [estadosTipoTamaño]
-    );
+    const tipo_tamano_idSelect = useMemo(() => {
+        return estadosTipoTamaño?.map((tipotamano: TipoTamaño) => ({
+            id: tipotamano.id,
+            label: tipotamano.nombre,
+        })) || [];
+    }, [estadosTipoTamaño]);
 
-    // Manejador de cambios para los campos de selección
-    const handleSelectChange = useCallback(
-        (field: string, option: SelectOption | null) => setFormState((prev) => ({ ...prev, [field]: option })),
-        []
-    );
+    const handleSelectChange2 = (field: 'agencias_id' | 'estado_ups_id' | 'tipo_tamano_id', option: { id: number; label: string } | null) => {
+        if (option) {
+            setFormState((prev) => ({ ...prev, [field]: option.id })); // Almacena la opción seleccionada
+        } else {
+            setFormState((prev) => ({ ...prev, [field]: 0 })); // Resetea si no se selecciona nada
+        }
+    };
+
 
     // Manejador de cambios en los campos de texto
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -76,8 +83,8 @@ const CrearUpsForm: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-         // Validación de los campos
-         if (
+        // Validación de los campos
+        if (
             !formState.agencias_id ||
             !formState.nombre ||
             !formState.modelo ||
@@ -97,7 +104,7 @@ const CrearUpsForm: React.FC = () => {
         }
 
         const nuevoUps: Post_Ups = {
-            agencias_id: formState.agencias_id!.value,
+            agencias_id: formState.agencias_id,
             nombre: formState.nombre,
             modelo: formState.modelo,
             direccion_ip: formState.direccion_ip,
@@ -105,10 +112,10 @@ const CrearUpsForm: React.FC = () => {
             fecha_instalacion: formState.fecha_instalacion,
             años_uso: parseInt(formState.años_uso, 10),
             proximo_cambio: formState.proximo_cambio,
-            estado_ups_id: formState.estado_ups_id!.value,
+            estado_ups_id: formState.estado_ups_id,
             modulos: parseInt(formState.modulos, 10),
             baterias: parseInt(formState.baterias, 10),
-            tipo_tamano_id: formState.tipo_tamano_id!.value,
+            tipo_tamano_id: formState.tipo_tamano_id,
             observacion: formState.observacion
         };
 
@@ -132,7 +139,7 @@ const CrearUpsForm: React.FC = () => {
 
             // Limpiar formulario
             setFormState({
-                agencias_id: null,
+                agencias_id: 0,
                 nombre: '',
                 modelo: '',
                 direccion_ip: '',
@@ -140,10 +147,10 @@ const CrearUpsForm: React.FC = () => {
                 fecha_instalacion: '',
                 años_uso: '',
                 proximo_cambio: '',
-                estado_ups_id: null,
+                estado_ups_id: 0,
                 modulos: '',
                 baterias: '',
-                tipo_tamano_id: null,
+                tipo_tamano_id: 0,
                 observacion: ''
             });
 
@@ -172,17 +179,17 @@ const CrearUpsForm: React.FC = () => {
                     {/* Grupo de datos generales */}
                     {/* Select para Agencia */}
                     <div className="col-span-1">
-                        <label className=" text-lg font-medium text-gray-700 flex" htmlFor="agencias_id">Agencia<Asterisk className='text-red-600 h-3 w-3' /></label>
-                        <SelectOptions
-                            value={formState.agencias_id}
-                            options={agenciasOptions}
-                            placeholder="Selecciona una Agencia"
-                            onChange={(option) => handleSelectChange('agencias_id', option)}
+                        <label className=" text-lg font-medium text-gray-700 flex" htmlFor="agencias_id">Agencia</label>
+                        {/* <Asterisk className='text-red-600 h-3 w-3' /> */}
+                        <SearchableSelect
+                            options={agencias_idSelect}
+                            onSelect={(option) => handleSelectChange2('agencias_id', option)}
+                            selected={agencias_idSelect.find(agencia => agencia.id === formState.agencias_id) || null}
                         />
                     </div>
 
                     <div className="col-span-1">
-                    <label className="block text-lg font-medium text-gray-700" htmlFor="nombre">Nombre</label>
+                        <label className="block text-lg font-medium text-gray-700" htmlFor="nombre">Nombre</label>
                         <InputText
                             type="text"
                             name="nombre"
@@ -267,11 +274,10 @@ const CrearUpsForm: React.FC = () => {
                     {/* Select para Estado UPS */}
                     <div className="col-span-1">
                         <label className="block text-lg font-medium text-gray-700" htmlFor="estado_ups_id">Estado UPS</label>
-                        <SelectOptions
-                            value={formState.estado_ups_id}
-                            options={estadosUpsOptions}
-                            placeholder="Selecciona un Estado UPS"
-                            onChange={(option) => handleSelectChange('estado_ups_id', option)}
+                        <SearchableSelect
+                            options={estado_ups_idSelect}
+                            onSelect={(option) => handleSelectChange2('estado_ups_id', option)}
+                            selected={estado_ups_idSelect.find(estado => estado.id === formState.estado_ups_id) || null}
                         />
                     </div>
 
@@ -302,11 +308,10 @@ const CrearUpsForm: React.FC = () => {
                     {/* Select para Tipo y Tamaño */}
                     <div className="col-span-1">
                         <label className="block text-lg font-medium text-gray-700" htmlFor="tipo_tamano_id">Tipo y Tamaño</label>
-                        <SelectOptions
-                            value={formState.tipo_tamano_id}
-                            options={tipoTamañoOptions}
-                            placeholder="Selecciona un Tipo y Tamaño"
-                            onChange={(option) => handleSelectChange('tipo_tamano_id', option)}
+                        <SearchableSelect
+                            options={tipo_tamano_idSelect}
+                            onSelect={(option) => handleSelectChange2('tipo_tamano_id', option)}
+                            selected={tipo_tamano_idSelect.find(tamano => tamano.id === formState.tipo_tamano_id) || null}
                         />
                     </div>
 
