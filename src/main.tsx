@@ -37,10 +37,17 @@ import PaginaAgencias from './paginas/dashboard-admin/Agencia/agencias';
 import CrearAgencia from './paginas/dashboard-admin/Agencia/crearAgencia';
 import PaginaDepartamento from './paginas/dashboard-admin/Departamento/departamento';
 import CrearDepartamentos from './paginas/dashboard-admin/Departamento/crearDepto';
-import PaginaMarca from './paginas/dashboard-admin/Marca-Modelo/marca';
-import CrearMarca from './paginas/dashboard-admin/Marca-Modelo/crearMarca';
-import CrearModelo from './paginas/dashboard-admin/Marca-Modelo/crearModelo';
+
+import CrearMarca from './paginas/dashboard-admin/Marca/crearMarca';
+import CrearModelo from './paginas/dashboard-admin/Modelo/crearModelo';
 import LogViewer from './components/Pruebas/logs';
+import UpdateDepartamentos from './paginas/dashboard-admin/Departamento/updateDepartamento';
+import UpdateAgencias from './paginas/dashboard-admin/Agencia/updateAgencia';
+import UpdateModelo from './paginas/dashboard-admin/Modelo/updateModelo';
+import PaginaMarcas from './paginas/dashboard-admin/Marca/marca';
+import PaginaModelos from './paginas/dashboard-admin/Modelo/modelos';
+import UpdateMarca from './paginas/dashboard-admin/Marca/updateMarca';
+
 
 
 
@@ -103,11 +110,16 @@ root.render(
             <Route path="dashboard-admin/ups/editar-ups/:id" element={<UdpateUps />} />
             <Route path="dashboard-admin/agencias" element={<PaginaAgencias />} />
             <Route path="dashboard-admin/crear-agencias" element={<CrearAgencia />} />
+            <Route path="dashboard-admin/actualizar-agencia/:id" element={<UpdateAgencias/>} />
             <Route path="dashboard-admin/departamentos" element={<PaginaDepartamento />} />
             <Route path="dashboard-admin/crear-departamentos" element={<CrearDepartamentos />} />
-            <Route path="dashboard-admin/marca-modelo" element={<PaginaMarca />} />
+            <Route path="dashboard-admin/actualizar-departamento/:id" element={<UpdateDepartamentos />} />
+            <Route path="dashboard-admin/marca" element={<PaginaMarcas />} />
             <Route path="dashboard-admin/crear-marcas" element={<CrearMarca />} />
+            <Route path="dashboard-admin/actualizar-marca/:id" element={<UpdateMarca/>} />
+            <Route path="dashboard-admin/modelo" element={<PaginaModelos />} />
             <Route path="dashboard-admin/crear-modelos" element={<CrearModelo />} />
+            <Route path="dashboard-admin/actualizar-modelo/:id" element={<UpdateModelo/>} />
             <Route path="dashboard-admin/logs" element={<LogViewer />} />
 
 

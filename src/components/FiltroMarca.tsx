@@ -2,17 +2,19 @@ import React, { useState } from "react";
 import { Search, X } from "lucide-react";
 import { FaPlusCircle } from "react-icons/fa";
 import Modal from "./Modal";
-import CrearModelo from "@/paginas/dashboard-admin/Modelo/crearModelo";
+import CrearMarca from "@/paginas/dashboard-admin/Marca/crearMarca";
 
-interface FiltroModeloProps {
+
+interface FiltroMarcaprops {
     searchTerm: string;
     setSearchTerm: (term: string) => void;
 }
 
-const FiltroModelo: React.FC<FiltroModeloProps> = ({
+const FiltroMarca: React.FC<FiltroMarcaprops> = ({
     searchTerm,
     setSearchTerm,
 }) => {
+
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const openModal = () => setIsModalOpen(true);
@@ -31,7 +33,7 @@ const FiltroModelo: React.FC<FiltroModeloProps> = ({
                             type="text"
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            placeholder="Buscar por marca, modelo"
+                            placeholder="Buscar por marca"
                             className="block w-full p-2 rounded-r focus:outline-none"
                         />
                         {searchTerm && (
@@ -55,15 +57,14 @@ const FiltroModelo: React.FC<FiltroModeloProps> = ({
                     </button>
                 </div>
             </div>
-            {/* Modal */}
-            {isModalOpen && (
+                {/* Modal */}
+                {isModalOpen && (
                 <Modal onClose={closeModal}>
-                    <CrearModelo /> 
+                    <CrearMarca /> 
                 </Modal>
             )}
         </>
-        
     );
 };
 
-export default FiltroModelo;
+export default FiltroMarca;
