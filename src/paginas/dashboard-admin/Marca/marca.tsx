@@ -1,15 +1,13 @@
-import { CpuIcon, Pencil, ServerIcon  } from "lucide-react";
+import { Building, Pencil  } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import Loading from "@/components/Loading";
 import Pagination from "@/components/Pagination";
+import { Marca, ObtenerMarca } from "@/api_conexion/servicios/marca";
+import FiltroMarca from "@/components/FiltroMarca";
 
-
-import { Modelo, ObtenerModelo } from "@/api_conexion/servicios/modelo";
-import FiltroModelo from "@/components/FiltroModelo";
-
-export default function PaginaMarca() {
-    const [{ data: ModeloData, loading: loadingMarca }] = ObtenerModelo();
+export default function PaginaMarcas() {
+    const [{ data: MarcaData, loading: loadingMarca }] = ObtenerMarca();
     
     const [error] = useState<string | null>(null);
     const [searchTerm, setSearchTerm] = useState<string>(''); // Estado para la búsqueda
@@ -19,10 +17,10 @@ export default function PaginaMarca() {
     const itemsPerPage = 12; // Cambia este valor según tus necesidades
 
     //validacion otencion de datos
-    if (!ModeloData) return <div>error al obtener los datos</div>
+    if (!MarcaData) return <div>error al obtener los datos</div>
 
     // Filtrar las agencias según el término de búsqueda nombre, codigo, ubicacion
-    const filteredDirectorio = ModeloData.filter((data: Modelo) => {
+    const filteredDirectorio = MarcaData.filter((data: Marca) => {
 
         //const searchLower = searchTerm.toLowerCase();
         const agencyMatches = selectedAgencia === "" 
@@ -51,7 +49,7 @@ export default function PaginaMarca() {
             </h1>
 
             {/* Componente de filtros */}
-            <FiltroModelo
+            <FiltroMarca
                 searchTerm={searchTerm}
                 setSearchTerm={setSearchTerm}
             />
@@ -59,7 +57,7 @@ export default function PaginaMarca() {
             {/* Tarjetas de las agencias*/}
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4 ">
                 {paginatedData.length > 0 ? (
-                    paginatedData.map((data: Modelo) => (
+                    paginatedData.map((data: Marca) => (
                         <div
                             key={data.id}
                             className="relative p-6 transition-shadow duration-300 bg-white rounded-lg shadow-md hover:shadow-lg"
@@ -67,7 +65,7 @@ export default function PaginaMarca() {
                             {/* Botones de editar y borrar */}
                             <div className="absolute flex space-x-2 transition-opacity duration-300 opacity-75 top-3 right-3 hover:opacity-100">
                                 <Link
-                                    to={`/dashboard-admin/actualizar_departamento/${data.id}`}
+                                    to={`/dashboard-admin/actualizar-marca/${data.id}`}
                                     className="text-gray-400 transition-colors duration-300 hover:text-blue-500"
                                 >
                                     <Pencil className="w-5 h-5" />
@@ -76,19 +74,14 @@ export default function PaginaMarca() {
 
                             {/* Formateo de la agencias */}
                             <div className="flex items-center mb-4">
-                                <CpuIcon className="w-6 h-6 mr-2 text-blue-500" />
-                                <span className="text-2xl font-semibold">{(data.marca)}</span>
-                            </div>
-
-                            <div className="flex items-center mb-4">
-                                <ServerIcon className="w-6 h-6 mr-2 text-blue-500" />
+                                <Building className="w-6 h-6 mr-2 text-blue-500" />
                                 <span className="text-xl font-semibold">{(data.nombre)}</span>
                             </div>
                            
                         </div>
                     ))
                 ) : (
-                    <p>No se encontraron registros de Marcas y Modelo.</p>
+                    <p>No se encontraron registros en las marcas.</p>
                 )}
             </div>
 

@@ -19,8 +19,11 @@ const Dashboard_ConfigAdmin: React.FC = () => {
       case "Departamentos":
         return <PiMapPinSimpleAreaThin className="w-14 h-14 text-white"  />
 
-      case "Marca - Modelo":
+        case "Marca":
         return <Dice6 className="w-14 h-14 text-white" />
+
+        case "Modelo":
+          return <Dice6 className="w-14 h-14 text-white" />
 
         case "Logs":
         return <Logs  className="w-14 h-14 text-white" />

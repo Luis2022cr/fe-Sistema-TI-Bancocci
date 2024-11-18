@@ -65,7 +65,7 @@ export default function PaginaDepartamento() {
                             {/* Botones de editar y borrar */}
                             <div className="absolute flex space-x-2 transition-opacity duration-300 opacity-75 top-3 right-3 hover:opacity-100">
                                 <Link
-                                    to={`/dashboard-admin/actualizar_departamento/${data.id}`}
+                                    to={`/dashboard-admin/actualizar-departamento/${data.id}`}
                                     className="text-gray-400 transition-colors duration-300 hover:text-blue-500"
                                 >
                                     <Pencil className="w-5 h-5" />
