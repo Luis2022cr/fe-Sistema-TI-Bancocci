@@ -1,4 +1,4 @@
-import axiosInstance from "../axiosInstance";
+import axiosInstance, { useAxios } from "../axiosInstance";
 
 
 // Definimos la interfaz para los datos del inventario
@@ -12,17 +12,16 @@ export interface Post_Marca{
     nombre: string;
 }
 
+export const ObtenerMarca = (marcaId?: number) => {
+  const queryParams = marcaId ? `?marca_id=${marcaId}` : '';
 
-export const ObtenerMarca = async (marcaId?: number): Promise<Marca[]> => {
-    const queryParams = marcaId ? `?marca_id=${marcaId}` : '';
-    try {
-      const response = await axiosInstance.get(`/marcas${queryParams}`);
-      return response.data; // Suponiendo que la API retorna un array de marcas
-    } catch (error) {
-      console.error("Error al obtener marcas:", error);
-      throw error;
-    }
-  };
+  const response = useAxios<Marca[]>({
+    url: `/marcas${queryParams}`,
+  },{
+    useCache: false,
+  });
+  return response;
+};
 
 
 export const CrearMarcas = async (nuevasMarcas: Post_Marca): Promise<Post_Marca> => {

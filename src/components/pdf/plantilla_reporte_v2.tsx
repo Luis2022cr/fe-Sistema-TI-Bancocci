@@ -7,6 +7,8 @@ import BotonRegresar from '../Regresar';
 import { Inventario, ObtenerInventarios } from '@/api_conexion/servicios/inventarios';
 import Loading from '../Loading';
 import { ObtenerAgencia } from '@/api_conexion/servicios/agencias';
+import marcaAgua from '@/assets/marca-de-agua.png'
+import logoReporte from '@/assets/occidente-pdf.jpeg'
 
 interface Agencia {
     id: number;
@@ -78,7 +80,7 @@ const ControlEquiposV2: React.FC = () => {
                         inventario: inventarioMatch.codigo || '',
                         serie: inventarioMatch.serie || '',
                         descripcionEquipo: inventarioMatch.tipo_inventario || '',
-                        modeloTipo: inventarioMatch.modelo  || '',
+                        modeloTipo: inventarioMatch.modelo || '',
                         pertenece: inventarioMatch.agencia_origen || '',
                     };
                 }
@@ -92,14 +94,14 @@ const ControlEquiposV2: React.FC = () => {
     };
     const [showSuggestions, setShowSuggestions] = useState(false);
     const [filteredAgencias, setFilteredAgencias] = useState<Agencia[]>([]);
-    
+
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setFormData(prev => ({
             ...prev,
             [name]: value,
         }));
-    
+
         // Filtrar sugerencias basadas en la entrada del usuario
         if (name === "agencia") {
             const suggestions = agenciaData?.filter((agencia) =>
@@ -108,7 +110,7 @@ const ControlEquiposV2: React.FC = () => {
             setFilteredAgencias(suggestions || []);
         }
     };
-    
+
     const handleAgenciaSelect = (nombre: string) => {
         setFormData(prev => ({
             ...prev,
@@ -116,8 +118,8 @@ const ControlEquiposV2: React.FC = () => {
         }));
         setShowSuggestions(false);
     };
-    
-    
+
+
     const handleInputChange2 = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, type, checked } = e.target;
         setFormData(prev => ({
@@ -143,12 +145,12 @@ const ControlEquiposV2: React.FC = () => {
                         const imgProps = pdf.getImageProperties(dataUrl);
                         const pdfWidth = pdf.internal.pageSize.getWidth();
                         const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-    
+
                         pdf.addImage(dataUrl, 'PNG', 0, 5, pdfWidth, pdfHeight);
                         const blob = pdf.output('blob');
                         const url = URL.createObjectURL(blob);
                         window.open(url);
-    
+
                         setIsLoading(false);
                     })
                     .catch((error) => {
@@ -160,21 +162,21 @@ const ControlEquiposV2: React.FC = () => {
             }
         }, 100); // Retraso de 100ms para permitir que el DOM se actualice
     };
-    
+
     if (loadingInventario || loadingAgencias) return <Loading />;
     if (!inventarioData || !agenciaData) return <div>Error al obtener los datos</div>;
 
     return (
         <>
-        <div className='-mt-10'>
+            <div className='-mt-10'>
 
-            <BotonRegresar />
-        </div>
+                <BotonRegresar />
+            </div>
 
             <div className='mx-5 text-black '>
                 <div className="font-sans p-10" id="pdf-content">
                     <div className='flex justify-between items-center mb-5'>
-                        <img src="/src/assets/occidente-pdf.jpeg" alt="logo" className="font-bold text-lg mb-5" />
+                        <img src={logoReporte} alt="logo" className="font-bold text-lg mb-5" />
                         <div className="text-center font-semibold text-3xl mr-16 whitespace-nowrap">
                             Control de Entradas y Salidas de Equipos
                         </div>
@@ -182,7 +184,7 @@ const ControlEquiposV2: React.FC = () => {
                     </div>
 
                     <img
-                        src="/src/assets/marca-de-agua.png"
+                        src={marcaAgua}
                         alt="Marca de Agua"
                         className="absolute inset-0 opacity-10"
                         style={{
@@ -213,31 +215,31 @@ const ControlEquiposV2: React.FC = () => {
                                 <td colSpan={3} className="p-1 border border-black w-full">Técnico: <input type="text" name="tecnico" value={formData.tecnico} onChange={handleInputChange} className="w-4/5 border-none" /></td>
                             </tr>
                             <tr>
-                            <td className="p-1 border border-black w-1/4 relative">
-    Agencia:
-    <input
-        type="text"
-        name="agencia"
-        value={formData.agencia}
-        onChange={handleInputChange}
-        onFocus={() => setShowSuggestions(true)}
-        placeholder="Escribe la agencia"
-        className="w-[200px] border-none bg-transparent text-base ml-1 text-center"
-    />
-    {showSuggestions && filteredAgencias.length > 0 && (
-        <ul className="absolute bg-white border border-gray-300 w-full max-h-40 overflow-y-auto z-10">
-            {filteredAgencias.map((agencia) => (
-                <li
-                    key={agencia.id}
-                    className="p-2 hover:bg-gray-200 cursor-pointer"
-                    onClick={() => handleAgenciaSelect(agencia.nombre + " - " + agencia.codigo)}
-                >
-                    {agencia.nombre} ({agencia.codigo})
-                </li>
-            ))}
-        </ul>
-    )}
-</td>
+                                <td className="p-1 border border-black w-1/4 relative">
+                                    Agencia:
+                                    <input
+                                        type="text"
+                                        name="agencia"
+                                        value={formData.agencia}
+                                        onChange={handleInputChange}
+                                        onFocus={() => setShowSuggestions(true)}
+                                        placeholder="Escribe la agencia"
+                                        className="w-[200px] border-none bg-transparent text-base ml-1 text-center"
+                                    />
+                                    {showSuggestions && filteredAgencias.length > 0 && (
+                                        <ul className="absolute bg-white border border-gray-300 w-full max-h-40 overflow-y-auto z-10">
+                                            {filteredAgencias.map((agencia) => (
+                                                <li
+                                                    key={agencia.id}
+                                                    className="p-2 hover:bg-gray-200 cursor-pointer"
+                                                    onClick={() => handleAgenciaSelect(agencia.nombre + " - " + agencia.codigo)}
+                                                >
+                                                    {agencia.nombre} ({agencia.codigo})
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    )}
+                                </td>
 
                                 <td colSpan={3} className="p-1 border-r flex border-black w-full gap-40">
                                     {/* Área de Infraestructura y Taller */}
@@ -442,21 +444,21 @@ const ControlEquiposV2: React.FC = () => {
                                 ))}
                             </tr>
                             {formData.equipos.map((equipo, index) => (
-                        <tr key={index}>
-                            {Object.keys(equipo).map((field) => (
-                                <td key={field} className="border border-black text-center">
-                                    <input
-                                        type="text"
-                                        name={field}
-                                        value={equipo[field as keyof typeof equipo]}
-                                        onChange={(e) => handleInputChange3(e, index)}
-                                        className={`border-none text-center font-medium ${field === 'descripcionEquipo' ? 'w-10/12 text-xl' : 'w-full text-base'}`}
-                                        style={{ height: '25px' }}
-                                    />
-                                </td>
+                                <tr key={index}>
+                                    {Object.keys(equipo).map((field) => (
+                                        <td key={field} className="border border-black text-center">
+                                            <input
+                                                type="text"
+                                                name={field}
+                                                value={equipo[field as keyof typeof equipo]}
+                                                onChange={(e) => handleInputChange3(e, index)}
+                                                className={`border-none text-center font-medium ${field === 'descripcionEquipo' ? 'w-10/12 text-xl' : 'w-full text-base'}`}
+                                                style={{ height: '25px' }}
+                                            />
+                                        </td>
+                                    ))}
+                                </tr>
                             ))}
-                        </tr>
-                    ))}
 
                             <tr>
                                 <td colSpan={6} className="p-1 border-l border-r font-bold text-xl border-black">III. Observaciones:</td>

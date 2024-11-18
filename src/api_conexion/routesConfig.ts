@@ -83,6 +83,7 @@ export const configAdminRoutes = {
   "Agencias": "/dashboard-admin/agencias",
   "Departamentos": "/dashboard-admin/departamentos",
   "Marca - Modelo": "/dashboard-admin/marca-modelo", 
+  "Logs": "/dashboard-admin/logs", 
  
  
 } as const;

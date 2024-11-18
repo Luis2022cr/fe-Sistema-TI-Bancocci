@@ -3,7 +3,7 @@ import { ConfigAdminRoutes, configAdminRoutes } from "@/api_conexion/routesConfi
 import DashboardButton from "@/components/DashboardButton";
 import { TfiAgenda } from "react-icons/tfi";
 import { PiMapPinSimpleAreaThin } from "react-icons/pi";
-import { Dice6 } from "lucide-react";
+import { Dice6, Logs } from "lucide-react";
 
 const Dashboard_ConfigAdmin: React.FC = () => {
   useEffect(() => {
@@ -21,6 +21,9 @@ const Dashboard_ConfigAdmin: React.FC = () => {
 
       case "Marca - Modelo":
         return <Dice6 className="w-14 h-14 text-white" />
+
+        case "Logs":
+        return <Logs  className="w-14 h-14 text-white" />
       
       default:
         return null;
