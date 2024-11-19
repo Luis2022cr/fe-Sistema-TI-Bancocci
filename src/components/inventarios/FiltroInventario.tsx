@@ -1,7 +1,7 @@
 import React from "react";
 import { Search, X } from "lucide-react";
 import { FaPlusCircle } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 interface FiltroInventarioProps {
     searchTerm: string;
@@ -18,7 +18,12 @@ const FiltroInventario: React.FC<FiltroInventarioProps> = ({
     setSelectedAgencia,
     agencias,
 }) => {
-    
+
+    const location = useLocation();
+    const isDashboardEmpleados = location.pathname.includes('/dashboard-empleados');
+    const dashboardPath = isDashboardEmpleados ? '/dashboard-empleados' : '/dashboard-admin';
+
+
     return (
         <>
             <div className="flex mb-6 space-x-4 justify-between">
@@ -30,7 +35,7 @@ const FiltroInventario: React.FC<FiltroInventarioProps> = ({
                         <input
                             type="text"
                             value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}placeholder="Buscar por Nº Inventario, Serie, Marca, Modelo"
+                            onChange={(e) => setSearchTerm(e.target.value)} placeholder="Buscar por Nº Inventario, Serie, Marca, Modelo"
                             className="block w-full p-2 rounded-r focus:outline-none"
                         />
                         {searchTerm && (
@@ -45,9 +50,9 @@ const FiltroInventario: React.FC<FiltroInventarioProps> = ({
                 </div>
                 <div className="flex-none">
                     <Link
-                        to='/dashboard-empleados/agregar-inventario'
+                        to={`${dashboardPath}/agregar-inventario`}
                         className="flex items-center gap-3 p-1 mt-1 text-center text-white bg-green-700 rounded-full w-28 hover:bg-green-600"
-                        >
+                    >
                         <FaPlusCircle />
                         Agregar
                     </Link>

@@ -73,6 +73,7 @@ root.render(
             <Route path="dashboard-empleados/main" element={<DashboardInicio />} />
             <Route path="dashboard-empleados/informes-ups" element={<Dashboard_Ups />} />
             <Route path="dashboard-empleados/inventario-ti" element={<Dashboard_inventario />} />
+            
             <Route path="dashboard-empleados/directorio" element={<Directorio />} />
             <Route path="dashboard-empleados/directorio/:id" element={<UpdateDirectorio />} />
             <Route path="dashboard-empleados/calendario" element={<Calendario />} />
@@ -87,6 +88,7 @@ root.render(
             <Route path="dashboard-empleados/perfil" element={<ProfileCard />} />
             <Route path="dashboard-empleados/perfil/cambiar-contraseña" element={<UpdateContraseñaP />} />
             <Route path="dashboard-empleados/ups/editar-ups/:id" element={<UdpateUps />} />
+            <Route path="dashboard-empleados/crear/ups" element={<CrearUpsForm />} />
 
 
             <Route path="dashboard-admin/main" element={<DashboardAdmin />} />
@@ -96,6 +98,7 @@ root.render(
             <Route path="dashboard-admin/gestion-usuarios" element={<GestionUsuarios />} />
             <Route path="dashboard-admin/gestion-usuarios/editar-usuario/:id" element={<UpdateUsuario />} />
             <Route path="dashboard-admin/gestion-usuarios/password/:id" element={<UpdateContraseña />} />
+            
             <Route path="dashboard-admin/directorio" element={<Directorio />} />
             <Route path="dashboard-admin/directorio/:id" element={<UpdateDirectorio />} />
             <Route path="dashboard-admin/calendario" element={<Calendario />} />
@@ -107,7 +110,15 @@ root.render(
             <Route path="dashboard-admin/notificaciones" element={<NotificationList />} />
             <Route path="dashboard-admin/perfil" element={<ProfileCard />} />
             <Route path="dashboard-admin/perfil/cambiar-contraseña" element={<UpdateContraseñaP />} />
+            <Route path="dashboard-admin/historial_inventario/:id" element={<HistorialInventario />} />
+            <Route path="dashboard-admin/agregar-inventario" element={<CrearInventarios />} />
+            <Route path="dashboard-admin/actualizar_inventario/:id" element={<EditarInventario />} />
             <Route path="dashboard-admin/ups/editar-ups/:id" element={<UdpateUps />} />
+            <Route path="dashboard-admin/agregar-inventario" element={<CrearInventarios />} />
+            <Route path="dashboard-admin/actualizar_inventario/:id" element={<EditarInventario />} />
+            <Route path="dashboard-admin/ups/editar-ups/:id" element={<UdpateUps />} />
+
+
             <Route path="dashboard-admin/agencias" element={<PaginaAgencias />} />
             <Route path="dashboard-admin/crear-agencias" element={<CrearAgencia />} />
             <Route path="dashboard-admin/actualizar-agencia/:id" element={<UpdateAgencias/>} />
@@ -121,7 +132,6 @@ root.render(
             <Route path="dashboard-admin/crear-modelos" element={<CrearModelo />} />
             <Route path="dashboard-admin/actualizar-modelo/:id" element={<UpdateModelo/>} />
             <Route path="dashboard-admin/logs" element={<LogViewer />} />
-
 
           </Route>
         </Routes>

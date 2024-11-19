@@ -1,7 +1,7 @@
 import { Suspense, useState } from "react";
 import { PencilIcon, ClockIcon} from "lucide-react";
 import Loading from "../Loading";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { ObtenerInventarios } from "@/api_conexion/servicios/inventarios";
 import lista from "../../assets/listaReport.svg";
 import { Link } from "react-router-dom";
@@ -37,7 +37,9 @@ interface ExportData {
 }
 
 export default function Pagina_Inventario() {
-
+  const location = useLocation();
+  const isDashboardEmpleados = location.pathname.includes('/dashboard-empleados');
+  const dashboardPath = isDashboardEmpleados ? '/dashboard-empleados' : '/dashboard-admin';
   
 
   const [{ data: agenciaData, loading: loadingAgencias }] = ObtenerAgencia();
@@ -165,7 +167,6 @@ export default function Pagina_Inventario() {
   };
 
   
-  
   return (
     <>
       <button
@@ -247,13 +248,13 @@ export default function Pagina_Inventario() {
                     <td className="p-2 border-t border-blue-300">
                       <div className="flex space-x-2">
                         <Link
-                          to={`/dashboard-empleados/actualizar_inventario/${data.id}`}
+                          to={`${dashboardPath}/actualizar_inventario/${data.id}`}
                           className="p-1 text-white bg-orange-500 rounded-full"
                         >
                           <PencilIcon className="w-4 h-4" />
                         </Link>
                         <Link
-                          to={`/dashboard-empleados/historial_inventario/${data.id}`}
+                          to={`${dashboardPath}/historial_inventario/${data.id}`}
                           className="p-1 text-white bg-yellow-700 rounded-full"
                         >
                           <ClockIcon className="w-4 h-4" />

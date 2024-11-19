@@ -1,9 +1,10 @@
 import React from "react";
 import { Search, X } from "lucide-react";
 import { FaPlusCircle } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 interface FiltroUpsProps {
+    
     searchTerm: string;
     setSearchTerm: (term: string) => void;
     selectedAgencia: string;
@@ -18,6 +19,9 @@ const FiltroUps: React.FC<FiltroUpsProps> = ({
     setSelectedAgencia,
     agencias,
 }) => {
+    const location = useLocation();
+    const isDashboardEmpleados = location.pathname.includes('/dashboard-empleados');
+    const dashboardPath = isDashboardEmpleados ? '/dashboard-empleados' : '/dashboard-admin';
     return (
         <div className="flex mb-6 space-x-4 justify-between items-center">
             {/* Campo de búsqueda */}
@@ -45,7 +49,7 @@ const FiltroUps: React.FC<FiltroUpsProps> = ({
                 </div>
             <div className="flex-none">
                 <Link
-                    to="/dashboard-admin/crear/ups"  // Cambia esta ruta a la URL deseada
+                    to={`${dashboardPath}/crear/ups`}  // Cambia esta ruta a la URL deseada
                     className="mt-1 rounded-full w-28 h-8 bg-green-700 p-1 flex gap-3 hover:bg-green-600 text-white text-center items-center justify-center no-underline"
                 >
                     <FaPlusCircle />

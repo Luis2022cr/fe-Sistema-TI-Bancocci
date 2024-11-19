@@ -10,16 +10,18 @@ import Modal from '../Modal';
 import CrearPuntoMapaForm from './creacionPuntoMapa';
 import { IoArrowUndoOutline } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
+import onlineIconSvg from '@/assets/pingtrue.svg'
+import offlineIconSvg from '@/assets/pingFalse.svg'
 
 const onlineIcon = L.icon({
-  iconUrl: '/src/assets/pingtrue.svg',
+  iconUrl: onlineIconSvg,
   iconSize: [40, 45],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
 });
 
 const offlineIcon = L.icon({
-  iconUrl: '/src/assets/pingFalse.svg',
+  iconUrl: offlineIconSvg,
   iconSize: [40, 45],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],

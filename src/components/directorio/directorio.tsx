@@ -3,7 +3,7 @@ import { Suspense, useState } from "react";
 import Loading from "../Loading";
 import Pagination from "../Pagination";
 import { BorrarDirectorios } from "@/api_conexion/servicios/directorio";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { ObtenerAgencia } from "@/api_conexion/servicios/agencias";
 import { ObtenerDirectorios, Directorio } from '../../api_conexion/servicios/directorio';
 import Alert from "../Alert";
@@ -20,6 +20,10 @@ interface ExportData {
 }
 
 export default function PaginaDirectorio() {
+    const location = useLocation();
+    const isDashboardEmpleados = location.pathname.includes('/dashboard-empleados');
+    const dashboardPath = isDashboardEmpleados ? '/dashboard-empleados' : '/dashboard-admin';
+
     const [{ data: agenciaData, loading: loadingAgencias }] = ObtenerAgencia();
     const [{ data: directorioData, loading: loadingDirectorio }] = ObtenerDirectorios();
     const directorio = Array.isArray(directorioData) ? directorioData : [];
@@ -193,7 +197,7 @@ export default function PaginaDirectorio() {
                             {/* Botones de editar y borrar */}
                             <div className="absolute flex space-x-2 transition-opacity duration-300 opacity-75 top-3 right-3 hover:opacity-100">
                                 <Link
-                                    to={`/dashboard-empleados/directorio/${data.id}`}
+                                    to={`${dashboardPath}/directorio/${data.id}`}
                                     className="text-gray-400 transition-colors duration-300 hover:text-blue-500"
                                 >
                                     <Pencil className="w-5 h-5" />

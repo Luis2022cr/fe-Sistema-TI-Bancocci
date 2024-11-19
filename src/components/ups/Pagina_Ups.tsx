@@ -26,6 +26,7 @@ const tipoTamanoMap: { [key: number]: string } = {
 };
 
 export default function Pagina_Ups() {
+  
     const { tipoTamanoId } = useParams<{ tipoTamanoId?: string }>();
     const Id = tipoTamanoId ? parseInt(tipoTamanoId, 10) : undefined;
     const [{ data: agenciaData, loading: loadingAgencias }] = ObtenerAgencia();
