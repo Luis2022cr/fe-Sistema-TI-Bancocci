@@ -42,7 +42,7 @@ const CrearDepartamentos: React.FC = () => {
 
             setStatus({ error: null, isLoading: false, successMessage: "Departamento agregado correctamente." });
             setFormState({ nombre: ''});
-            // window.location.reload();
+            window.location.reload();
         } catch (error) {
             const errorMessage = axios.isAxiosError(error) ? error.response?.data?.error || "Error al agregar el Departamento." : "Error al agregar el Departamento";
             setStatus({ ...status, error: errorMessage, isLoading: false });

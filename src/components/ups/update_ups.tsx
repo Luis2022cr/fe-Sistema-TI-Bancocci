@@ -182,7 +182,7 @@ const UdpateUps = () => {
                     <div className="col-span-1">
                         <label className="text-lg font-medium text-gray-700 flex" htmlFor="agencias_id">
                             Agencia
-                            <Asterisk className="text-red-600 h-3 w-3" />
+                            <Asterisk className="text-red-600 h-2 w-2 mt-1" />
                         </label>
                         <SearchableSelect
                             options={agencias_idSelect}
@@ -192,7 +192,10 @@ const UdpateUps = () => {
                     </div>
 
                     <div className="col-span-1">
-                        <label className="block text-lg font-medium text-gray-700" htmlFor="nombre">Nombre</label>
+                        <label className=" text-lg font-medium text-gray-700 flex" htmlFor="nombre">
+                            Nombre
+                            <Asterisk className="text-red-600 h-2 w-2 mt-1" />
+                        </label>
                         <InputText
                             type="text"
                             name="nombre"
@@ -203,7 +206,10 @@ const UdpateUps = () => {
                     </div>
 
                     <div className="col-span-1">
-                        <label className="block text-lg font-medium text-gray-700" htmlFor="modelo">Modelo</label>
+                        <label className="flex text-lg font-medium text-gray-700" htmlFor="modelo">
+                            Modelo
+                            <Asterisk className="text-red-600 h-2 w-2 mt-1" />
+                        </label>
                         <InputText
                             type="text"
                             name="modelo"
@@ -225,7 +231,10 @@ const UdpateUps = () => {
                     </div>
 
                     <div className="col-span-1">
-                        <label className="block text-lg font-medium text-gray-700" htmlFor="kva">KVA</label>
+                        <label className="flex text-lg font-medium text-gray-700" htmlFor="kva">
+                            KVA
+                            <Asterisk className="text-red-600 h-2 w-2 mt-1" />
+                        </label>
                         <InputText
                             type="text"
                             name="kva"
@@ -236,7 +245,10 @@ const UdpateUps = () => {
                     </div>
 
                     <div className="col-span-1">
-                        <label className="block text-lg font-medium text-gray-700" htmlFor="años_uso">Años de Uso</label>
+                        <label className="flex text-lg font-medium text-gray-700" htmlFor="años_uso">
+                            Años de Uso
+                            <Asterisk className="text-red-600 h-2 w-2 mt-1" />
+                        </label>
                         <InputText
                             type="number"
                             name="años_uso"
@@ -248,7 +260,10 @@ const UdpateUps = () => {
 
                     {/* Select para Estado UPS */}
                     <div className="col-span-1">
-                        <label className="block text-lg font-medium text-gray-700" htmlFor="estado_ups_id">Estado UPS</label>
+                        <label className="flex text-lg font-medium text-gray-700" htmlFor="estado_ups_id">
+                            Estado UPS
+                            <Asterisk className="text-red-600 h-2 w-2 mt-1" />
+                        </label>
                         <SearchableSelect
                             options={estado_ups_idSelect}
                             onSelect={(option) => handleSelectChange2('estado_ups_id', option)}
@@ -280,7 +295,10 @@ const UdpateUps = () => {
 
                     {/* Select para Tipo y Tamaño */}
                     <div className="col-span-1">
-                        <label className="block text-lg font-medium text-gray-700" htmlFor="tipo_tamano_id">Tipo y Tamaño</label>
+                        <label className="flex text-lg font-medium text-gray-700" htmlFor="tipo_tamano_id">
+                            Tipo y Tamaño
+                            <Asterisk className="text-red-600 h-2 w-2 mt-1" />
+                        </label>
                         <SearchableSelect
                             options={tipo_tamano_idSelect}
                             onSelect={(option) => handleSelectChange2('tipo_tamano_id', option)}
@@ -298,9 +316,13 @@ const UdpateUps = () => {
                             onChange={handleChange}
                         />
                     </div>
-
+                    <div className='flex col-span-3'>
+                        <Asterisk className="text-red-600 h-2 w-2 text-sm" />
+                        Estos campos son obligatorios
+                    </div>
                     {/* Botón centrado */}
-                    <div className="col-span-4 flex justify-center mt-10">
+                    <div className="col-span-4 flex justify-center ">
+
                         <button
                             className="w-1/3 h-14 hover:bg-green-500 bg-green-700 text-xl text-white py-2 rounded-full flex items-center justify-center"
                             disabled={status.isLoading}

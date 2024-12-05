@@ -150,6 +150,8 @@ const EditarInventario: React.FC = () => {
             await UpdateInventario(Number(id), inventarioActualizado);
 
             setStatus({ error: null, isLoading: false, successMessage: 'Inventario actualizado correctamente.' });
+            window.location.reload();
+
         } catch (error) {
             const errorMessage = axios.isAxiosError(error)
                 ? error.response?.data?.error || 'Error al actualizar el inventario.'

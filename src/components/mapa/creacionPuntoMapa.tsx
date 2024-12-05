@@ -79,6 +79,8 @@ const CrearPuntoMapaForm: React.FC = () => {
                 lat: '',
                 lon: ''
             });
+            window.location.reload();
+
         } catch (error) {
             console.error('Error al agregar el punto:', error);
             setStatus({

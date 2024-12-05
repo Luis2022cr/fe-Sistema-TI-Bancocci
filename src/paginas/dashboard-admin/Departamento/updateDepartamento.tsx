@@ -8,7 +8,6 @@ import InputText from '@/components/campos/InputForm';
 import Loading from '@/components/Loading';
 import BotonRegresar from '@/components/Regresar';
 
-
 const UpdateDepartamentos: React.FC = () => {
     const { id } = useParams<{ id?: string }>();
     const numericId = id ? parseInt(id, 10) : undefined;
@@ -17,7 +16,6 @@ const UpdateDepartamentos: React.FC = () => {
     // Obtener los datos de la API
     const [{ data: departamento, loading, error }] = ObtenerDepartamentoById(numericId!);
    
-
     const [formData, setFormData] = useState<Post_Departamento>({
        nombre: '',
     });

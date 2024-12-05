@@ -45,7 +45,7 @@ const CrearAgencia: React.FC = () => {
 
             setStatus({ error: null, isLoading: false, successMessage: "Agencia agregada correctamente." });
             setFormState({ nombre: '', ubicacion: '', codigo: ''});
-            // window.location.reload();
+            window.location.reload();
         } catch (error) {
             const errorMessage = axios.isAxiosError(error) ? error.response?.data?.error || "Error al agregar la agencia." : "Error al agregar la agencia.";
             setStatus({ ...status, error: errorMessage, isLoading: false });

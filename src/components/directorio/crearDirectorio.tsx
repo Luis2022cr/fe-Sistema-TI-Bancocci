@@ -68,7 +68,7 @@ const CrearDirectorio: React.FC = () => {
 
             setStatus({ error: null, isLoading: false, successMessage: "Directorio agregado correctamente." });
             setFormState({ extension: '', departamento_id: 0, agencia_id: 0, empleado: '' });
-            // window.location.reload();
+            window.location.reload();
         } catch (error) {
             const errorMessage = axios.isAxiosError(error) ? error.response?.data?.error || "Error al agregar el directorio." : "Error al agregar el directorio.";
             setStatus({ ...status, error: errorMessage, isLoading: false });

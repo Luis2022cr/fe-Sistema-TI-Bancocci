@@ -136,6 +136,8 @@ const CrearInventarios: React.FC = () => {
         tipo_inventario_id: 0, agencias_id_origen: 0,
         agencias_id_actual: 0, estado_id: 0, comentarios: ''
       });
+      window.location.reload();
+
     } catch (error) {
       const errorMessage = axios.isAxiosError(error)
         ? error.response?.data?.error || 'Error al agregar el inventario.'

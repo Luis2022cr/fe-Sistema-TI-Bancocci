@@ -8,7 +8,7 @@ import { useState } from "react";
 import Crear_HistorialUps from "./crear_historialUps";
 import Modal from "../Modal";
 import BotonRegresar from "../Regresar";
-import lista from "../../assets/listaReport.svg"; // Importar el icono de lista de reportes (si no tienes un icono, puedes usar uno de Lucide o FontAwesome)
+import lista from "../../assets/listaReport.svg"; 
 
 const Historial_Ups = () => {
     const { id } = useParams<{ id?: string }>();
@@ -175,7 +175,7 @@ const Historial_Ups = () => {
                         </div>
                         <div className="flex items-center">
                             <CalendarIcon className="w-5 h-5 mr-2 text-red-500" />
-                            <span>Próximo cambio: {formatearFecha(upsData.fecha_instalacion)}</span>
+                            <span>Próximo cambio: {formatearFecha(upsData.proximo_cambio)}</span>
                         </div>
                         <div className="flex items-center">
                             <BatteryIcon className="w-5 h-5 mr-2 text-purple-500" />
