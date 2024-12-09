@@ -21,8 +21,8 @@ interface ExportData {
 
 export default function PaginaDirectorio() {
     const location = useLocation();
-    const isDashboardEmpleados = location.pathname.includes('/dashboard-empleados');
-    const dashboardPath = isDashboardEmpleados ? '/dashboard-empleados' : '/dashboard-admin';
+    const isDashboardEmpleados = location.pathname.includes('/empleado');
+    const dashboardPath = isDashboardEmpleados ? '/empleado' : '/administracion';
 
     const [{ data: agenciaData, loading: loadingAgencias }] = ObtenerAgencia();
     const [{ data: directorioData, loading: loadingDirectorio }] = ObtenerDirectorios();

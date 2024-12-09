@@ -103,7 +103,6 @@ const CrearInventarios: React.FC = () => {
     const { codigo, serie, marca_id, modelo_id, tipo_inventario_id,
       agencias_id_origen, agencias_id_actual, estado_id, comentarios } = formState;
       
-      console.log(modelo_id)
     if (!codigo || !serie || !marca_id || !modelo_id || !tipo_inventario_id || !agencias_id_origen || !agencias_id_actual || !estado_id) {
       setStatus({ ...status, error: 'Por favor, rellena todos los campos.' });
       return;

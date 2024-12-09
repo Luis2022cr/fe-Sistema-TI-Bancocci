@@ -7,7 +7,9 @@ const NotificationList = () => {
     const [notifications, setNotifications] = useState<Notificacion[]>([]);
     const [{ data, loading, error }] = ObtenerNotificaciones(); 
 
-
+    useEffect(() => {
+        document.title = "Notificaciones - Sistema TI Bancocci";
+      }, []);
     useEffect(() => {
         if (data) {
             setNotifications(data); 

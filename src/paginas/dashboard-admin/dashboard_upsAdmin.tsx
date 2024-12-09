@@ -6,7 +6,7 @@ import DashboardButton from "@/components/DashboardButton";
 
 const Dashboard_UpsAdmin: React.FC = () => {
   useEffect(() => {
-    document.title = "Dashboard - Sistema TI Bancocci";
+    document.title = "Administracion - Sistema TI Bancocci";
   }, []);
 
   const getIconByTitle = (title: UpsAdminRouteKeys) => {

@@ -12,7 +12,7 @@ import { IoArrowUndoOutline } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
 import onlineIconSvg from '@/assets/pingtrue.svg';
 import offlineIconSvg from '@/assets/pingFalse.svg';
-import Pagination from '../Pagination'; // Importa el componente de paginación
+import Pagination from '../Pagination'; 
 
 const onlineIcon = L.icon({
   iconUrl: onlineIconSvg,

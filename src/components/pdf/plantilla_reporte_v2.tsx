@@ -9,6 +9,7 @@ import Loading from '../Loading';
 import { ObtenerAgencia } from '@/api_conexion/servicios/agencias';
 import marcaAgua from '@/assets/marca-de-agua.png'
 import logoReporte from '@/assets/occidente-pdf.jpeg'
+import { crearControlEquipo } from '@/api_conexion/servicios/controlEquipo';
 
 interface Agencia {
     id: number;
@@ -52,7 +53,6 @@ const ControlEquiposV2: React.FC = () => {
         recibe: '',
         entrega: '',
     });
-    console.log("Agencia seleccionada:", formData.agencia);
 
     const handleInputChange3 = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
         const { name, value } = e.target;
@@ -129,9 +129,10 @@ const ControlEquiposV2: React.FC = () => {
     };
 
 
-    const captureAndShowPreview = () => {
+    const captureAndShowPreview = async() => {
         setIsLoading(true);
         console.log(formData)
+        await crearControlEquipo(formData);
         setTimeout(() => {
             const input = document.getElementById('pdf-content');
             if (input) {

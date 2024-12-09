@@ -8,7 +8,7 @@ import DashboardButton from "@/components/DashboardButton";
 
 const DashboardInicio: React.FC = () => {
   useEffect(() => {
-    document.title = "Dashboard - Sistema TI Bancocci";
+    document.title = "Empleado - Sistema TI Bancocci";
   }, []);
 
   const getIconByTitle = (title: EmpleadosRouteKeys) => {

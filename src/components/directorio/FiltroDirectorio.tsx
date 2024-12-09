@@ -19,6 +19,7 @@ const FiltroDirectorio: React.FC<FiltroDirectorioProps> = ({
   setSelectedAgencia,
   agencias,
 }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);

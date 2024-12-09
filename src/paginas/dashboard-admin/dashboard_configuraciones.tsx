@@ -7,7 +7,7 @@ import { Dice6, Logs } from "lucide-react";
 
 const Dashboard_ConfigAdmin: React.FC = () => {
   useEffect(() => {
-    document.title = "Dashboard - Sistema TI Bancocci";
+    document.title = "Administracion - Sistema TI Bancocci";
   }, []);
 
   const getIconByTitle = (title: ConfigAdminRoutes) => {

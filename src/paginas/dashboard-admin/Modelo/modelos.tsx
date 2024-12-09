@@ -1,10 +1,8 @@
 import { CpuIcon, Pencil, ServerIcon  } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Loading from "@/components/Loading";
 import Pagination from "@/components/Pagination";
-
-
 import { Modelo, ObtenerModelo } from "@/api_conexion/servicios/modelo";
 import FiltroModelo from "@/components/FiltroModelo";
 
@@ -17,7 +15,9 @@ export default function PaginaModelos() {
 
     const [paginaInicial, setPaginaInicial] = useState(1); // Estado para la paginación
     const itemsPerPage = 12; // Cambia este valor según tus necesidades
-
+    useEffect(() => {
+        document.title = "Modelo - Sistema TI Bancocci";
+      }, []);
     //validacion otencion de datos
     if (!ModeloData) return <div>error al obtener los datos</div>
 
@@ -67,7 +67,7 @@ export default function PaginaModelos() {
                             {/* Botones de editar y borrar */}
                             <div className="absolute flex space-x-2 transition-opacity duration-300 opacity-75 top-3 right-3 hover:opacity-100">
                                 <Link
-                                    to={`/dashboard-admin/actualizar-modelo/${data.id}`}
+                                    to={`/administracion/actualizar-modelo/${data.id}`}
                                     className="text-gray-400 transition-colors duration-300 hover:text-blue-500"
                                 >
                                     <Pencil className="w-5 h-5" />

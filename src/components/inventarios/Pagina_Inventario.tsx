@@ -38,8 +38,8 @@ interface ExportData {
 
 export default function Pagina_Inventario() {
   const location = useLocation();
-  const isDashboardEmpleados = location.pathname.includes('/dashboard-empleados');
-  const dashboardPath = isDashboardEmpleados ? '/dashboard-empleados' : '/dashboard-admin';
+  const isDashboardEmpleados = location.pathname.includes('/empleado');
+  const dashboardPath = isDashboardEmpleados ? '/empleado' : '/administracion';
   
 
   const [{ data: agenciaData, loading: loadingAgencias }] = ObtenerAgencia();

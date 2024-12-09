@@ -17,7 +17,9 @@ export default function PaginaGestionUsuarios() {
 
     const [paginaInicial, setPaginaInicial] = useState(1); // Estado para la paginación
     const itemsPerPage = 12; // Cambia este valor según tus necesidades
-
+    useEffect(() => {
+        document.title = "Usuario - TI Bancocci";
+      }, []);
     // Obtener los datos del Back-End
     useEffect(() => {
         const obtenerUsuarios = async () => {
@@ -99,14 +101,14 @@ export default function PaginaGestionUsuarios() {
                             {/* Botones de editar y borrar */}
                             <div className="absolute top-3 right-3 flex space-x-2 opacity-75 hover:opacity-100 transition-opacity duration-300">
                                 <Link
-                                    to={`/dashboard-admin/gestion-usuarios/editar-usuario/${usuario.id}`}
+                                    to={`/administracion/gestion-usuarios/editar-usuario/${usuario.id}`}
                                     className="text-gray-400 hover:text-blue-500 transition-colors duration-300"
                                 >
                                     <Pencil className="w-5 h-5" />
                                 </Link>
                                 <Link
                                     
-                                    to={`/dashboard-admin/gestion-usuarios/password/${usuario.id}`}
+                                    to={`/administracion/gestion-usuarios/password/${usuario.id}`}
                                     className="text-gray-400 hover:text-red-500 transition-colors duration-300"
                                 >
                                     <KeyRound className="w-5 h-5" />

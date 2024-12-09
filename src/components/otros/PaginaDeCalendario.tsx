@@ -74,7 +74,7 @@ const Calendario: React.FC = () => {
                     <p className="text-sm text-gray-600">{activity.agencia}</p>
                   </div>
                   <NavLink
-                    to={`/dashboard-admin/historial_ups/${activity.id}`} // Cambia la ruta según tu necesidad
+                    to={`/administracion/historial_ups/${activity.id}`} // Cambia la ruta según tu necesidad
                     className="px-4 py-2 text-sm text-orange-500 hover:underline flex items-center"
                   >
                     Ver detalles

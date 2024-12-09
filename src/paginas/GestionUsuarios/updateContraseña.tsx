@@ -12,11 +12,14 @@ interface UsuarioCreadoModalProps {
 }
 
 const EditContraseñaModal: React.FC<UsuarioCreadoModalProps> = ({ isOpen, contraseña }) => {
+    useEffect(() => {
+        document.title = "Usuario - TI Bancocci";
+      }, []);
     const navigate = useNavigate(); 
     if (!isOpen) return null;
 
     const handleClose = () => {
-        navigate('/dashboard-admin/gestion-usuarios'); 
+        navigate('/administracion/gestion-usuarios'); 
     };
 
     return (

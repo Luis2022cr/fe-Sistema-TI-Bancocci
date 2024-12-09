@@ -4,15 +4,18 @@ import profile from "@/assets/usuario.png";
 import Loading from './Loading';
 import { ObtenerPerfil } from '@/api_conexion/servicios/perfil';
 import { Link } from "react-router-dom";
+import { useEffect } from 'react';
 
 export default function Perfil() {
     const { usuario } = useAuth();
     const [{ data: perfilData, loading: loadingPerfil }] = ObtenerPerfil();
+    useEffect(() => {
+        document.title = "Perfil - Sistema TI Bancocci";
+      }, []);
 
     if (loadingPerfil) {
         return <Loading />;
     }
-
     const usuarioPerfil = perfilData;
 
     if (!usuario || !usuarioPerfil) {
@@ -35,8 +38,8 @@ export default function Perfil() {
     localStorage.setItem('ultimaSesion', obtenerFechaHoraActual());
 
     const cambiarContraseñaRuta = usuarioPerfil.rol === "admin"
-        ? "/dashboard-admin/perfil/cambiar-contraseña"
-        : "/dashboard-empleados/perfil/cambiar-contraseña";
+        ? "/administracion/perfil/cambiar-contraseña"
+        : "/empleado/perfil/cambiar-contraseña";
 
     return (
         <div className="profile-card">

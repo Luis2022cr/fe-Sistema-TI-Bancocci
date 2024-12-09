@@ -20,8 +20,8 @@ const FiltroInventario: React.FC<FiltroInventarioProps> = ({
 }) => {
 
     const location = useLocation();
-    const isDashboardEmpleados = location.pathname.includes('/dashboard-empleados');
-    const dashboardPath = isDashboardEmpleados ? '/dashboard-empleados' : '/dashboard-admin';
+    const isDashboardEmpleados = location.pathname.includes('/empleado');
+    const dashboardPath = isDashboardEmpleados ? '/empleado' : '/administracion';
 
 
     return (

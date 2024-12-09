@@ -51,7 +51,7 @@ export default function Pagina_Ups() {
   const paginatedData = filtroUps.slice((paginaInicial - 1) * itemsPerPage, paginaInicial * itemsPerPage);
 
   
-  const isAdminDashboard = window.location.pathname.includes('dashboard-admin');
+  const isAdminDashboard = window.location.pathname.includes('administracion');
 
   return (
     <>
@@ -123,14 +123,14 @@ export default function Pagina_Ups() {
               </div>
               <div className="flex justify-end p-4 space-x-2 bg-gray-100">
                 <Link
-                  to={isAdminDashboard ? `/dashboard-admin/ups/editar-ups/${ups.id}` : `/dashboard-empleados/ups/editar-ups/${ups.id}`}
+                  to={isAdminDashboard ? `/administracion/ups/editar-ups/${ups.id}` : `/empleado/ups/editar-ups/${ups.id}`}
 
                   className="p-2 text-white transition-colors bg-orange-500 rounded-full hover:bg-orange-600">
                   <PencilIcon className="w-5 h-5" />
                 </Link>
                 {/* Condicionalmente cambia el enlace según la ruta actual */}
                 <Link
-                  to={isAdminDashboard ? `/dashboard-admin/historial_ups/${ups.id}` : `/dashboard-empleados/historial_ups/${ups.id}`}
+                  to={isAdminDashboard ? `/administracion/historial_ups/${ups.id}` : `/empleado/historial_ups/${ups.id}`}
                   className="p-2 text-white transition-colors bg-yellow-700 rounded-full hover:bg-yellow-800"
                 >
                   <ClockIcon className="w-5 h-5" />

@@ -15,6 +15,9 @@ const UpdateUsuario: React.FC = () => {
     const { id } = useParams<{ id?: string }>();
     const numericId = id ? parseInt(id, 10) : undefined;
     const navigate = useNavigate();
+    useEffect(() => {
+        document.title = "Usuario - TI Bancocci";
+      }, []);
 
     const [{ data: usuario, error }] = ObtenerUsuariosById(numericId!);
     
@@ -67,7 +70,7 @@ const UpdateUsuario: React.FC = () => {
             await UpdateUsuarios(numericId!, formData);
             setMessage('Usuario actualizado exitosamente.');
             setTimeout(() => {
-                navigate('/dashboard-admin/gestion-usuarios');
+                navigate('/administracion/gestion-usuarios');
             }, 500);
         } catch (error) {
             if (axios.isAxiosError(error)) {

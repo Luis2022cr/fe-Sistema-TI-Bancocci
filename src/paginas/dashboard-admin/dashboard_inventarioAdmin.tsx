@@ -12,7 +12,7 @@ import DashboardButton from "@/components/DashboardButton";
 
 const Dashboard_inventarioAdmin: React.FC = () => {
   useEffect(() => {
-    document.title = "Dashboard - Sistema TI Bancocci";
+    document.title = "Administracion - Sistema TI Bancocci";
   }, []);
 
   const getIconByTitle = (title: InventarioAdminRouteKeys) => {

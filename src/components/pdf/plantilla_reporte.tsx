@@ -1,43 +1,96 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import domtoimage from 'dom-to-image';
 import jsPDF from 'jspdf';
 import { X } from 'lucide-react';
 import { FiLoader } from 'react-icons/fi';
 import BotonRegresar from '../Regresar';
+import {  ObtenerControlById } from '@/api_conexion/servicios/controlEquipo';
+import Loading from '../Loading';
 
 const ControlEquipos: React.FC = () => {
     const [isLoading, setIsLoading] = useState(false);
+    const [{ data: controlData, loading: loadingControl }] = ObtenerControlById(4);
 
-    const [formData, setFormData] = useState({
-        fecha: '',
-        fecha1: '',
-        fecha2: '',
-        tecnico: '',
-        agencia: '',
-        infraestructura: false,
-        ticketAyuda: '',
-        id1: '',
-        id2: '',
-        equipoReparacion: false,
-        equipoPrestado: false,
-        otrosEspecificar: '',
-        cambioEquipo: false,
-        devolucionEquipo: false,
-        entregaEquipo: false,
-        equipoReparado: false,
-        soporte: false,
-        equipos: Array(8).fill({
-            descripcionEquipo: '',
-            inventario: '',
-            modeloTipo: '',
-            serie: '',
-            pertenece: '',
-            destino: '',
-        }),
-        observaciones: '',
-        recibe: '',
-        entrega: '',
+const [formData, setFormData] = useState({
+  fecha: '',
+  fecha1: '',
+  fecha2: '',
+  tecnico: '',
+  agencia: '',
+  infraestructura: false,
+  ticketAyuda: '',
+  id1: '',
+  id2: '',
+  equipoReparacion: false,
+  equipoPrestado: false,
+  otrosEspecificar: '',
+  cambioEquipo: false,
+  devolucionEquipo: false,
+  entregaEquipo: false,
+  equipoReparado: false,
+  soporte: false,
+  equipos: Array(8).fill({
+    descripcionEquipo: '',
+    inventario: '',
+    modeloTipo: '',
+    serie: '',
+    pertenece: '',
+    destino: '',
+  }),
+  observaciones: '',
+  recibe: '',
+  entrega: '',
+});
+
+useEffect(() => {
+  if (controlData) {
+    // Actualizar formData con los datos obtenidos
+    setFormData({
+      fecha: controlData.fecha || '',
+      tecnico: controlData.tecnico || '',
+      agencia: controlData.agencia || '',
+      infraestructura: controlData.infraestructura === 1, // Asumiendo que el valor 1 es true
+      ticketAyuda: controlData.ticket_ayuda || '',
+      equipoReparacion: controlData.equipo_reparacion === 1, // Asumiendo que el valor 1 es true
+      equipoPrestado: controlData.equipo_prestado === 1, // Asumiendo que el valor 1 es true
+      otrosEspecificar: controlData.otros_especificar || '',
+      cambioEquipo: controlData.cambio_equipo === 1, // Asumiendo que el valor 1 es true
+      devolucionEquipo: controlData.devolucion_equipo === 1, // Asumiendo que el valor 1 es true
+      entregaEquipo: controlData.entrega_equipo === 1, // Asumiendo que el valor 1 es true
+      equipoReparado: controlData.equipo_reparado === 1, // Asumiendo que el valor 1 es true
+      soporte: controlData.soporte === 1, // Asumiendo que el valor 1 es true
+      observaciones: controlData.observaciones || '',
+      
+      // Aquí mapeamos los equipos y completamos los vacíos si es necesario
+      equipos: [
+        ...controlData.equipos.map((equipo) => ({
+          descripcionEquipo: equipo.descripcion_equipo || '',
+          inventario: equipo.inventario || '',
+          modeloTipo: equipo.modelo_tipo || '',
+          serie: equipo.serie || '',
+          pertenece: equipo.pertenece || '',
+          destino: equipo.destino || '',
+        })),
+        ...Array(8 - controlData.equipos.length).fill({
+          descripcionEquipo: '',
+          inventario: '',
+          modeloTipo: '',
+          serie: '',
+          pertenece: '',
+          destino: '',
+        }), // Completa con objetos vacíos si hay menos de 8 equipos
+      ],
+      
+      // Los campos 'fecha1' y 'fecha2' no están presentes en la respuesta de la API, por lo que quedarán vacíos.
+      fecha1: '', // Puedes actualizar esto si tienes una lógica para 'fecha1' y 'fecha2'
+      fecha2: '',
+      id1: '',
+      id2: '',
+      recibe: '',
+      entrega: '',
     });
+  }
+}, [controlData]);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, index?: number) => {
         const { name, value, type } = e.target;
@@ -61,7 +114,9 @@ const ControlEquipos: React.FC = () => {
         }));
     };
 
-
+    if ( loadingControl) return <Loading />;
+    if ( !controlData) return <div>Error al obtener los datos</div>;
+    
     const captureAndShowPreview = () => {
         setIsLoading(true); // Establecer isLoading en true
 

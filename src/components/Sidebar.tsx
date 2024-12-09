@@ -36,11 +36,11 @@ const Sidebar: React.FC = () => {
     <aside className="bg-orange-500 text-white h-screen w-40 hidden md:flex text-sm fixed mt-14">
       <nav className="mt-5">
         <ul className="space-y-2">
-          {location.pathname.includes("dashboard-empleados") && (
+          {location.pathname.includes("empleado") && (
             <>
               <li>
                 <NavLink
-                  to="/dashboard-empleados/main"
+                  to="/empleado/main"
                   className={({ isActive }) =>
                     `flex items-center py-3 px-6 hover:bg-gray-700 ${
                       isActive ? "bg-gray-700" : ""
@@ -53,7 +53,7 @@ const Sidebar: React.FC = () => {
               </li>
               <li>
                 <NavLink
-                  to="/dashboard-empleados/notificaciones"
+                  to="/empleado/notificaciones"
                   className={({ isActive }) =>
                     `flex items-center py-3 px-6  hover:bg-gray-700 ${
                       isActive ? "bg-gray-700" : ""
@@ -69,7 +69,7 @@ const Sidebar: React.FC = () => {
               </li>
               <li>
                 <NavLink
-                  to="/dashboard-empleados/perfil"
+                  to="/empleado/perfil"
                   className={({ isActive }) =>
                     `flex items-center py-3 px-6 hover:bg-gray-700 ${
                       isActive ? "bg-gray-700" : ""
@@ -82,7 +82,7 @@ const Sidebar: React.FC = () => {
               </li>
               <li>
                 <NavLink
-                  to="/dashboard-empleados/calendario"
+                  to="/empleado/calendario"
                   className={({ isActive }) =>
                     `flex items-center py-3 px-6 hover:bg-gray-700 ${
                       isActive ? "bg-gray-700" : ""
@@ -99,11 +99,11 @@ const Sidebar: React.FC = () => {
 
           {/* DASHBOARD DE ADMINITRADOR */}
 
-          {location.pathname.includes("dashboard-admin") && (
+          {location.pathname.includes("administracion") && (
             <>
               <li>
                 <NavLink
-                  to="/dashboard-admin/main"
+                  to="/administracion/main"
                   className={({ isActive }) =>
                     `flex items-center py-3 px-6 hover:bg-gray-700 ${
                       isActive ? "bg-gray-700" : ""
@@ -116,7 +116,7 @@ const Sidebar: React.FC = () => {
               </li>
               <li>
                 <NavLink
-                  to="/dashboard-admin/notificaciones"
+                  to="/administracion/notificaciones"
                   className={({ isActive }) =>
                     `flex items-center py-3 px-6 hover:bg-gray-700 ${
                       isActive ? "bg-gray-700" : ""
@@ -132,7 +132,7 @@ const Sidebar: React.FC = () => {
               </li>
               <li>
                 <NavLink
-                  to="/dashboard-admin/perfil"
+                  to="/administracion/perfil"
                   className={({ isActive }) =>
                     `flex items-center py-3 px-6 hover:bg-gray-700 ${
                       isActive ? "bg-gray-700" : ""
@@ -145,7 +145,7 @@ const Sidebar: React.FC = () => {
               </li>
               <li>
                 <NavLink
-                  to="/dashboard-admin/calendario"
+                  to="/administracion/calendario"
                   className={({ isActive }) =>
                     `flex items-center py-3 px-6 hover:bg-gray-700 ${
                       isActive ? "bg-gray-700" : ""
@@ -158,7 +158,7 @@ const Sidebar: React.FC = () => {
               </li>
               <li>
                 <NavLink
-                  to="/dashboard-admin/configuraciones"
+                  to="/administracion/configuraciones"
                   className={({ isActive }) =>
                     `flex items-center py-3 px-6 hover:bg-gray-700 ${
                       isActive ? "bg-gray-700" : ""

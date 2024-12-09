@@ -33,7 +33,9 @@ const CrearUsuario: React.FC = () => {
     nombre: '',
     contraseña: ''
   });
-
+  useEffect(() => {
+    document.title = "Usuario - TI Bancocci";
+  }, []);
   useEffect(() => {
     const obtenerRoles = async () => {
       try {
