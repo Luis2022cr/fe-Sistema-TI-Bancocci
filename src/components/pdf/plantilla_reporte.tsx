@@ -7,10 +7,13 @@ import BotonRegresar from '../Regresar';
 import {  ObtenerControlById } from '@/api_conexion/servicios/controlEquipo';
 import Loading from '../Loading';
 import marcaAgua from '@/assets/marca-de-agua.png'
+import { useParams } from 'react-router-dom';
 
 const HistorialporID: React.FC = () => {
+    const { id } = useParams<{ id?: string }>();
+    const NumericId = id ? parseInt(id, 10) : undefined;
     const [isLoading, setIsLoading] = useState(false);
-    const [{ data: controlData, loading: loadingControl }] = ObtenerControlById(4);
+    const [{ data: controlData, loading: loadingControl }] = ObtenerControlById(NumericId);
 
 const [formData, setFormData] = useState({
   fecha: '',
@@ -195,15 +198,15 @@ useEffect(() => {
                         </label>
                     </div>
 
-                    <table className=" border-collapse mb-7 text-2xl">
+                    <table className=" border-collapse mb-7 text-xl">
                         <tbody>
                             <tr>
-                                <td className="p-1 border border-black w-1/4">Fecha: <input disabled type="text" name="fecha" value={formData.fecha} onChange={handleInputChange} className="w-3/5 border-none" /></td>
-                                <td colSpan={3} className="p-1 border border-black w-full">Técnico: <input disabled type="text" name="tecnico" value={formData.tecnico} onChange={handleInputChange} className="w-4/5 border-none" /></td>
+                                <td className="p-1 border border-black w-1/4">Fecha: <input disabled type="text" name="fecha" value={formData.fecha} onChange={handleInputChange} className="w-3/5 border-none font-semibold" /></td>
+                                <td colSpan={3} className="p-1 border border-black w-full">Técnico: <input disabled type="text" name="tecnico" value={formData.tecnico} onChange={handleInputChange} className="w-4/5 border-none font-semibold" /></td>
                             </tr>
                             <tr>
-                                <td className="p-1 border border-black w-1/4 text-xl ">Agencia: <input disabled type="text" name="agencia" value={formData.agencia} onChange={handleInputChange} className="w-3/5 border-none" /></td>
-                                <td colSpan={3} className="p-1 border-r flex border-black w-full gap-40">
+                                <td className="p-1 border border-black w-1/4 text-xl ">Agencia: <input disabled type="text" name="agencia" value={formData.agencia} onChange={handleInputChange} className="w-3/5 border-none text-sm font-semibold" /></td>
+                                <td colSpan={3} className="p-1 border-r flex border-black w-full gap-24">
                                     {/* Área de Infraestructura y Taller */}
                                     <div className="flex items-center ">
                                         <label className="ml-2  mr-5 whitespace-nowrap">
@@ -327,7 +330,7 @@ useEffect(() => {
                                         {/* Segunda columna */}
                                         <div className="flex flex-col">
                                             <div className="flex items-center mb-3">
-                                                <label className="text-xl mr-3">
+                                                <label className="text-xl mr-3 whitespace-nowrap">
                                                     Entrega de Equipo Prestado
                                                 </label>
                                                 <div className="relative w-9 rounded-lg h-6 border-4 ml-16 bg-white border-black flex items-center justify-center">

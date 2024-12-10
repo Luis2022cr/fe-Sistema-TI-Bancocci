@@ -10,6 +10,7 @@ import { ObtenerAgencia } from '@/api_conexion/servicios/agencias';
 import marcaAgua from '@/assets/marca-de-agua.png'
 import logoReporte from '@/assets/occidente-pdf.jpeg'
 import { crearControlEquipo } from '@/api_conexion/servicios/controlEquipo';
+import axios from 'axios';
 
 interface Agencia {
     id: number;
@@ -18,10 +19,11 @@ interface Agencia {
 }
 
 
-const ControlEquiposV2: React.FC = () => {
+const CrearControlEquipos: React.FC = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [{ data: inventarioData, loading: loadingInventario }] = ObtenerInventarios();
     const [{ data: agenciaData, loading: loadingAgencias }] = ObtenerAgencia();
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
     const [formData, setFormData] = useState({
         fecha: '',
@@ -81,7 +83,7 @@ const ControlEquiposV2: React.FC = () => {
                         serie: inventarioMatch.serie || '',
                         descripcionEquipo: inventarioMatch.tipo_inventario || '',
                         modeloTipo: inventarioMatch.modelo || '',
-                        pertenece: inventarioMatch.agencia_origen || '',
+                        pertenece: inventarioMatch.codigo_agencia_origen || '',
                     };
                 }
             }
@@ -105,7 +107,8 @@ const ControlEquiposV2: React.FC = () => {
         // Filtrar sugerencias basadas en la entrada del usuario
         if (name === "agencia") {
             const suggestions = agenciaData?.filter((agencia) =>
-                agencia.nombre.toLowerCase().includes(value.toLowerCase())
+                agencia.nombre.toLowerCase().includes(value.toLowerCase()) ||
+                agencia.codigo.toString().toLowerCase().includes(value.toLowerCase())
             );
             setFilteredAgencias(suggestions || []);
         }
@@ -130,38 +133,49 @@ const ControlEquiposV2: React.FC = () => {
 
 
     const captureAndShowPreview = async() => {
-        setIsLoading(true);
-        console.log(formData)
-        await crearControlEquipo(formData);
-        setTimeout(() => {
-            const input = document.getElementById('pdf-content');
-            if (input) {
-                domtoimage.toPng(input, { bgcolor: '#ffffff', quality: 8 })
-                    .then((dataUrl) => {
-                        const pdf = new jsPDF({
-                            orientation: 'portrait',
-                            unit: 'px',
-                            format: 'letter',
+        try{
+            setIsLoading(true);
+            await crearControlEquipo(formData);
+            setTimeout(() => {
+                const input = document.getElementById('pdf-content');
+                if (input) {
+                    domtoimage.toPng(input, { bgcolor: '#ffffff', quality: 8 })
+                        .then((dataUrl) => {
+                            const pdf = new jsPDF({
+                                orientation: 'portrait',
+                                unit: 'px',
+                                format: 'letter',
+                            });
+                            const imgProps = pdf.getImageProperties(dataUrl);
+                            const pdfWidth = pdf.internal.pageSize.getWidth();
+                            const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+    
+                            pdf.addImage(dataUrl, 'PNG', 0, 5, pdfWidth, pdfHeight);
+                            const blob = pdf.output('blob');
+                            const url = URL.createObjectURL(blob);
+                            window.open(url);
+    
+                            setIsLoading(false);
+                            window.location.reload();
+
+                        })
+                        .catch((error) => {
+                            console.error('Error al generar el PDF:', error);
+                            setIsLoading(false);
                         });
-                        const imgProps = pdf.getImageProperties(dataUrl);
-                        const pdfWidth = pdf.internal.pageSize.getWidth();
-                        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
 
-                        pdf.addImage(dataUrl, 'PNG', 0, 5, pdfWidth, pdfHeight);
-                        const blob = pdf.output('blob');
-                        const url = URL.createObjectURL(blob);
-                        window.open(url);
-
-                        setIsLoading(false);
-                    })
-                    .catch((error) => {
-                        console.error('Error al generar el PDF:', error);
-                        setIsLoading(false);
-                    });
-            } else {
-                setIsLoading(false);
+                } 
+            }, 100); 
+        }catch(error){
+            if (axios.isAxiosError(error)) {
+                const respuestaError = error.response?.data?.error;
+                setErrorMessage(respuestaError || "Error al actualizar el directorio.");
             }
-        }, 100); // Retraso de 100ms para permitir que el DOM se actualice
+        }
+        finally {
+            setIsLoading(false);
+        }
+        
     };
 
     if (loadingInventario || loadingAgencias) return <Loading />;
@@ -177,7 +191,7 @@ const ControlEquiposV2: React.FC = () => {
             <div className='mx-5 text-black '>
                 <div className="font-sans p-10" id="pdf-content">
                     <div className='flex justify-between items-center mb-5'>
-                        <img src={logoReporte} alt="logo" className="font-bold text-lg mb-5" />
+                        <img src={logoReporte} alt="logo" className="font-bold text-lg mb-5 pointer-events-none" />
                         <div className="text-center font-semibold text-3xl mr-16 whitespace-nowrap">
                             Control de Entradas y Salidas de Equipos
                         </div>
@@ -187,7 +201,7 @@ const ControlEquiposV2: React.FC = () => {
                     <img
                         src={marcaAgua}
                         alt="Marca de Agua"
-                        className="absolute inset-0 opacity-10"
+                        className="absolute inset-0 z-0 opacity-10 "
                         style={{
                             width: '1000px',
                             height: '230vh',
@@ -198,18 +212,17 @@ const ControlEquiposV2: React.FC = () => {
                         }}
                     />
 
-
                     <div className="flex flex-col items-center ">
                         <label className='text-orange-400 flex items-center'>
                             <label className='mr-2 font-semibold text-2xl whitespace-nowrap'>DATOS GENERALES</label>
                             <div className="w-96 h-3 bg-orange-400 "></div>
                             <div className="w-96 h-3 bg-orange-400"></div>
                             <div className="w-48 h-3 bg-orange-400"></div>
-                            <div className="w-9 h-3 bg-orange-400"></div>
+                            {/* <div className="w-9 h-3 bg-orange-400"></div> */}
                         </label>
                     </div>
 
-                    <table className=" border-collapse mb-7 text-2xl">
+                    <table className=" border-collapse mb-7 text-xl">
                         <tbody>
                             <tr>
                                 <td className="p-1 border border-black w-1/4">Fecha: <input type="text" name="fecha" value={formData.fecha} onChange={handleInputChange} className="w-3/5 border-none" /></td>
@@ -225,7 +238,7 @@ const ControlEquiposV2: React.FC = () => {
                                         onChange={handleInputChange}
                                         onFocus={() => setShowSuggestions(true)}
                                         placeholder="Escribe la agencia"
-                                        className="w-[200px] border-none bg-transparent text-base ml-1 text-center"
+                                        className="w-[250px] border-none bg-transparent text-sm text-center"
                                     />
                                     {showSuggestions && filteredAgencias.length > 0 && (
                                         <ul className="absolute bg-white border border-gray-300 w-full max-h-40 overflow-y-auto z-10">
@@ -242,10 +255,10 @@ const ControlEquiposV2: React.FC = () => {
                                     )}
                                 </td>
 
-                                <td colSpan={3} className="p-1 border-r flex border-black w-full gap-40">
+                                <td colSpan={3} className="p-1 border-r flex border-black w-full gap-24">
                                     {/* Área de Infraestructura y Taller */}
                                     <div className="flex items-center ">
-                                        <label className="ml-2  mr-5 whitespace-nowrap">
+                                        <label className="ml-2 mr-5 whitespace-nowrap">
                                             Área de Infraestructura y Taller:
                                         </label>
                                         <div className="relative w-9 rounded-lg h-6 border-4 bg-white border-black flex items-center justify-center">
@@ -296,7 +309,7 @@ const ControlEquiposV2: React.FC = () => {
                             <div className="w-96 h-3 bg-orange-400 "></div>
                             <div className="w-96 h-3 bg-orange-400"></div>
                             <div className="w-28 h-3 bg-orange-400"></div>
-                            <div className="w-8 h-3 bg-orange-400"></div>
+                            {/* <div className="w-8 h-3 bg-orange-400"></div> */}
                         </label>
                     </div>
 
@@ -366,7 +379,7 @@ const ControlEquiposV2: React.FC = () => {
                                         {/* Segunda columna */}
                                         <div className="flex flex-col">
                                             <div className="flex items-center mb-3">
-                                                <label className="text-xl mr-3">
+                                                <label className="text-xl mr-3 whitespace-nowrap">
                                                     Entrega de Equipo Prestado
                                                 </label>
                                                 <div className="relative w-9 rounded-lg h-6 border-4 ml-16 bg-white border-black flex items-center justify-center">
@@ -453,8 +466,8 @@ const ControlEquiposV2: React.FC = () => {
                                                 name={field}
                                                 value={equipo[field as keyof typeof equipo]}
                                                 onChange={(e) => handleInputChange3(e, index)}
-                                                className={`border-none text-center font-medium ${field === 'descripcionEquipo' ? 'w-10/12 text-xl' : 'w-full text-base'}`}
-                                                style={{ height: '25px' }}
+                                                className={`border-none text-center font-medium ${field === 'descripcionEquipo' ? 'w-3/4 text-xl' : 'w-full text-base'}`}
+                                                style={{ height: '30px' }}
                                             />
                                         </td>
                                     ))}
@@ -604,14 +617,14 @@ const ControlEquiposV2: React.FC = () => {
                                             </div>
 
                                             <div className="flex items-center w-1/2 ml-2">
-                                                <span className="mr-2 text-xl">Fecha:</span>
+                                                <span className="mr-2 text-xl ">Fecha:</span>
                                                 <input
                                                     type="text"
                                                     name="fecha2"
                                                     value={formData.fecha2}
                                                     onChange={handleInputChange}
                                                     placeholder="_____/______/_____"
-                                                    className="w-3/4 border-none underline text-xl"
+                                                    className="w-3/4 border-none underline text-xl text-black"
                                                 />
 
                                             </div>
@@ -659,7 +672,7 @@ const ControlEquiposV2: React.FC = () => {
 
                             {/* Firma jefe inmediato */}
                             <tr>
-                                <td colSpan={4} className="p-1 border-l border-b border-r border-black w-full">
+                                <td colSpan={4} className="p-1 border-l border-b border-r  w-full">
                                     <div className="flex justify-center items-center mt-10">
                                         <div className="ml-10">
                                             <div className="flex mb-2 justify-center w-full">
@@ -667,7 +680,7 @@ const ControlEquiposV2: React.FC = () => {
                                                     <input
                                                         type="text"
                                                         name="firma"
-                                                        className="w-3/4 h-3/4 px-2 border-none"
+                                                        className="w-3/4 h-3/4 px-2 border-none caret-orange-700"
                                                     />
                                                 </div>
                                             </div>
@@ -682,18 +695,20 @@ const ControlEquiposV2: React.FC = () => {
                         </tbody>
                     </table>
                 </div>
+                {errorMessage && <div className="text-red-500 mb-4 text-center">{errorMessage}</div>}
                 <button onClick={captureAndShowPreview} className="bg-orange-500 hover:bg-orange-700 text-white p-2 rounded w-full mb-10" disabled={isLoading}
                 >
                     {isLoading ? (
 
                         <FiLoader className="mr-2 animate-spin text-center mx-[650px]" />
                     ) : (
-                        "Ver vista previa"
+                        "Generar control de equipo"
                     )}
                 </button>
+
             </div>
         </>
     );
 };
 
-export default ControlEquiposV2;
+export default CrearControlEquipos;

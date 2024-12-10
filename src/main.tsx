@@ -46,10 +46,10 @@ import UpdateMarca from './paginas/dashboard-admin/Marca/updateMarca';
 import CrearModelo from './paginas/dashboard-admin/Modelo/crearModelo';
 import PaginaModelos from './paginas/dashboard-admin/Modelo/modelos';
 import UpdateModelo from './paginas/dashboard-admin/Modelo/updateModelo';
-import ControlEquiposV2 from './components/pdf/plantilla_reporte_v2';
 import Dashboard_Control from './paginas/dashboard-empleados/dashboard_control';
 import HistorialporID from './components/pdf/plantilla_reporte';
 import HistorialControlEquipo from './components/pdf/historialDeControl';
+import CrearControlEquipos from './components/pdf/CrearControlEquipos';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
@@ -64,7 +64,7 @@ root.render(
             <Route index element={<App />} />
             <Route path="login" element={<Login />} />
             <Route path="empleado/historial-control-equipo/:id" element={<HistorialporID />} /> {/* ver reporte por id */}
-            <Route path="empleado/crear-control-equipo" element={<ControlEquiposV2 />} /> {/* crear control de equipo */}
+            <Route path="empleado/crear-control-equipo" element={<CrearControlEquipos />} /> {/* crear control de equipo */}
           </Route>
 
           <Route path="/" element={<Layout_2 />}>

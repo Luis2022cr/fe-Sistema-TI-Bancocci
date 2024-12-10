@@ -13,6 +13,7 @@ export interface Inventario {
     marca: string;
     agencia_origen: string;
     agencia_actual: string;
+    codigo_agencia_origen: number;
     estado: string;
     usuario: string;
 }

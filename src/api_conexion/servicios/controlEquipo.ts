@@ -49,8 +49,8 @@ export interface Reparacion {
     soporte: number;
     observaciones: string;
     fecha_creacion: string; // Fecha en formato ISO
-    fecha_modificacion: string; // Fecha en formato ISO
     equipos: EquipoReparacion[]; // Arreglo de equipos relacionados a la reparación
+    [key: string]: number | string | EquipoReparacion[]; // Agregar la firma de índice
 }
 
 export interface EquipoReparacion {
@@ -61,11 +61,12 @@ export interface EquipoReparacion {
     serie: string;
     pertenece: string;
     destino: string;
+
 }
 
 
-export const ObtenerControlById = (id: number) => {
-    id = 4;
+export const ObtenerControlById = (id?: number) => {
+    
     const response = useAxios<Reparacion>({
       url: `/control_equipo/${id}`,
     },{
@@ -83,3 +84,16 @@ export const ObtenerControlById = (id: number) => {
     });
     return response;
   };
+
+  export interface Solicitud {
+    equipo_reparacion: number;
+    equipo_prestado: number;
+    cambio_equipo: number;
+    devolucion_equipo: number;
+    entrega_equipo: number;
+    equipo_reparado: number;
+    infraestructura: number;
+    soporte: number;
+    [key: string]: number; // Permite acceso dinámico con claves string
+  }
+  
