@@ -20,7 +20,7 @@ const DashboardInicio: React.FC = () => {
           return <img src={directorio} alt="directorio" width={150} height={150}  />;
           case "Inventario TI":
         return <img src={inventarios} alt="inventario" width={150} height={150}  />;
-        case "Reporte E/S Equipo":
+        case "Entrada y salida Equipo":
         return <img src={reporte} alt="inventario" width={150} height={150}  />;
       default:
         return null;

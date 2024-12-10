@@ -44,7 +44,7 @@ export const empleadosRoutes = {
   "Informe UPS": "/empleado/informes-ups",
   "Directorio TI": "/empleado/directorio",
   "Inventario TI": "/empleado/inventario-ti",
-  "Reporte E/S Equipo": "/empleado/reportes",
+  "Entrada y salida Equipo": "/empleado/control-equipo",
  
 } as const;
 
@@ -90,3 +90,12 @@ export const configAdminRoutes = {
 } as const;
 
 export type ConfigAdminRoutes = keyof typeof configAdminRoutes;
+
+export const controlRoutes = {
+
+  "Historial Entradas y Salidas de Equipo": "/empleado/historial/control-equipo",
+  "Crear nueva Entrada o Salida": "/empleado/crear-control-equipo",
+ 
+} as const;
+
+export type ControlRouteKeys = keyof typeof controlRoutes;

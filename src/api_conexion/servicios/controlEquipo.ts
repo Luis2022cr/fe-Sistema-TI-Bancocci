@@ -73,3 +73,13 @@ export const ObtenerControlById = (id: number) => {
     });
     return response;
   };
+
+  export const ObtenerControlEquipo = () => {
+    
+    const response = useAxios<Reparacion[]>({
+      url: `/control_equipo`,
+    },{
+      useCache: false,
+    });
+    return response;
+  };

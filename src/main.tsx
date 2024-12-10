@@ -47,6 +47,9 @@ import CrearModelo from './paginas/dashboard-admin/Modelo/crearModelo';
 import PaginaModelos from './paginas/dashboard-admin/Modelo/modelos';
 import UpdateModelo from './paginas/dashboard-admin/Modelo/updateModelo';
 import ControlEquiposV2 from './components/pdf/plantilla_reporte_v2';
+import Dashboard_Control from './paginas/dashboard-empleados/dashboard_control';
+import HistorialporID from './components/pdf/plantilla_reporte';
+import HistorialControlEquipo from './components/pdf/historialDeControl';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
@@ -60,8 +63,8 @@ root.render(
           <Route path="/" element={<Layout />}>
             <Route index element={<App />} />
             <Route path="login" element={<Login />} />
-            {/* <Route path="empleado/reportes" element={<ControlEquipos />} /> */}
-            <Route path="empleado/reportes" element={<ControlEquiposV2 />} />
+            <Route path="empleado/historial-control-equipo/:id" element={<HistorialporID />} /> {/* ver reporte por id */}
+            <Route path="empleado/crear-control-equipo" element={<ControlEquiposV2 />} /> {/* crear control de equipo */}
           </Route>
 
           <Route path="/" element={<Layout_2 />}>
@@ -71,6 +74,7 @@ root.render(
               <Route path="empleado/main" element={<DashboardInicio />} />
               <Route path="empleado/informes-ups" element={<Dashboard_Ups />} />
               <Route path="empleado/inventario-ti" element={<Dashboard_inventario />} />
+              <Route path="empleado/control-equipo" element={<Dashboard_Control />} />
               <Route path="empleado/directorio" element={<Directorio />} />
               <Route path="empleado/directorio/:id" element={<UpdateDirectorio />} />
               <Route path="empleado/calendario" element={<Calendario />} />
@@ -86,6 +90,7 @@ root.render(
               <Route path="empleado/perfil/cambiar-contraseña" element={<UpdateContraseñaP />} />
               <Route path="empleado/ups/editar-ups/:id" element={<UdpateUps />} />
               <Route path="empleado/crear/ups" element={<CrearUpsForm />} />
+              <Route path="empleado/historial/control-equipo" element={<HistorialControlEquipo />} />
 
             </Route>
 

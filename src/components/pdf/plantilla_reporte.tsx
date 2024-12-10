@@ -6,8 +6,9 @@ import { FiLoader } from 'react-icons/fi';
 import BotonRegresar from '../Regresar';
 import {  ObtenerControlById } from '@/api_conexion/servicios/controlEquipo';
 import Loading from '../Loading';
+import marcaAgua from '@/assets/marca-de-agua.png'
 
-const ControlEquipos: React.FC = () => {
+const HistorialporID: React.FC = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [{ data: controlData, loading: loadingControl }] = ObtenerControlById(4);
 
@@ -170,7 +171,7 @@ useEffect(() => {
                     </div>
 
                     <img
-                        src="/src/assets/marca-de-agua.png"
+                        src={marcaAgua}
                         alt="Marca de Agua"
                         className="absolute inset-0 opacity-10"
                         style={{
@@ -190,18 +191,18 @@ useEffect(() => {
                             <div className="w-96 h-3 bg-orange-400 "></div>
                             <div className="w-96 h-3 bg-orange-400"></div>
                             <div className="w-48 h-3 bg-orange-400"></div>
-                            <div className="w-7 h-3 bg-orange-400"></div>
+                            {/* <div className="w-7 h-3 bg-orange-400"></div> */}
                         </label>
                     </div>
 
                     <table className=" border-collapse mb-7 text-2xl">
                         <tbody>
                             <tr>
-                                <td className="p-1 border border-black w-1/4">Fecha: <input type="text" name="fecha" value={formData.fecha} onChange={handleInputChange} className="w-3/5 border-none" /></td>
-                                <td colSpan={3} className="p-1 border border-black w-full">Técnico: <input type="text" name="tecnico" value={formData.tecnico} onChange={handleInputChange} className="w-4/5 border-none" /></td>
+                                <td className="p-1 border border-black w-1/4">Fecha: <input disabled type="text" name="fecha" value={formData.fecha} onChange={handleInputChange} className="w-3/5 border-none" /></td>
+                                <td colSpan={3} className="p-1 border border-black w-full">Técnico: <input disabled type="text" name="tecnico" value={formData.tecnico} onChange={handleInputChange} className="w-4/5 border-none" /></td>
                             </tr>
                             <tr>
-                                <td className="p-1 border border-black w-1/4">Agencia: <input type="text" name="agencia" value={formData.agencia} onChange={handleInputChange} className="w-3/5 border-none" /></td>
+                                <td className="p-1 border border-black w-1/4 text-xl ">Agencia: <input disabled type="text" name="agencia" value={formData.agencia} onChange={handleInputChange} className="w-3/5 border-none" /></td>
                                 <td colSpan={3} className="p-1 border-r flex border-black w-full gap-40">
                                     {/* Área de Infraestructura y Taller */}
                                     <div className="flex items-center ">
@@ -209,7 +210,7 @@ useEffect(() => {
                                             Área de Infraestructura y Taller:
                                         </label>
                                         <div className="relative w-9 rounded-lg h-6 border-4 bg-white border-black flex items-center justify-center">
-                                            <input
+                                            <input disabled
                                                 type="checkbox"
                                                 name="infraestructura"
                                                 checked={formData.infraestructura}
@@ -228,7 +229,7 @@ useEffect(() => {
                                             Área de Soporte Técnico:
                                         </label>
                                         <div className="relative w-9 rounded-lg h-6 border-4 bg-white border-black flex items-center justify-center">
-                                            <input
+                                            <input disabled
                                                 type="checkbox"
                                                 name="soporte"
                                                 checked={formData.soporte}
@@ -245,7 +246,7 @@ useEffect(() => {
 
                             </tr>
                             <tr>
-                                <td colSpan={4} className="p-1 border border-black">No. de Ticket de Mesa de Ayuda: <input type="text" name="ticketAyuda" value={formData.ticketAyuda} onChange={handleInputChange} className="w-1/2 border-none" /></td>
+                                <td colSpan={4} className="p-1 border border-black">No. de Ticket de Mesa de Ayuda: <input disabled type="text" name="ticketAyuda" value={formData.ticketAyuda} onChange={handleInputChange} className="w-1/2 border-none" /></td>
                             </tr>
                         </tbody>
                     </table>
@@ -256,7 +257,7 @@ useEffect(() => {
                             <div className="w-96 h-3 bg-orange-400 "></div>
                             <div className="w-96 h-3 bg-orange-400"></div>
                             <div className="w-28 h-3 bg-orange-400"></div>
-                            <div className="w-8 h-3 bg-orange-400"></div>
+                            {/* <div className="w-8 h-3 bg-orange-400"></div> */}
                         </label>
                     </div>
 
@@ -275,7 +276,7 @@ useEffect(() => {
                                                     Equipo para Reparación
                                                 </label>
                                                 <div className="relative w-9 rounded-lg h-6 border-4 bg-white ml-4 border-black flex items-center justify-center">
-                                                    <input
+                                                    <input disabled
                                                         type="checkbox"
                                                         name="equipoReparacion"
                                                         checked={formData.equipoReparacion as boolean}
@@ -292,7 +293,7 @@ useEffect(() => {
                                                     Cambio de Equipo
                                                 </label>
                                                 <div className="relative w-9 rounded-lg h-6 border-4 ml-16 bg-white border-black flex items-center justify-center">
-                                                    <input
+                                                    <input disabled
                                                         type="checkbox"
                                                         name="cambioEquipo"
                                                         checked={formData.cambioEquipo as boolean}
@@ -309,7 +310,7 @@ useEffect(() => {
                                                     Entrega de Equipo
                                                 </label>
                                                 <div className="relative w-9 rounded-lg h-6 border-4 ml-16 bg-white border-black flex items-center justify-center">
-                                                    <input
+                                                    <input disabled
                                                         type="checkbox"
                                                         name="entregaEquipo"
                                                         checked={formData.entregaEquipo as boolean}
@@ -330,7 +331,7 @@ useEffect(() => {
                                                     Entrega de Equipo Prestado
                                                 </label>
                                                 <div className="relative w-9 rounded-lg h-6 border-4 ml-16 bg-white border-black flex items-center justify-center">
-                                                    <input
+                                                    <input disabled
                                                         type="checkbox"
                                                         name="equipoPrestado"
                                                         checked={formData.equipoPrestado as boolean}
@@ -347,7 +348,7 @@ useEffect(() => {
                                                     Devolución de Equipo Prestado
                                                 </label>
                                                 <div className="relative w-9 rounded-lg h-6 border-4 ml-8 bg-white border-black flex items-center justify-center">
-                                                    <input
+                                                    <input disabled
                                                         type="checkbox"
                                                         name="devolucionEquipo"
                                                         checked={formData.devolucionEquipo as boolean}
@@ -364,7 +365,7 @@ useEffect(() => {
                                                     Entrega de Equipo Reparado
                                                 </label>
                                                 <div className="relative w-9 rounded-lg h-6 border-4 ml-14 bg-white border-black flex items-center justify-center">
-                                                    <input
+                                                    <input disabled
                                                         type="checkbox"
                                                         name="equipoReparado"
                                                         checked={formData.equipoReparado as boolean}
@@ -381,7 +382,7 @@ useEffect(() => {
                                         {/* Tercera columna: Otros */}
                                         <div className="flex items-center col-col -mt-20">
                                             <label className="text-xl mr-3 whitespace-nowrap">Otros Especifique:</label>
-                                            <input
+                                            <input disabled
                                                 type="text"
                                                 name="otrosEspecificar"
                                                 value={formData.otrosEspecificar}
@@ -408,12 +409,12 @@ useEffect(() => {
                                 <tr key={index}>
                                     {Object.keys(equipo).map((field) => (
                                         <td key={field} className=" border border-black text-center">
-                                            <input
+                                            <input disabled
                                                 type="text"
                                                 name={field}
                                                 value={equipo[field as keyof typeof equipo]}
                                                 onChange={(e) => handleInputChange(e, index)}
-                                                className={`border-none text-center  font-medium  ${field === 'descripcionEquipo' ? 'w-10/12  text-xl' : 'w-full  text-xl'}`} // Aumentando el ancho solo para la descripción
+                                                className={`border-none text-center  font-medium  ${field === 'descripcionEquipo' ? 'w-10/12  text-base' : 'w-full  text-base'}`} // Aumentando el ancho solo para la descripción
                                                 style={field === 'descripcionEquipo' ? { height: '25px' } : { height: '25px' }} // Ajuste de altura para el input
                                             />
                                         </td>
@@ -452,7 +453,7 @@ useEffect(() => {
                                         <div className="flex mb-2">
                                             <span className="ml-2 text-lg font-bold">Recibe</span>
                                             <div className=" ml-7 border-4 rounded-2xl border-orange-400 w-full h-24 flex items-center">
-                                                <input
+                                                <input disabled
                                                     type="text"
                                                     name="recibe"
                                                     value={formData.recibe}
@@ -466,7 +467,7 @@ useEffect(() => {
                                         <div className="flex mt-2 ml-24 ">
                                             <div className="relative flex items-center mb-2 w-7/12">
                                                 <span className="mr-2 text-xl">Id:</span>
-                                                <input
+                                                <input disabled
                                                     type="text"
                                                     name="id1"
                                                     value={formData.id1}
@@ -478,7 +479,7 @@ useEffect(() => {
 
                                             <div className="flex items-center w-1/2 ml-2">
                                                 <span className="mr-2 text-xl">Fecha:</span>
-                                                <input
+                                                <input disabled
                                                     type="text"
                                                     name="fecha1"
                                                     value={formData.fecha1}
@@ -497,7 +498,7 @@ useEffect(() => {
 
                                         <div className="flex  mb-2 mr-5">
                                             <div className=" ml-5 border-4 rounded-2xl border-orange-400 w-full h-24 flex items-center">
-                                                <input
+                                                <input disabled
                                                     type="text"
                                                     name="recibe"
                                                     className="w-full h-3/4 ml-5 px-2 border-none bg-transparent"
@@ -507,7 +508,7 @@ useEffect(() => {
                                         <div className="flex mt-2 ml-6">
                                             <div className="relative flex items-center mb-2 w-7/12">
                                                 <span className="mr-2 text-xl">Id:</span>
-                                                <input
+                                                <input disabled
                                                     type="text"
                                                     name="id55"
                                                     className="w-full border-none text-xl bg-transparent"
@@ -517,7 +518,7 @@ useEffect(() => {
 
                                             <div className="flex items-center w-1/2 ml-2">
                                                 <span className="mr-2 text-xl">Fecha:</span>
-                                                <input
+                                                <input disabled
                                                     type="text"
                                                     name="fecha1"
                                                     placeholder="_____/______/_____"
@@ -539,7 +540,7 @@ useEffect(() => {
                                         <div className="flex mb-2  items-center">
                                             <span className="ml-2 text-lg font-bold">Entrega</span>
                                             <div className=" ml-5 border-4 rounded-2xl border-orange-400 w-full h-24 flex items-center">
-                                                <input
+                                                <input disabled
                                                     type="text"
                                                     name="entrega"
                                                     value={formData.entrega}
@@ -553,7 +554,7 @@ useEffect(() => {
                                         <div className="flex mt-2 ml-24">
                                             <div className="relative flex items-center mb-2 w-7/12">
                                                 <span className="mr-2 text-xl">Id:</span>
-                                                <input
+                                                <input disabled
                                                     type="text"
                                                     name="id2"
                                                     value={formData.id2}
@@ -565,7 +566,7 @@ useEffect(() => {
 
                                             <div className="flex items-center w-1/2 ml-2">
                                                 <span className="mr-2 text-xl">Fecha:</span>
-                                                <input
+                                                <input disabled
                                                     type="text"
                                                     name="fecha2"
                                                     value={formData.fecha2}
@@ -584,7 +585,7 @@ useEffect(() => {
 
                                         <div className="flex  mb-2 mr-5">
                                             <div className=" ml-5 border-4 rounded-2xl border-orange-400 w-full h-24 flex items-center">
-                                                <input
+                                                <input disabled
                                                     type="text"
                                                     name="entrega"
                                                     className="w-full h-3/4 ml-5 px-2 border-none bg-transparent"
@@ -594,7 +595,7 @@ useEffect(() => {
                                         <div className="flex mt-2 ml-6">
                                             <div className="relative flex items-center mb-2 w-7/12">
                                                 <span className="mr-2 text-xl">Id:</span>
-                                                <input
+                                                <input disabled
                                                     type="text"
                                                     name="id55"
                                                     className="w-full border-none text-xl bg-transparent"
@@ -604,7 +605,7 @@ useEffect(() => {
 
                                             <div className="flex items-center w-1/2 ml-2">
                                                 <span className="mr-2 text-xl">Fecha:</span>
-                                                <input
+                                                <input disabled
                                                     type="text"
                                                     name="fecha1"
                                                     placeholder="_____/______/_____"
@@ -624,7 +625,7 @@ useEffect(() => {
                                         <div className="ml-10">
                                             <div className="flex mb-2 justify-center w-full">
                                                 <div className=" border-4 rounded-2xl border-orange-400 w-[400px] h-24 flex items-center justify-center">
-                                                    <input
+                                                    <input disabled
                                                         type="text"
                                                         name="firma"
                                                         className="w-3/4 h-3/4 px-2 border-none"
@@ -648,7 +649,7 @@ useEffect(() => {
 
                         <FiLoader className="mr-2 animate-spin text-center mx-[650px]" />
                     ) : (
-                        "Ver vista previa"
+                        "Generar Control"
                     )}
                 </button>
             </div>
@@ -656,4 +657,4 @@ useEffect(() => {
     );
 };
 
-export default ControlEquipos;
+export default HistorialporID;
