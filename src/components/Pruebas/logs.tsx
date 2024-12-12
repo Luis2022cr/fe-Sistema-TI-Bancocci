@@ -12,7 +12,7 @@ export default function LogViewer() {
   const [startDate, setStartDate] = useState<string>('');
   const [endDate, setEndDate] = useState<string>('');
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [logsPerPage] = useState<number>(15);
+  const [logsPerPage] = useState<number>(10);
 
   // Filtrado de logs por búsqueda y fechas
   const filteredLogs = logsData

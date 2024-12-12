@@ -139,7 +139,7 @@ const CrearControlEquipos: React.FC = () => {
             setTimeout(() => {
                 const input = document.getElementById('pdf-content');
                 if (input) {
-                    domtoimage.toPng(input, { bgcolor: '#ffffff', quality: 8 })
+                    domtoimage.toPng(input, { bgcolor: '#ffffff', quality: 10 })
                         .then((dataUrl) => {
                             const pdf = new jsPDF({
                                 orientation: 'portrait',
@@ -467,7 +467,7 @@ const CrearControlEquipos: React.FC = () => {
                                                 value={equipo[field as keyof typeof equipo]}
                                                 onChange={(e) => handleInputChange3(e, index)}
                                                 className={`border-none text-center font-medium ${field === 'descripcionEquipo' ? 'w-3/4 text-xl' : 'w-full text-base'}`}
-                                                style={{ height: '30px' }}
+                                                style={{ height: '35px' }}
                                             />
                                         </td>
                                     ))}
@@ -672,7 +672,7 @@ const CrearControlEquipos: React.FC = () => {
 
                             {/* Firma jefe inmediato */}
                             <tr>
-                                <td colSpan={4} className="p-1 border-l border-b border-r  w-full">
+                                <td colSpan={4} className="p-1 border-l border-b border-r border-black w-full">
                                     <div className="flex justify-center items-center mt-10">
                                         <div className="ml-10">
                                             <div className="flex mb-2 justify-center w-full">
@@ -700,7 +700,7 @@ const CrearControlEquipos: React.FC = () => {
                 >
                     {isLoading ? (
 
-                        <FiLoader className="mr-2 animate-spin text-center mx-[650px]" />
+                        <FiLoader className="mr-2 animate-spin text-center mx-[850px]" />
                     ) : (
                         "Generar control de equipo"
                     )}

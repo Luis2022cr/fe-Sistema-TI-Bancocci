@@ -105,11 +105,12 @@ const MapaCopan: React.FC = () => {
                 .sort((a) => (a.estado === 'offline' ? -1 : 1)) // Ordena por estado
                 .map((ubicacion: UPS_MAPA, index) => (
                   <tr
-                    key={ubicacion.codigo}
+                    key={index}
                     className={`${
                       index % 2 === 0 ? 'bg-white' : 'bg-gray-50'
                     } hover:bg-orange-100`} // Resalta la fila con hover
                   >
+                    
                     <td className="border border-gray-300 px-4 py-2 whitespace-nowrap text-xs">
                       {ubicacion.agencia} - {ubicacion.codigo}
                     </td>

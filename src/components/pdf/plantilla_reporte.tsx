@@ -126,7 +126,7 @@ useEffect(() => {
 
         const input = document.getElementById('pdf-content');
         if (input) {
-            domtoimage.toPng(input, { bgcolor: '#ffffff', quality: 8 })
+            domtoimage.toPng(input, { bgcolor: '#ffffff', quality: 10 })
                 .then((dataUrl) => {
                     const pdf = new jsPDF({
                         orientation: 'portrait',
@@ -417,8 +417,8 @@ useEffect(() => {
                                                 name={field}
                                                 value={equipo[field as keyof typeof equipo]}
                                                 onChange={(e) => handleInputChange(e, index)}
-                                                className={`border-none text-center  font-medium  ${field === 'descripcionEquipo' ? 'w-10/12  text-base' : 'w-full  text-base'}`} // Aumentando el ancho solo para la descripción
-                                                style={field === 'descripcionEquipo' ? { height: '25px' } : { height: '25px' }} // Ajuste de altura para el input
+                                                className={`border-none text-center  font-medium  ${field === 'descripcionEquipo' ? 'w-10/12  text-xl' : 'w-full  text-base'}`} // Aumentando el ancho solo para la descripción
+                                                style={{ height: '35px' }}
                                             />
                                         </td>
                                     ))}
@@ -650,9 +650,9 @@ useEffect(() => {
                 >
                     {isLoading ? (
 
-                        <FiLoader className="mr-2 animate-spin text-center mx-[650px]" />
+                        <FiLoader className="mr-2 animate-spin text-center mx-[850px]" />
                     ) : (
-                        "Generar Control"
+                        "Emprimir control"
                     )}
                 </button>
             </div>

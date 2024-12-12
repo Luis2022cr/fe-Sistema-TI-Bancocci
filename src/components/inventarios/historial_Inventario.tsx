@@ -11,7 +11,6 @@ import Crear_HistorialInventario from "./crear_historialInventario";
 import lista from "../../assets/listaReport.svg";
 import Pagination from "../Pagination";
 
-
 const Historial_Inventario = () => {
     const { id } = useParams<{ id?: string }>();
     const NumericId = id ? parseInt(id, 10) : undefined;
@@ -32,29 +31,29 @@ const Historial_Inventario = () => {
     const historialPaginaActual = inventarioData.historial.slice(inicio, fin);
 
     const totalPaginas = Math.ceil(inventarioData.historial.length / elementosPorPagina);
-    
+
     const exportToExcel = async () => {
         const ExcelJS = (await import("exceljs")).default;
-    
+
         // Crear un nuevo libro de trabajo
         const workbook = new ExcelJS.Workbook();
-    
+
         // Crear una hoja de trabajo para el inventario
         const worksheet = workbook.addWorksheet(`Inventario ${inventarioData.codigo}`);
-    
-       
-    
+
+
+
         // Agregar una fila con el título "Información de Equipo"
         const infoTitleRow = worksheet.addRow(["Información de Equipo"]);
         worksheet.mergeCells(infoTitleRow.number, 1, infoTitleRow.number, 3);
         infoTitleRow.alignment = { horizontal: "center", vertical: "middle" };
         infoTitleRow.font = { bold: true };
 
-        infoTitleRow.fill = { 
-            type: 'pattern', 
-            pattern: 'solid', 
+        infoTitleRow.fill = {
+            type: 'pattern',
+            pattern: 'solid',
             fgColor: { argb: '4CAF50' }  // El color verde
-          };
+        };
         // Agregar información general del inventario en las primeras filas
         const informacionGeneral = [
             { campo: 'Nº Inventario', valor: inventarioData.codigo },
@@ -66,14 +65,14 @@ const Historial_Inventario = () => {
             { campo: 'Estado', valor: inventarioData.estado },
             { campo: 'Tipo Inventario', valor: inventarioData.tipo_inventario },
         ];
-    
+
         informacionGeneral.forEach((data) => {
             const row = worksheet.addRow([data.campo, data.valor]);
             row.eachCell((cell) => {
                 cell.font = { color: { argb: '000000' } }; // Aplica color negro a cada celda de la fila
             });
         });
-        
+
         // Ajustar el tamaño de las columnas después de agregar todas las filas
         worksheet.columns.forEach((column) => {
             let maxLength = 0;
@@ -83,37 +82,37 @@ const Historial_Inventario = () => {
             });
             column.width = maxLength < 10 ? 10 : maxLength;
         });
-    
+
         // Aplicar estilo a las filas de información general (encabezado)
         worksheet.eachRow((row, rowNumber) => {
             if (rowNumber === 1) {
                 row.font = { bold: true, color: { argb: 'FFFFFF' } }; // Encabezado con fondo blanco y texto en negrita
                 row.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '4CAF50' } }; // Color de fondo
-                row.alignment =  { horizontal: "center" };
+                row.alignment = { horizontal: "center" };
             } else {
                 row.font = { color: { argb: '000000' } }; // Texto negro para el resto de las filas
             }
         });
 
-    
+
         // Agregar una fila vacía para separar la información del inventario del historial
         worksheet.addRow({});
-    
+
         // Agregar una fila con el título "Historial de cambios"
         const historialTitleRow = worksheet.addRow(["Historial de Cambios"]);
         worksheet.mergeCells(historialTitleRow.number, 1, historialTitleRow.number, 3);
         historialTitleRow.alignment = { horizontal: "center", vertical: "middle" };
         historialTitleRow.font = { bold: true };
-       // Encabezado de la tabla "Historial de cambios"
-      const historialHeaderRow = worksheet.addRow(["Cambio", "Fecha de Cambio", "Usuario"]);
+        // Encabezado de la tabla "Historial de cambios"
+        const historialHeaderRow = worksheet.addRow(["Cambio", "Fecha de Cambio", "Usuario"]);
 
-      // Aplicar estilo a los encabezados de "Historial de cambios"
-      historialHeaderRow.eachCell((cell) => {
-        cell.font = { bold: true, color: { argb: "FFFFFF" } }; // Texto en negrita y blanco
-        cell.fill = { type: "pattern", pattern: "solid", fgColor: { argb: "F97316" } }; // Fondo azul
-        cell.alignment = { horizontal: "center" }; // Centrado de texto
-      });
-        
+        // Aplicar estilo a los encabezados de "Historial de cambios"
+        historialHeaderRow.eachCell((cell) => {
+            cell.font = { bold: true, color: { argb: "FFFFFF" } }; // Texto en negrita y blanco
+            cell.fill = { type: "pattern", pattern: "solid", fgColor: { argb: "F97316" } }; // Fondo azul
+            cell.alignment = { horizontal: "center" }; // Centrado de texto
+        });
+
         // Agregar las filas de historial de cambios
         inventarioData.historial.forEach((data) => {
             worksheet.addRow([
@@ -122,7 +121,7 @@ const Historial_Inventario = () => {
                 data.usuario,
             ]);
         });
-    
+
         // Ajustar el tamaño de las columnas nuevamente después de agregar el historial
         worksheet.columns.forEach((column) => {
             let maxLength = 0;
@@ -132,15 +131,15 @@ const Historial_Inventario = () => {
             });
             column.width = maxLength < 10 ? 10 : maxLength;
         });
-    
+
         // Crear el archivo y descargarlo
         const buffer = await workbook.xlsx.writeBuffer();
         const blob = new Blob([buffer], { type: "application/octet-stream" });
         const url = URL.createObjectURL(blob);
-    
+
         // Crear un nombre dinámico para el archivo
         const nombreArchivo = `inventario_${inventarioData.codigo.replace(/\s+/g, "_")}.xlsx`;
-    
+
         const a = document.createElement("a");
         a.href = url;
         a.download = nombreArchivo;
@@ -149,35 +148,35 @@ const Historial_Inventario = () => {
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
     };
-       
-  
+
+
     return (
         <>
             <BotonRegresar />
 
-                    {/* boton para reportes */}
-                    <div className="flex justify-end space-x-4 -mt-6 mr-10">
-    <Suspense fallback={<Loading />}>
-        <div className="flex items-center">
-            <button
-                onClick={exportToExcel}
-                className="flex items-center gap-2 px-4 py-2 text-blue-900 transition-colors duration-300 bg-blue-100 rounded-full hover:text-white hover:bg-blue-600"
-            >
-                <img src={lista} alt="plan" width={40} height={40} />
-                Generar Reporte
-            </button>
-        </div>
-    </Suspense>
-    <div className="flex items-center">
-        <button
-            onClick={openModal}
-            className="flex items-center gap-3 p-2 text-center text-white bg-green-700 rounded-full hover:bg-green-600 w-40"
-        >
-            <FaPlusCircle />
-            Agregar Cambio
-        </button>
-    </div>
-</div>
+            {/* boton para reportes */}
+            <div className="flex justify-end space-x-4 -mt-6 mr-10">
+                <Suspense fallback={<Loading />}>
+                    <div className="flex items-center">
+                        <button
+                            onClick={exportToExcel}
+                            className="flex items-center gap-2 px-4 py-2 text-blue-900 transition-colors duration-300 bg-blue-100 rounded-full hover:text-white hover:bg-blue-600"
+                        >
+                            <img src={lista} alt="plan" width={40} height={40} />
+                            Generar Reporte
+                        </button>
+                    </div>
+                </Suspense>
+                <div className="flex items-center">
+                    <button
+                        onClick={openModal}
+                        className="flex items-center gap-3 p-2 text-center text-white bg-green-700 rounded-full hover:bg-green-600 w-40"
+                    >
+                        <FaPlusCircle />
+                        Agregar Cambio
+                    </button>
+                </div>
+            </div>
             <div className="flex items-center w-full p-11 gap-2 bg-white">
                 {/* Parte izquierda: Información del Inventario */}
                 <div className="w-1/2">
@@ -235,7 +234,7 @@ const Historial_Inventario = () => {
                             </thead>
                             <tbody>
                                 {historialPaginaActual.length > 0 ? (
-                                     historialPaginaActual.map((data, index) => (
+                                    historialPaginaActual.map((data, index) => (
                                         <tr key={index} className="border-b">
                                             <td className="px-4 py-2">{data.cambio_realizado}</td>
                                             <td className="px-4 py-2">{formatearFecha(data.fecha_cambio)}</td>
@@ -259,7 +258,7 @@ const Historial_Inventario = () => {
                         onPageChange={setPaginaActual}
                     />
                 </div>
-                
+
             </div>
             {/* Modal para agregar nuevo cambio */}
             {isModalOpen && (
