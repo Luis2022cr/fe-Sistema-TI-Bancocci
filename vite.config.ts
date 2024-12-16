@@ -12,13 +12,7 @@ export default defineConfig({
       ext: '.br',                 
       threshold: 10240,
       compressionOptions: { level: 11 },
-    }),
-    // visualizer({
-    //   open: true, // Abre automáticamente en el navegador
-    //   filename: 'bundle-analysis.html', // Archivo de análisis generado
-    //   gzipSize: true, // Mostrar el tamaño gzip también
-    //   brotliSize: true, // Mostrar el tamaño brotli también
-    // }),
+    })
   ],
   resolve: {
     alias: {

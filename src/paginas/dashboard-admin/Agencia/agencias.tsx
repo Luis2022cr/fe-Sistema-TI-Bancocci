@@ -76,7 +76,7 @@ export default function PaginaAgencias() {
                             {/* Formateo de la agencias */}
                             <div className="flex items-center mb-4">
                                 <Hash className="w-6 h-6 mr-2 text-blue-500" />
-                                <span className="text-xl font-semibold">{(data.codigo)}</span>
+                                <span className="text-xl font-semibold">{data.codigo}</span>
                             </div>
                             <div className="space-y-2">
                                 <div className="flex items-center">
@@ -88,8 +88,8 @@ export default function PaginaAgencias() {
                                     <span>{data.ubicacion}</span>
                                 </div>
                                 <div className="flex items-center">
-                                    {data.estado_agencias === "activo" ? (
-                                        <CircleCheck className="w-5 h-5 mr-2 text-green-500" /> // Ícono para "Activo"
+                                    {data.estado_agencias === "Operativo" ? (
+                                        <CircleCheck className="w-5 h-5 mr-2 text-green-500" /> // Ícono para "Operativo"
                                     ) : (
                                         <CircleX className="w-5 h-5 mr-2 text-red-500" /> // Ícono para "Inactivo"
                                     )}

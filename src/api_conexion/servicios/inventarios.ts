@@ -81,6 +81,15 @@ export const ObtenerInventarios = (tipoInventarioId?: number) => {
     return response;
 };
 
+export const ObtenerInventariosObsoletos = () => {
+    const response = useAxios<Inventario[]>({
+        url: `/inventario_obsoleto`,
+    }, {
+        useCache: false,
+    });
+    return response;
+};
+
 export const ObtenerInventariosById = (id: number) => {
     const response = useAxios<InventarioById>({
       url: `/inventarios/${id}`,

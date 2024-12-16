@@ -5,7 +5,9 @@ export const adminRoutes = {
   "Informe UPS": "/administracion/informes-ups",
   "Directorio TI": "/administracion/directorio",
   "Inventario TI": "/administracion/inventario-ti",
- 
+  "Entrada y salida Equipo": "/administracion/control-equipo",
+  "Otros": "/administracion/configuraciones",
+
 } as const;
 
 export type AdminRouteKeys = keyof typeof adminRoutes;
@@ -99,3 +101,12 @@ export const controlRoutes = {
 } as const;
 
 export type ControlRouteKeys = keyof typeof controlRoutes;
+
+export const controlRoutesAdmin = {
+
+  "Historial Entradas y Salidas de Equipo": "/administracion/historial/control-equipo",
+  "Crear nueva Entrada o Salida": "/administracion/crear-control-equipo",
+ 
+} as const;
+
+export type ControlAminRouteKeys = keyof typeof controlRoutesAdmin;

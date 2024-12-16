@@ -6,7 +6,6 @@ import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import useAuth from "@/api_conexion/useAuth";
 import { ObtenerNotificacionesCheck } from "@/api_conexion/servicios/notifcaciones";
 import { IoIosNotificationsOutline } from "react-icons/io";
-import { Settings } from "lucide-react";
 
 const Sidebar: React.FC = () => {
   const { logout } = useAuth();
@@ -156,19 +155,7 @@ const Sidebar: React.FC = () => {
                   Calendario
                 </NavLink>
               </li>
-              <li>
-                <NavLink
-                  to="/administracion/configuraciones"
-                  className={({ isActive }) =>
-                    `flex items-center py-3 px-6 hover:bg-gray-700 ${
-                      isActive ? "bg-gray-700" : ""
-                    }`
-                  }
-                >
-                  <Settings className="h-6 w-6 " />
-                  Configuracion
-                </NavLink>
-              </li>
+             
             </>
           )}
           <hr className="my-4 border-t border-gray-300" />

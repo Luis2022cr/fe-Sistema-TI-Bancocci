@@ -5,6 +5,7 @@ import { ObtenerControlEquipo, Reparacion } from "@/api_conexion/servicios/contr
 import { FaFilePdf } from "react-icons/fa";
 import { formatearFecha } from "../campos/FormateoFecha";
 import Pagination from "../Pagination";
+import { useLocation } from "react-router-dom";
 
 export default function HistorialControlEquipo() {
   const [expandedItems, setExpandedItems] = useState<number[]>([]);
@@ -14,6 +15,9 @@ export default function HistorialControlEquipo() {
   const [endDate, setEndDate] = useState("");
   const itemsPerPage = 10;
   const [{ data: controlData, loading: loadingControl }] = ObtenerControlEquipo();
+  const location = useLocation();
+    const isDashboardEmpleados = location.pathname.includes('/empleado');
+    const dashboardPath = isDashboardEmpleados ? '/empleado' : '/administracion';
 
   if (loadingControl) return <Loading />;
   if (!controlData) return <div>Error al obtener los datos</div>;
@@ -150,7 +154,7 @@ export default function HistorialControlEquipo() {
                   <span className="mr-2 text-green-700 font-medium">{formatearFecha(item.fecha_creacion)}</span>
                   {expandedItems.includes(index) ? <ChevronUp /> : <ChevronDown />}
                   <a
-                    href={`/empleado/historial-control-equipo/${item.reparacion_id}`}
+                    href={`${dashboardPath}/historial-control-equipo/${item.reparacion_id}`}
                     className="ml-4 px-4 py-2 text-white bg-blue-600 hover:bg-blue-900 rounded shadow"
                   >
                     <FaFilePdf />

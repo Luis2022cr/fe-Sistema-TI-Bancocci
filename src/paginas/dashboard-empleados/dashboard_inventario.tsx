@@ -9,11 +9,15 @@ import telefono from "@/assets/telefono.svg";
 import planta from "@/assets/planta.svg";
 import { InventarioRouteKeys, inventarioRoutes } from "@/api_conexion/routesConfig";
 import DashboardButton from "@/components/DashboardButton";
+import { Link, useLocation } from "react-router-dom";
 
 const Dashboard_inventario: React.FC = () => {
   useEffect(() => {
     document.title = "Empleado - Sistema TI Bancocci";
   }, []);
+  const location = useLocation();
+  const isDashboardEmpleados = location.pathname.includes('/empleado');
+  const dashboardPath = isDashboardEmpleados ? '/empleado' : '/administracion';
 
   const getIconByTitle = (title: InventarioRouteKeys) => {
     switch (title) {
@@ -30,7 +34,6 @@ const Dashboard_inventario: React.FC = () => {
         return <img src={telefono} alt="telefono" width={62} height={62} />;
       case "Planta":
         return <img src={planta} alt="plan" width={62} height={62} />;
-        return;
       case "Monitor":
         return <IoIosDesktop size={62} color="white" />;
       case "Proyector":
@@ -43,9 +46,16 @@ const Dashboard_inventario: React.FC = () => {
   };
 
   return (
-    <div className="h-full flex mx-6 ">
+    <div className="h-full mx-6 ">
+      <div className="flex justify-between items-center mt-5">
+        <div>
+        </div>
+        <Link to={`${dashboardPath}/inventario/obsoleto`} className="text-blue-800 hover:text-blue-700 hover:underline">
+          Inventario obsoleto
+        </Link>
+      </div>
       <div className="flex-1 p-4">
-        <h1 className="text-3xl font-bold mb-6 mt-11 text-blue-900 text-center">Inventario TI</h1>
+        <h1 className="text-3xl font-bold mb-6 -mt-8 text-blue-900 text-center">Inventario TI</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {Object.keys(inventarioRoutes).map((title) => (
             <DashboardButton

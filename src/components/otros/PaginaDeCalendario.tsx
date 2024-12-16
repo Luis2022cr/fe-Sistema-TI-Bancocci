@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Calendar, { CalendarProps } from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './DiseñCalendario.css';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import {  isSameDay } from 'date-fns';
 import Loading from '../Loading';
 import { CalendarioUps, ObtenerDatosUpsCalendario } from '@/api_conexion/servicios/estados'; // Asegúrate de que esta ruta sea correcta
@@ -13,6 +13,9 @@ const Calendario: React.FC = () => {
   useEffect(() => {
     document.title = "Calendario - TI Bancocci";
   }, []);
+  const location = useLocation();
+      const isDashboardEmpleados = location.pathname.includes('/empleado');
+      const dashboardPath = isDashboardEmpleados ? '/empleado' : '/administracion';
 
   const [{ data, loading, error }] = ObtenerDatosUpsCalendario();
   const [date, setDate] = useState<Date | null>(null);
@@ -74,7 +77,7 @@ const Calendario: React.FC = () => {
                     <p className="text-sm text-gray-600">{activity.agencia}</p>
                   </div>
                   <NavLink
-                    to={`/administracion/historial_ups/${activity.id}`} // Cambia la ruta según tu necesidad
+                    to={`${dashboardPath}/historial_ups/${activity.id}`} // Cambia la ruta según tu necesidad
                     className="px-4 py-2 text-sm text-orange-500 hover:underline flex items-center"
                   >
                     Ver detalles

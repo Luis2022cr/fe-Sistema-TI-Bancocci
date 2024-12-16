@@ -50,6 +50,8 @@ import Dashboard_Control from './paginas/dashboard-empleados/dashboard_control';
 import HistorialporID from './components/pdf/plantilla_reporte';
 import HistorialControlEquipo from './components/pdf/historialDeControl';
 import CrearControlEquipos from './components/pdf/CrearControlEquipos';
+import Dashboard_Control_Admin from './paginas/dashboard-admin/dashboard_control-admin';
+import Inventario_Obsoleto from './components/inventarios/inventario_obsoleto';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
@@ -64,7 +66,9 @@ root.render(
             <Route index element={<App />} />
             <Route path="login" element={<Login />} />
             <Route path="empleado/historial-control-equipo/:id" element={<HistorialporID />} /> {/* ver reporte por id */}
+            <Route path="administracion/historial-control-equipo/:id" element={<HistorialporID />} /> {/* ver reporte por id */}
             <Route path="empleado/crear-control-equipo" element={<CrearControlEquipos />} /> {/* crear control de equipo */}
+            <Route path="administracion/crear-control-equipo" element={<CrearControlEquipos />} /> {/* crear control de equipo */}
           </Route>
 
           <Route path="/" element={<Layout_2 />}>
@@ -91,6 +95,7 @@ root.render(
               <Route path="empleado/ups/editar-ups/:id" element={<UdpateUps />} />
               <Route path="empleado/crear/ups" element={<CrearUpsForm />} />
               <Route path="empleado/historial/control-equipo" element={<HistorialControlEquipo />} />
+              <Route path="empleado/inventario/obsoleto" element={<Inventario_Obsoleto />} />
 
             </Route>
 
@@ -134,9 +139,11 @@ root.render(
               <Route path="administracion/crear-modelos" element={<CrearModelo />} />
               <Route path="administracion/actualizar-modelo/:id" element={<UpdateModelo />} />
               <Route path="administracion/logs" element={<LogViewer />} />
-              
-            </Route>
+              <Route path="administracion/historial/control-equipo" element={<HistorialControlEquipo />} />
+              <Route path="administracion/control-equipo" element={<Dashboard_Control_Admin />} />
+              <Route path="administracion/inventario/obsoleto" element={<Inventario_Obsoleto />} />
 
+            </Route>
           </Route>
         </Routes>
       </BrowserRouter>
