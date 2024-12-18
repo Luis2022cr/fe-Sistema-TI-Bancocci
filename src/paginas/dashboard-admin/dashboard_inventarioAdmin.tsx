@@ -48,9 +48,11 @@ const Dashboard_inventarioAdmin: React.FC = () => {
 
   return (
     <div className="h-full  mx-6 ">
-      <div className="flex justify-between items-center mt-5">
-        <div>
-        </div>
+
+      <div className="flex justify-between items-center mt-6">
+        <Link to={`${dashboardPath}/inventario/Subir_Excel`} className="text-blue-800 hover:text-blue-700 hover:underline">
+          Ingresar Excel
+        </Link>
         <Link to={`${dashboardPath}/inventario/obsoleto`} className="text-blue-800 hover:text-blue-700 hover:underline">
           Inventario obsoleto
         </Link>

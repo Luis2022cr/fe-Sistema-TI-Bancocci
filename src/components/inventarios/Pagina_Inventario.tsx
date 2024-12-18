@@ -1,5 +1,5 @@
 import { Suspense, useState } from "react";
-import { PencilIcon, ClockIcon} from "lucide-react";
+import { PencilIcon, ClockIcon } from "lucide-react";
 import Loading from "../Loading";
 import { useLocation, useParams } from "react-router-dom";
 import { ObtenerInventarios } from "@/api_conexion/servicios/inventarios";
@@ -40,23 +40,23 @@ export default function Pagina_Inventario() {
   const location = useLocation();
   const isDashboardEmpleados = location.pathname.includes('/empleado');
   const dashboardPath = isDashboardEmpleados ? '/empleado' : '/administracion';
-  
+
 
   const [{ data: agenciaData, loading: loadingAgencias }] = ObtenerAgencia();
 
   const { tipoInventarioId } = useParams<{ tipoInventarioId?: string }>();
   const Id = tipoInventarioId ? parseInt(tipoInventarioId, 10) : undefined;
-  
+
   const navigate = useNavigate();
   const [{ data: inventarioData, loading: loadingInventario }] = ObtenerInventarios(Id);
-  
+
 
   const [selectedAgencia, setSelectedAgencia] = useState<string>("");
 
-  
+
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 8;
+  const itemsPerPage = 10;
 
   if (loadingInventario || loadingAgencias) return <Loading />;
   if (!inventarioData) return <div>Error al obtener los datos</div>;
@@ -68,6 +68,7 @@ export default function Pagina_Inventario() {
       data.codigo?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       data.serie?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       data.marca?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      data.estado?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       data.modelo?.toLowerCase().includes(searchTerm.toLowerCase());
 
     const matchesAgencia = selectedAgencia ? data.agencia_actual === selectedAgencia : true;
@@ -166,7 +167,7 @@ export default function Pagina_Inventario() {
     URL.revokeObjectURL(url);
   };
 
-  
+
   return (
     <>
       <button
@@ -175,52 +176,55 @@ export default function Pagina_Inventario() {
       >
         <IoArrowUndoOutline />
         Regresar
-      </button>      
+      </button>
 
       <div className="container p-4 mx-auto -mt-10">
-        <h1 className="mb-5 text-3xl font-bold text-center">Inventarios: {inventarioNombre}</h1>       
-          
-           {/* boton para reportes */}
-           <Suspense fallback={<Loading />}>
-                <div className="flex justify-end mt-5 mb-5">
-                <button
-                        onClick={exportToExcel}
-                        className="flex items-center gap-2 px-2 py-2 text-blue-900 transition-colors duration-300
-                         bg-blue-100 rounded-full hover:text-white hover:bg-blue-600"
-                    >
-                    <img src={lista} alt="plan" width={40} height={40} />
-                    Generar Reporte     
-                    </button>
-                </div>
-            </Suspense>
+        <h1 className="mb-5 text-3xl font-bold text-center">Inventarios: {inventarioNombre}</h1>
+       
+        <div className="flex justify-end gap-6 -mt-5">
 
-            <Suspense fallback={<Loading />}>
+          {/* boton para reportes */}
+          <Suspense fallback={<Loading />}>
             <div className="flex justify-end mt-5 mb-5">
-            <button
-             className="flex items-center gap-2 px-2 py-2 text-blue-900 transition-colors duration-300
-             bg-blue-100 rounded-full hover:text-white hover:bg-blue-600">
-              
-              <img src={lista} alt="plan" width={40} height={40} /> 
-              {Id && ( <ExcelReportInventario tipo_inventario_id={Id} data={filteredInventario} selectedAgencia={selectedAgencia} />)}
-            </button> 
+              <button
+                onClick={exportToExcel}
+                className="flex items-center gap-2 px-2 py-2 text-blue-900 transition-colors duration-300
+                         bg-blue-100 rounded-full hover:text-white hover:bg-blue-600"
+              >
+                <img src={lista} alt="plan" width={40} height={40} />
+                Generar Reporte
+              </button>
             </div>
-        </Suspense>
-            
-          <FiltroInventario
-            searchTerm={searchTerm}
-            setSearchTerm={setSearchTerm}
-            selectedAgencia={selectedAgencia}
-            setSelectedAgencia={setSelectedAgencia}
-            agencias={agenciaData}
-            />
-    
+          </Suspense>
+
+          <Suspense fallback={<Loading />}>
+            <div className="flex justify-end mt-5 mb-5">
+              <button
+                className="flex items-center gap-2 px-2 py-2 text-blue-900 transition-colors duration-300
+             bg-blue-100 rounded-full hover:text-white hover:bg-blue-600">
+
+                <img src={lista} alt="plan" width={40} height={40} />
+                {Id && (<ExcelReportInventario tipo_inventario_id={Id} data={filteredInventario} selectedAgencia={selectedAgencia} />)}
+              </button>
+            </div>
+          </Suspense>
+        </div>
+
+        <FiltroInventario
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          selectedAgencia={selectedAgencia}
+          setSelectedAgencia={setSelectedAgencia}
+          agencias={agenciaData}
+        />
+
 
         {/* Tabla de inventarios */}
         <div className="overflow-x-auto">
           {currentItems.length > 0 ? (
             <table className="w-full border-collapse">
               <thead>
-              <tr className="text-white bg-blue-900">
+                <tr className="text-white bg-blue-900">
                   <th className="p-2 text-left border-r-2 border-blue-300">Nº Inventario</th>
                   <th className="p-2 text-left border-r-2 border-blue-300">Serie</th>
                   <th className="p-2 text-left border-r-2 border-blue-300">Marca</th>

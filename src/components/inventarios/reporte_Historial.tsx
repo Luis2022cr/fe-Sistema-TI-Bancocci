@@ -177,7 +177,7 @@ const ExcelReportInventario: React.FC<ExcelReportProps> = ({ tipo_inventario_id,
 
   return (
     <button onClick={exportToExcelInventario}>
-      Reporte Inventario con Historial
+      Generar Reporte con Historial
     </button>
   );
 };

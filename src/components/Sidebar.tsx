@@ -6,6 +6,8 @@ import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import useAuth from "@/api_conexion/useAuth";
 import { ObtenerNotificacionesCheck } from "@/api_conexion/servicios/notifcaciones";
 import { IoIosNotificationsOutline } from "react-icons/io";
+import Loading from "./Loading";
+import { Settings } from "lucide-react";
 
 const Sidebar: React.FC = () => {
   const { logout } = useAuth();
@@ -28,7 +30,7 @@ const Sidebar: React.FC = () => {
     }
   }, [location.pathname]);
 
-  if (loading) return <p>Cargando notificaciones...</p>;
+  if (loading) return <Loading/>;
   if (error) return <p>Error al cargar las notificaciones: {error.message}</p>;
 
   return (
@@ -90,6 +92,19 @@ const Sidebar: React.FC = () => {
                 >
                   <FaRegCalendarAlt className="h-6 w-6 mr-2" />
                   Calendario
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/empleado/configuraciones"
+                  className={({ isActive }) =>
+                    `flex items-center py-3 px-6 hover:bg-gray-700 ${
+                      isActive ? "bg-gray-700" : ""
+                    }`
+                  }
+                >
+                  <Settings className="h-6 w-6 mr-2"/>
+                  Otros
                 </NavLink>
               </li>
               

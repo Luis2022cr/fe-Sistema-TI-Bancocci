@@ -47,13 +47,14 @@ const Dashboard_inventario: React.FC = () => {
 
   return (
     <div className="h-full mx-6 ">
-      <div className="flex justify-between items-center mt-5">
-        <div>
-        </div>
-        <Link to={`${dashboardPath}/inventario/obsoleto`} className="text-blue-800 hover:text-blue-700 hover:underline">
-          Inventario obsoleto
-        </Link>
-      </div>
+      <div className="flex justify-between items-center mt-6">
+             <Link to={`${dashboardPath}/inventario/Subir_Excel`} className="text-blue-800 hover:text-blue-700 hover:underline">
+               Ingresar Excel
+             </Link>
+             <Link to={`${dashboardPath}/inventario/obsoleto`} className="text-blue-800 hover:text-blue-700 hover:underline">
+               Inventario obsoleto
+             </Link>
+           </div>
       <div className="flex-1 p-4">
         <h1 className="text-3xl font-bold mb-6 -mt-8 text-blue-900 text-center">Inventario TI</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

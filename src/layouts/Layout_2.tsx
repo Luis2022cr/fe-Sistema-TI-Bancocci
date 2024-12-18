@@ -10,7 +10,7 @@ export default function Layout_Login() {
       <Header_2 />
       <main className="flex">
         <Sidebar />
-        <div className="ml-0 md:ml-40 w-full mt-10">
+        <div className="ml-0 md:ml-40 w-full mt-10  ">
           <Outlet />
         </div>
       </main>

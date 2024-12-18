@@ -14,6 +14,7 @@ import { IoArrowUndoOutline } from 'react-icons/io5';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Actualizar_Inventario } from '@/api_conexion/servicios/inventarios'; 
 import SearchableSelect from '../Pruebas/SearchableSelect';
+import Alert from '../Alert';
 
 const EditarInventario: React.FC = () => {
     const { id } = useParams<{ id?: string }>();
@@ -150,7 +151,12 @@ const EditarInventario: React.FC = () => {
             await UpdateInventario(Number(id), inventarioActualizado);
 
             setStatus({ error: null, isLoading: false, successMessage: 'Inventario actualizado correctamente.' });
-            window.location.reload();
+            Alert({
+              title: 'Éxito',
+              text: `Se actualizo el inventario con exito: ${inventarioActualizado.codigo}`,
+              icon: 'success',
+              callback: () => navigate(-1)
+          });
 
         } catch (error) {
             const errorMessage = axios.isAxiosError(error)

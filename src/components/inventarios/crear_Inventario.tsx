@@ -12,6 +12,7 @@ import InputText from '../campos/InputForm';
 import { IoArrowUndoOutline } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
 import SearchableSelect from '../Pruebas/SearchableSelect';
+import Alert from '../Alert';
 
 const CrearInventarios: React.FC = () => {
 
@@ -130,12 +131,18 @@ const CrearInventarios: React.FC = () => {
       await CrearInventario(nuevoInventario);
 
       setStatus({ error: null, isLoading: false, successMessage: 'Inventario agregado correctamente.' });
+      
       setFormState({
         codigo: '', serie: '', marca_id: 0, modelo_id: 0,
         tipo_inventario_id: 0, agencias_id_origen: 0,
         agencias_id_actual: 0, estado_id: 0, comentarios: ''
       });
-      window.location.reload();
+      Alert({
+        title: 'Éxito',
+        text: `Se creo el inventario con exito: ${nuevoInventario.codigo}`,
+        icon: 'success',
+        callback: () => navigate(-1)
+    });
 
     } catch (error) {
       const errorMessage = axios.isAxiosError(error)

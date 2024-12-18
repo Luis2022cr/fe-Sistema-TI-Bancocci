@@ -79,7 +79,6 @@ export const inventarioRoutes = {
 
 export type InventarioRouteKeys = keyof typeof inventarioRoutes;
 
-
 export const configAdminRoutes = {
 
   "Agencias": "/administracion/agencias",
@@ -110,3 +109,14 @@ export const controlRoutesAdmin = {
 } as const;
 
 export type ControlAminRouteKeys = keyof typeof controlRoutesAdmin;
+
+export const configEmpleadoRoutes = {
+
+  "Agencias": "/empleado/agencias",
+  "Departamentos": "/empleado/departamentos",
+  "Marca": "/empleado/marca", 
+  "Modelo": "/empleado/modelo", 
+ 
+} as const;
+
+export type ConfigEmpleadoRoutes = keyof typeof configEmpleadoRoutes;

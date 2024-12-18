@@ -52,6 +52,8 @@ import HistorialControlEquipo from './components/pdf/historialDeControl';
 import CrearControlEquipos from './components/pdf/CrearControlEquipos';
 import Dashboard_Control_Admin from './paginas/dashboard-admin/dashboard_control-admin';
 import Inventario_Obsoleto from './components/inventarios/inventario_obsoleto';
+import ExcelInventario from './components/inventarios/subir_Excel_inventario';
+import Dashboard_ConfigEmpleado from './paginas/dashboard-empleados/dashboard_configuraciones_empleado';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
@@ -79,6 +81,8 @@ root.render(
               <Route path="empleado/informes-ups" element={<Dashboard_Ups />} />
               <Route path="empleado/inventario-ti" element={<Dashboard_inventario />} />
               <Route path="empleado/control-equipo" element={<Dashboard_Control />} />
+              <Route path="empleado/configuraciones" element={<Dashboard_ConfigEmpleado />} />
+
               <Route path="empleado/directorio" element={<Directorio />} />
               <Route path="empleado/directorio/:id" element={<UpdateDirectorio />} />
               <Route path="empleado/calendario" element={<Calendario />} />
@@ -96,6 +100,19 @@ root.render(
               <Route path="empleado/crear/ups" element={<CrearUpsForm />} />
               <Route path="empleado/historial/control-equipo" element={<HistorialControlEquipo />} />
               <Route path="empleado/inventario/obsoleto" element={<Inventario_Obsoleto />} />
+              <Route path="empleado/inventario/Subir_Excel" element={<ExcelInventario />} />
+              <Route path="empleado/agencias" element={<PaginaAgencias />} />
+              <Route path="empleado/crear-agencias" element={<CrearAgencia />} />
+              <Route path="empleado/actualizar-agencia/:id" element={<UpdateAgencias />} />
+              <Route path="empleado/departamentos" element={<PaginaDepartamento />} />
+              <Route path="empleado/crear-departamentos" element={<CrearDepartamentos />} />
+              <Route path="empleado/actualizar-departamento/:id" element={<UpdateDepartamentos />} />
+              <Route path="empleado/marca" element={<PaginaMarcas />} />
+              <Route path="empleado/crear-marcas" element={<CrearMarca />} />
+              <Route path="empleado/actualizar-marca/:id" element={<UpdateMarca />} />
+              <Route path="empleado/modelo" element={<PaginaModelos />} />
+              <Route path="empleado/crear-modelos" element={<CrearModelo />} />
+              <Route path="empleado/actualizar-modelo/:id" element={<UpdateModelo />} />
 
             </Route>
 
@@ -142,6 +159,7 @@ root.render(
               <Route path="administracion/historial/control-equipo" element={<HistorialControlEquipo />} />
               <Route path="administracion/control-equipo" element={<Dashboard_Control_Admin />} />
               <Route path="administracion/inventario/obsoleto" element={<Inventario_Obsoleto />} />
+              <Route path="administracion/inventario/Subir_Excel" element={<ExcelInventario />} />
 
             </Route>
           </Route>
