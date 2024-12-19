@@ -4,10 +4,11 @@ import jsPDF from 'jspdf';
 import { X } from 'lucide-react';
 import { FiLoader } from 'react-icons/fi';
 import BotonRegresar from '../Regresar';
-import {  ObtenerControlById } from '@/api_conexion/servicios/controlEquipo';
+import { ObtenerControlById } from '@/api_conexion/servicios/controlEquipo';
 import Loading from '../Loading';
 import marcaAgua from '@/assets/marca-de-agua.png'
 import { useParams } from 'react-router-dom';
+import logoReporte from '@/assets/occidente-pdf.jpeg'
 
 const HistorialporID: React.FC = () => {
     const { id } = useParams<{ id?: string }>();
@@ -15,86 +16,86 @@ const HistorialporID: React.FC = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [{ data: controlData, loading: loadingControl }] = ObtenerControlById(NumericId);
 
-const [formData, setFormData] = useState({
-  fecha: '',
-  fecha1: '',
-  fecha2: '',
-  tecnico: '',
-  agencia: '',
-  infraestructura: false,
-  ticketAyuda: '',
-  id1: '',
-  id2: '',
-  equipoReparacion: false,
-  equipoPrestado: false,
-  otrosEspecificar: '',
-  cambioEquipo: false,
-  devolucionEquipo: false,
-  entregaEquipo: false,
-  equipoReparado: false,
-  soporte: false,
-  equipos: Array(8).fill({
-    descripcionEquipo: '',
-    inventario: '',
-    modeloTipo: '',
-    serie: '',
-    pertenece: '',
-    destino: '',
-  }),
-  observaciones: '',
-  recibe: '',
-  entrega: '',
-});
-
-useEffect(() => {
-  if (controlData) {
-    // Actualizar formData con los datos obtenidos
-    setFormData({
-      fecha: controlData.fecha || '',
-      tecnico: controlData.tecnico || '',
-      agencia: controlData.agencia || '',
-      infraestructura: controlData.infraestructura === 1, // Asumiendo que el valor 1 es true
-      ticketAyuda: controlData.ticket_ayuda || '',
-      equipoReparacion: controlData.equipo_reparacion === 1, // Asumiendo que el valor 1 es true
-      equipoPrestado: controlData.equipo_prestado === 1, // Asumiendo que el valor 1 es true
-      otrosEspecificar: controlData.otros_especificar || '',
-      cambioEquipo: controlData.cambio_equipo === 1, // Asumiendo que el valor 1 es true
-      devolucionEquipo: controlData.devolucion_equipo === 1, // Asumiendo que el valor 1 es true
-      entregaEquipo: controlData.entrega_equipo === 1, // Asumiendo que el valor 1 es true
-      equipoReparado: controlData.equipo_reparado === 1, // Asumiendo que el valor 1 es true
-      soporte: controlData.soporte === 1, // Asumiendo que el valor 1 es true
-      observaciones: controlData.observaciones || '',
-      
-      // Aquí mapeamos los equipos y completamos los vacíos si es necesario
-      equipos: [
-        ...controlData.equipos.map((equipo) => ({
-          descripcionEquipo: equipo.descripcion_equipo || '',
-          inventario: equipo.inventario || '',
-          modeloTipo: equipo.modelo_tipo || '',
-          serie: equipo.serie || '',
-          pertenece: equipo.pertenece || '',
-          destino: equipo.destino || '',
-        })),
-        ...Array(8 - controlData.equipos.length).fill({
-          descripcionEquipo: '',
-          inventario: '',
-          modeloTipo: '',
-          serie: '',
-          pertenece: '',
-          destino: '',
-        }), // Completa con objetos vacíos si hay menos de 8 equipos
-      ],
-      
-      // Los campos 'fecha1' y 'fecha2' no están presentes en la respuesta de la API, por lo que quedarán vacíos.
-      fecha1: '', // Puedes actualizar esto si tienes una lógica para 'fecha1' y 'fecha2'
-      fecha2: '',
-      id1: '',
-      id2: '',
-      recibe: '',
-      entrega: '',
+    const [formData, setFormData] = useState({
+        fecha: '',
+        fecha1: '',
+        fecha2: '',
+        tecnico: '',
+        agencia: '',
+        infraestructura: false,
+        ticketAyuda: '',
+        id1: '',
+        id2: '',
+        equipoReparacion: false,
+        equipoPrestado: false,
+        otrosEspecificar: '',
+        cambioEquipo: false,
+        devolucionEquipo: false,
+        entregaEquipo: false,
+        equipoReparado: false,
+        soporte: false,
+        equipos: Array(8).fill({
+            descripcionEquipo: '',
+            inventario: '',
+            modeloTipo: '',
+            serie: '',
+            pertenece: '',
+            destino: '',
+        }),
+        observaciones: '',
+        recibe: '',
+        entrega: '',
     });
-  }
-}, [controlData]);
+
+    useEffect(() => {
+        if (controlData) {
+            // Actualizar formData con los datos obtenidos
+            setFormData({
+                fecha: controlData.fecha || '',
+                tecnico: controlData.tecnico || '',
+                agencia: controlData.agencia || '',
+                infraestructura: controlData.infraestructura === 1, // Asumiendo que el valor 1 es true
+                ticketAyuda: controlData.ticket_ayuda || '',
+                equipoReparacion: controlData.equipo_reparacion === 1,
+                equipoPrestado: controlData.equipo_prestado === 1,
+                otrosEspecificar: controlData.otros_especificar || '',
+                cambioEquipo: controlData.cambio_equipo === 1,
+                devolucionEquipo: controlData.devolucion_equipo === 1,
+                entregaEquipo: controlData.entrega_equipo === 1,
+                equipoReparado: controlData.equipo_reparado === 1,
+                soporte: controlData.soporte === 1,
+                observaciones: controlData.observaciones || '',
+
+                // Aquí mapeamos los equipos y completamos los vacíos si es necesario
+                equipos: [
+                    ...controlData.equipos.map((equipo) => ({
+                        descripcionEquipo: equipo.descripcion_equipo || '',
+                        inventario: equipo.inventario || '',
+                        modeloTipo: equipo.modelo_tipo || '',
+                        serie: equipo.serie || '',
+                        pertenece: equipo.pertenece || '',
+                        destino: equipo.destino || '',
+                    })),
+                    ...Array(8 - controlData.equipos.length).fill({
+                        descripcionEquipo: '',
+                        inventario: '',
+                        modeloTipo: '',
+                        serie: '',
+                        pertenece: '',
+                        destino: '',
+                    }),
+                ],
+
+                // Los campos 'fecha1' y 'fecha2' no están presentes en la respuesta de la API, por lo que quedarán vacíos.
+                fecha1: '',
+                fecha2: '',
+                id1: '',
+                id2: '',
+                recibe: '',
+                entrega: '',
+            });
+        }
+    }, [controlData]);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, index?: number) => {
         const { name, value, type } = e.target;
@@ -118,9 +119,9 @@ useEffect(() => {
         }));
     };
 
-    if ( loadingControl) return <Loading />;
-    if ( !controlData) return <div>Error al obtener los datos</div>;
-    
+    if (loadingControl) return <Loading />;
+    if (!controlData) return <div>Error al obtener los datos</div>;
+
     const captureAndShowPreview = () => {
         setIsLoading(true); // Establecer isLoading en true
 
@@ -158,15 +159,15 @@ useEffect(() => {
 
     return (
         <>
-        <div className='-mt-10'>
+            <div className='-mt-10'>
 
-            <BotonRegresar />
-        </div>
+                <BotonRegresar />
+            </div>
 
             <div className='mx-5 text-black '>
                 <div className="font-sans p-10" id="pdf-content">
-                    <div className='flex justify-between items-center mb-5'>
-                        <img src="/src/assets/occidente-pdf.jpeg" alt="logo" className="font-bold text-lg mb-5" />
+                    <div className='flex justify-between items-center mb-3'>
+                        <img src={logoReporte} alt="logo" className="font-bold text-lg mb-5 w-44" />
                         <div className="text-center font-semibold text-3xl mr-16 whitespace-nowrap">
                             Control de Entradas y Salidas de Equipos
                         </div>
@@ -176,9 +177,9 @@ useEffect(() => {
                     <img
                         src={marcaAgua}
                         alt="Marca de Agua"
-                        className="absolute inset-0 opacity-10"
+                        className="absolute inset-0 opacity-10 "
                         style={{
-                            width: '1000px',
+                            width: '1200px',
                             height: '230vh',
                             top: '137%',
                             left: '50%',
@@ -198,14 +199,14 @@ useEffect(() => {
                         </label>
                     </div>
 
-                    <table className=" border-collapse mb-7 text-xl">
+                    <table className=" border-collapse mb-5 text-xl">
                         <tbody>
                             <tr>
                                 <td className="p-1 border border-black w-1/4">Fecha: <input disabled type="text" name="fecha" value={formData.fecha} onChange={handleInputChange} className="w-3/5 border-none font-semibold" /></td>
                                 <td colSpan={3} className="p-1 border border-black w-full">Técnico: <input disabled type="text" name="tecnico" value={formData.tecnico} onChange={handleInputChange} className="w-4/5 border-none font-semibold" /></td>
                             </tr>
                             <tr>
-                                <td className="p-1 border border-black w-1/4 text-xl ">Agencia: <input disabled type="text" name="agencia" value={formData.agencia} onChange={handleInputChange} className="w-3/5 border-none text-sm font-semibold" /></td>
+                                <td className="p-1 border border-black w-1/4  ">Agencia: <input disabled type="text" name="agencia" value={formData.agencia} onChange={handleInputChange} className="w-[270px] border-none bg-transparent text-sm text-center text-blue-700" /></td>
                                 <td colSpan={3} className="p-1 border-r flex border-black w-full gap-24">
                                     {/* Área de Infraestructura y Taller */}
                                     <div className="flex items-center ">
@@ -403,7 +404,7 @@ useEffect(() => {
                             </tr>
                             <tr>
                                 {['Descripción del Equipo', 'Inventario', 'Modelo/Tipo', 'Serie', 'Pertenece a', 'Destino'].map((header, index) => (
-                                    <th key={header} className={`p-2 border text-xl border-black text-center font-bold ${index === 0 ? 'w-1/3' : ''}`}>
+                                    <th key={header} className={`p border text-xl border-black text-center font-bold ${index === 0 ? 'w-1/3' : ''}`}>
                                         {header}
                                     </th>
                                 ))}
@@ -583,7 +584,7 @@ useEffect(() => {
                                     </div>
                                 </td>
 
-                                <td colSpan={2} className="p-1 border-r  border-black w-1/2">
+                                <td colSpan={2} className="p-1 border-r border-black w-1/2">
                                     <div className='ml-16 mr-5'>
 
                                         <div className="flex  mb-2 mr-5">
@@ -624,7 +625,7 @@ useEffect(() => {
                             {/* Firma jefe inmediato */}
                             <tr>
                                 <td colSpan={4} className="p-1 border-l border-b border-r border-black w-full">
-                                    <div className="flex justify-center items-center mt-10">
+                                    <div className="flex justify-center items-center mt-7">
                                         <div className="ml-10">
                                             <div className="flex mb-2 justify-center w-full">
                                                 <div className=" border-4 rounded-2xl border-orange-400 w-[400px] h-24 flex items-center justify-center">

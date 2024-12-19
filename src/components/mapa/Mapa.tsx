@@ -5,14 +5,14 @@ import { FaPlusCircle, FaTrash } from 'react-icons/fa';
 import { BorrarPuntoMapa, ObtenerMapaUps, UPS_MAPA } from '@/api_conexion/servicios/ups-mapa';
 import Loading from '../Loading';
 import Alert from '../Alert';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Modal from '../Modal';
 import CrearPuntoMapaForm from './creacionPuntoMapa';
 import { IoArrowUndoOutline } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
 import onlineIconSvg from '@/assets/pingtrue.svg';
 import offlineIconSvg from '@/assets/pingFalse.svg';
-import Pagination from '../Pagination'; 
+import Pagination from '../Pagination';
 
 const onlineIcon = L.icon({
   iconUrl: onlineIconSvg,
@@ -39,6 +39,15 @@ const MapaCopan: React.FC = () => {
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
+
+  // Recarga automática cada 5 minutos
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      window.location.reload();
+    }, 5 * 60 * 1000); // 5 minutos
+
+    return () => clearInterval(intervalId);
+  }, []);
 
   if (loadingMapa) return <Loading />;
   if (!ubicacion || !Array.isArray(ubicacion)) return <div>Error al obtener los datos</div>;
@@ -69,6 +78,7 @@ const MapaCopan: React.FC = () => {
       }
     }
   };
+
 
   return (
     <>
@@ -106,19 +116,17 @@ const MapaCopan: React.FC = () => {
                 .map((ubicacion: UPS_MAPA, index) => (
                   <tr
                     key={index}
-                    className={`${
-                      index % 2 === 0 ? 'bg-white' : 'bg-gray-50'
-                    } hover:bg-orange-100`} // Resalta la fila con hover
+                    className={`${index % 2 === 0 ? 'bg-white' : 'bg-gray-50'
+                      } hover:bg-orange-100`} // Resalta la fila con hover
                   >
-                    
+
                     <td className="border border-gray-300 px-4 py-2 whitespace-nowrap text-xs">
                       {ubicacion.agencia} - {ubicacion.codigo}
                     </td>
                     <td className="border border-gray-300 px-4 py-2 text-xs">{ubicacion.direccion_ip}</td>
                     <td
-                      className={`border border-gray-300 px-4 py-2 text-xs font-semibold ${
-                        ubicacion.estado === 'online' ? 'text-green-500' : 'text-red-500'
-                      }`}
+                      className={`border border-gray-300 px-4 py-2 text-xs font-semibold ${ubicacion.estado === 'online' ? 'text-green-500' : 'text-red-500'
+                        }`}
                     >
                       {ubicacion.estado}
                     </td>

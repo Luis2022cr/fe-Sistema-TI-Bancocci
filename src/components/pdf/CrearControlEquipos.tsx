@@ -190,7 +190,7 @@ const CrearControlEquipos: React.FC = () => {
 
             <div className='mx-5 text-black '>
                 <div className="font-sans p-10" id="pdf-content">
-                    <div className='flex justify-between items-center mb-5'>
+                    <div className='flex justify-between items-center mb-3'>
                         <img src={logoReporte} alt="logo" className="font-bold text-lg mb-5 pointer-events-none" />
                         <div className="text-center font-semibold text-3xl mr-16 whitespace-nowrap">
                             Control de Entradas y Salidas de Equipos
@@ -203,7 +203,7 @@ const CrearControlEquipos: React.FC = () => {
                         alt="Marca de Agua"
                         className="absolute inset-0 z-0 opacity-10 "
                         style={{
-                            width: '1000px',
+                            width: '1200px',
                             height: '230vh',
                             top: '137%',
                             left: '50%',
@@ -222,7 +222,7 @@ const CrearControlEquipos: React.FC = () => {
                         </label>
                     </div>
 
-                    <table className=" border-collapse mb-7 text-xl">
+                    <table className=" border-collapse mb-5 text-xl">
                         <tbody>
                             <tr>
                                 <td className="p-1 border border-black w-1/4">Fecha: <input type="text" name="fecha" value={formData.fecha} onChange={handleInputChange} className="w-3/5 border-none" /></td>
@@ -238,7 +238,7 @@ const CrearControlEquipos: React.FC = () => {
                                         onChange={handleInputChange}
                                         onFocus={() => setShowSuggestions(true)}
                                         placeholder="Escribe la agencia"
-                                        className="w-[250px] border-none bg-transparent text-sm text-center"
+                                        className="w-[270px] border-none bg-transparent text-sm text-center"
                                     />
                                     {showSuggestions && filteredAgencias.length > 0 && (
                                         <ul className="absolute bg-white border border-gray-300 w-full max-h-40 overflow-y-auto z-10">
@@ -452,7 +452,7 @@ const CrearControlEquipos: React.FC = () => {
                             </tr>
                             <tr>
                                 {['Descripción del Equipo', 'Inventario', 'Modelo/Tipo', 'Serie', 'Pertenece a', 'Destino'].map((header, index) => (
-                                    <th key={header} className={`p-2 border text-xl border-black text-center font-bold ${index === 0 ? 'w-1/3' : ''}`}>
+                                    <th key={header} className={` border text-xl border-black text-center font-bold ${index === 0 ? 'w-1/3' : ''}`}>
                                         {header}
                                     </th>
                                 ))}
@@ -673,7 +673,7 @@ const CrearControlEquipos: React.FC = () => {
                             {/* Firma jefe inmediato */}
                             <tr>
                                 <td colSpan={4} className="p-1 border-l border-b border-r border-black w-full">
-                                    <div className="flex justify-center items-center mt-10">
+                                    <div className="flex justify-center items-center mt-7">
                                         <div className="ml-10">
                                             <div className="flex mb-2 justify-center w-full">
                                                 <div className=" border-4 rounded-2xl border-orange-400 w-[400px] h-24 flex items-center justify-center">

@@ -1,5 +1,5 @@
 import { Suspense, useState } from "react";
-import { PencilIcon, ClockIcon} from "lucide-react";
+import { PencilIcon, ClockIcon } from "lucide-react";
 import Loading from "../Loading";
 import { useLocation } from "react-router-dom";
 import { ObtenerInventariosObsoletos } from "@/api_conexion/servicios/inventarios";
@@ -12,7 +12,7 @@ import FiltroInventario from "./FiltroInventario";
 import { ObtenerAgencia } from "@/api_conexion/servicios/agencias";
 
 interface ExportData {
-  Nº_Inventario: number;
+  Nº_Inventario: string;
   Serie: string;
   Marca: string;
   Modelo: string;
@@ -70,7 +70,7 @@ export default function Inventario_Obsoleto() {
         acc[key] = [];
       }
       acc[key].push({
-        Nº_Inventario: parseInt(curr.codigo, 30),
+        Nº_Inventario: curr.codigo,
         Serie: curr.serie,
         Marca: curr.marca,
         Modelo: curr.modelo,
@@ -91,10 +91,10 @@ export default function Inventario_Obsoleto() {
     worksheet.columns = [
       { header: "Nº Inventario", key: "Nº_Inventario", width: 20 },
       { header: "Serie", key: "Serie", width: 20 },
-      { header: "Marca", key: "Marca", width: 15 },
-      { header: "Modelo", key: "Modelo", width: 15 },
-      { header: "Agencia Origen", key: "Agencia_Origen", width: 20 },
-      { header: "Agencia Actual", key: "Agencia_Actual", width: 20 },
+      { header: "Marca", key: "Marca", width: 25 },
+      { header: "Modelo", key: "Modelo", width: 25 },
+      { header: "Agencia Origen", key: "Agencia_Origen", width: 28 },
+      { header: "Agencia Actual", key: "Agencia_Actual", width: 15 },
       { header: "Estado", key: "Estado", width: 15 },
       { header: "Tipo Inventario", key: "Tipo_Inventario", width: 20 },
       { header: "Comentarios", key: "Comentarios", width: 25 },
@@ -112,13 +112,13 @@ export default function Inventario_Obsoleto() {
 
       items.forEach((item) => {
         const row = worksheet.addRow(item);
-        row.getCell("Nº_Inventario").alignment = { horizontal: "center" };
-        row.getCell("Serie").alignment = { horizontal: "center" };
+        row.getCell("Nº_Inventario").alignment = { horizontal: "left" };
+        row.getCell("Serie").alignment = { horizontal: "left" };
         row.getCell("Marca").alignment = { horizontal: "left" };
         row.getCell("Modelo").alignment = { horizontal: "left" };
         row.getCell("Agencia_Origen").alignment = { horizontal: "left" };
         row.getCell("Agencia_Actual").alignment = { horizontal: "left" };
-        row.getCell("Estado").alignment = { horizontal: "center" };
+        row.getCell("Estado").alignment = { horizontal: "left" };
         row.getCell("Tipo_Inventario").alignment = { horizontal: "left" };
         row.getCell("Comentarios").alignment = { horizontal: "left" };
       });
@@ -131,7 +131,7 @@ export default function Inventario_Obsoleto() {
 
     // Crear un nombre dinámico para el archivo
     const nombreAgencia = selectedAgencia ? selectedAgencia.replace(/\s+/g, "_") : "inventario";
-    const nombreArchivo = selectedAgencia ? `inventario_${nombreAgencia}.xlsx` : "inventario.xlsx";
+    const nombreArchivo = selectedAgencia ? `inventario_Obsoleto_${nombreAgencia}.xlsx` : "inventario_obsoleto.xlsx";
 
     const a = document.createElement("a");
     a.href = url;
@@ -142,7 +142,6 @@ export default function Inventario_Obsoleto() {
     URL.revokeObjectURL(url);
   };
 
-  
   return (
     <>
       <button
@@ -151,42 +150,39 @@ export default function Inventario_Obsoleto() {
       >
         <IoArrowUndoOutline />
         Regresar
-      </button>      
+      </button>
 
       <div className="container p-4 mx-auto -mt-10">
-        <h1 className="mb-5 text-3xl font-bold text-center underline">Inventario Obsoleto </h1>       
-          
-           {/* boton para reportes */}
-           <Suspense fallback={<Loading />}>
-                <div className="flex justify-end mt-5 mb-5">
-                <button
-                        onClick={exportToExcel}
-                        className="flex items-center gap-2 px-2 py-2 text-blue-900 transition-colors duration-300
-                         bg-blue-100 rounded-full hover:text-white hover:bg-blue-600"
-                    >
-                    <img src={lista} alt="plan" width={40} height={40} />
-                    Generar Reporte     
-                    </button>
-                </div>
-            </Suspense>
+        <h1 className="mb-5 text-3xl font-bold text-center underline">Inventario Obsoleto </h1>
 
-            
-            
-          <FiltroInventario
-            searchTerm={searchTerm}
-            setSearchTerm={setSearchTerm}
-            selectedAgencia={selectedAgencia}
-            setSelectedAgencia={setSelectedAgencia}
-            agencias={agenciaData}
-            />
-    
+        {/* boton para reportes */}
+        <Suspense fallback={<Loading />}>
+          <div className="flex justify-end mt-5 mb-5">
+            <button
+              onClick={exportToExcel}
+              className="flex items-center gap-2 px-2 py-2 text-blue-900 transition-colors duration-300
+                         bg-blue-100 rounded-full hover:text-white hover:bg-blue-600"
+            >
+              <img src={lista} alt="plan" width={40} height={40} />
+              Generar Reporte
+            </button>
+          </div>
+        </Suspense>
+
+        <FiltroInventario
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          selectedAgencia={selectedAgencia}
+          setSelectedAgencia={setSelectedAgencia}
+          agencias={agenciaData}
+        />
 
         {/* Tabla de inventarios */}
         <div className="overflow-x-auto">
           {currentItems.length > 0 ? (
             <table className="w-full border-collapse">
               <thead>
-              <tr className="text-white bg-blue-900">
+                <tr className="text-white bg-blue-900">
                   <th className="p-2 text-left border-r-2 border-blue-300">Nº Inventario</th>
                   <th className="p-2 text-left border-r-2 border-blue-300">Serie</th>
                   <th className="p-2 text-left border-r-2 border-blue-300">Marca</th>

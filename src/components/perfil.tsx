@@ -22,21 +22,6 @@ export default function Perfil() {
         return <p>No se encontró información del usuario.</p>;
     }
 
-    const obtenerFechaHoraActual = (): string => {
-        const fecha = new Date();
-        return fecha.toLocaleString('es-ES', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-            hour: 'numeric',
-            minute: 'numeric',
-            second: 'numeric',
-        });
-    };
-
-    const ultimaSesion = localStorage.getItem('ultimaSesion') || obtenerFechaHoraActual();
-    localStorage.setItem('ultimaSesion', obtenerFechaHoraActual());
-
     const cambiarContraseñaRuta = usuarioPerfil.rol === "admin"
         ? "/administracion/perfil/cambiar-contraseña"
         : "/empleado/perfil/cambiar-contraseña";
@@ -68,10 +53,7 @@ export default function Perfil() {
                     <span className='font-bold'>Rol:</span>
                     <span> {usuarioPerfil.rol}</span>
                 </div>
-                <div className="mt-2">
-                    <span className='font-bold'>Última vez conectado:</span>
-                    <span> {ultimaSesion}</span>
-                </div>
+              
              </div>
              <div className="mt-4 w-full flex justify-center">
                 <Link

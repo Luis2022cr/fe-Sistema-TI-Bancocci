@@ -11,6 +11,7 @@ import Pagination from "../Pagination";
 import FiltroInventario from "./FiltroInventario";
 import { ObtenerAgencia } from "@/api_conexion/servicios/agencias";
 import ExcelReportInventario from "./reporte_Historial";
+import { formatearFecha } from "../campos/FormateoFecha";
 
 const tipoInventarioMap: { [key: number]: string } = {
   1: "Desktop",
@@ -25,7 +26,7 @@ const tipoInventarioMap: { [key: number]: string } = {
 };
 
 interface ExportData {
-  Nº_Inventario: number;
+  Nº_Inventario: string;
   Serie: string;
   Marca: string;
   Modelo: string;
@@ -95,18 +96,19 @@ export default function Pagina_Inventario() {
         acc[key] = [];
       }
       acc[key].push({
-        Nº_Inventario: parseInt(curr.codigo, 30),
-        Serie: curr.serie,
-        Marca: curr.marca,
-        Modelo: curr.modelo,
-        Agencia_Origen: curr.agencia_origen,
-        Agencia_Actual: curr.agencia_actual,
-        Estado: curr.estado,
-        Tipo_Inventario: curr.tipo_inventario,
-        Comentarios: curr.comentarios,
+        Nº_Inventario: curr.codigo ? curr.codigo : "", // Asegúrate de manejar el caso en el que `codigo` sea null o no válido
+        Serie: curr.serie || "",
+        Marca: curr.marca || "",
+        Modelo: curr.modelo || "",
+        Agencia_Origen: curr.codigo_agencia_origen + ' ' + curr.agencia_origen || " n/a",
+        Agencia_Actual: curr.codigo_agencia_actual + ' ' + curr.agencia_actual || " n/a",
+        Estado: curr.estado || "",
+        Tipo_Inventario: curr.tipo_inventario || "",
+        Comentarios: curr.comentarios || "",
       });
       return acc;
-    }, {} as Record<string, ExportData[]>); // Añadir tipo explícito para groupedData
+    }, {} as Record<string, ExportData[]>);
+
 
     // Crear un nuevo libro de trabajo
     const workbook = new ExcelJS.Workbook();
@@ -117,9 +119,9 @@ export default function Pagina_Inventario() {
       { header: "Nº Inventario", key: "Nº_Inventario", width: 20 },
       { header: "Serie", key: "Serie", width: 20 },
       { header: "Marca", key: "Marca", width: 15 },
-      { header: "Modelo", key: "Modelo", width: 15 },
-      { header: "Agencia Origen", key: "Agencia_Origen", width: 20 },
-      { header: "Agencia Actual", key: "Agencia_Actual", width: 20 },
+      { header: "Modelo", key: "Modelo", width: 25 },
+      { header: "Agencia Origen", key: "Agencia_Origen", width: 27 },
+      { header: "Agencia Actual", key: "Agencia_Actual", width: 27 },
       { header: "Estado", key: "Estado", width: 15 },
       { header: "Tipo Inventario", key: "Tipo_Inventario", width: 20 },
       { header: "Comentarios", key: "Comentarios", width: 25 },
@@ -137,13 +139,13 @@ export default function Pagina_Inventario() {
 
       items.forEach((item) => {
         const row = worksheet.addRow(item);
-        row.getCell("Nº_Inventario").alignment = { horizontal: "center" };
-        row.getCell("Serie").alignment = { horizontal: "center" };
+        row.getCell("Nº_Inventario").alignment = { horizontal: "left" };
+        row.getCell("Serie").alignment = { horizontal: "left" };
         row.getCell("Marca").alignment = { horizontal: "left" };
         row.getCell("Modelo").alignment = { horizontal: "left" };
         row.getCell("Agencia_Origen").alignment = { horizontal: "left" };
         row.getCell("Agencia_Actual").alignment = { horizontal: "left" };
-        row.getCell("Estado").alignment = { horizontal: "center" };
+        row.getCell("Estado").alignment = { horizontal: "left" };
         row.getCell("Tipo_Inventario").alignment = { horizontal: "left" };
         row.getCell("Comentarios").alignment = { horizontal: "left" };
       });
@@ -155,8 +157,10 @@ export default function Pagina_Inventario() {
     const url = URL.createObjectURL(blob);
 
     // Crear un nombre dinámico para el archivo
-    const nombreAgencia = selectedAgencia ? selectedAgencia.replace(/\s+/g, "_") : "inventario";
-    const nombreArchivo = selectedAgencia ? `inventario_${nombreAgencia}.xlsx` : "inventario.xlsx";
+    // Crear un nombre dinámico para el archivo
+    const nombreAgencia = selectedAgencia ? selectedAgencia.replace(/\s+/g, "_") : "general";
+    const tipoInventarioNombre = inventarioNombre ? inventarioNombre.replace(/\s+/g, "_") : "inventario";
+    const nombreArchivo = `inventario_${tipoInventarioNombre}_${nombreAgencia}.xlsx`;
 
     const a = document.createElement("a");
     a.href = url;
@@ -166,7 +170,6 @@ export default function Pagina_Inventario() {
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
   };
-
 
   return (
     <>
@@ -180,7 +183,7 @@ export default function Pagina_Inventario() {
 
       <div className="container p-4 mx-auto -mt-10">
         <h1 className="mb-5 text-3xl font-bold text-center">Inventarios: {inventarioNombre}</h1>
-       
+
         <div className="flex justify-end gap-6 -mt-5">
 
           {/* boton para reportes */}
@@ -224,22 +227,24 @@ export default function Pagina_Inventario() {
           {currentItems.length > 0 ? (
             <table className="w-full border-collapse">
               <thead>
-                <tr className="text-white bg-blue-900">
-                  <th className="p-2 text-left border-r-2 border-blue-300">Nº Inventario</th>
-                  <th className="p-2 text-left border-r-2 border-blue-300">Serie</th>
-                  <th className="p-2 text-left border-r-2 border-blue-300">Marca</th>
-                  <th className="p-2 text-left border-r-2 border-blue-300">Modelo</th>
-                  <th className="p-2 text-left border-r-2 border-blue-300">Agencia Origen</th>
-                  <th className="p-2 text-left border-r-2 border-blue-300">Agencia Actual</th>
-                  <th className="p-2 text-left border-r-2 border-blue-300">Estado</th>
-                  <th className="p-2 text-left border-r-2 border-blue-300">Tipo Inventario</th>
-                  <th className="p-2 text-left border-r-2 border-blue-300">Comentarios</th>
-                  <th className="p-2 text-left">Acciones</th>
+                <tr className="text-white bg-blue-900 text-sm ">
+                  <th className="p-2 text-center border-r-2 border-blue-300 ">#</th>
+                  <th className="p-2 text-center border-r-2 border-blue-300 ">Nº Inventario</th>
+                  <th className="p-2 text-center border-r-2 border-blue-300">Serie</th>
+                  <th className="p-2 text-center border-r-2 border-blue-300">Marca</th>
+                  <th className="p-2 text-center border-r-2 border-blue-300">Modelo</th>
+                  <th className="p-2 text-center border-r-2 border-blue-300">Agencia Origen</th>
+                  <th className="p-2 text-center border-r-2 border-blue-300">Agencia Actual</th>
+                  <th className="p-2 text-center border-r-2 border-blue-300">Estado</th>
+                  <th className="p-2 text-center border-r-2 border-blue-300">Comentarios</th>
+                  <th className="p-2 text-center border-r-2 border-blue-300">Fecha de instalacion</th>
+                  <th className="p-2 text-center">Acciones</th>
                 </tr>
               </thead>
               <tbody>
                 {currentItems.map((data, index) => (
-                  <tr key={index} className="text-center bg-blue-50 hover:bg-gray-300 even:bg-blue-100">
+                  <tr key={index} className="text-center bg-blue-50 hover:bg-gray-300 even:bg-blue-100 text-xs">
+                    <td className="p-2 border-t border-r-2 border-blue-300">{indexOfFirstItem + index + 1}</td>
                     <td className="p-2 border-t border-r-2 border-blue-300">{data.codigo}</td>
                     <td className="p-2 border-t border-r-2 border-blue-300">{data.serie}</td>
                     <td className="p-2 border-t border-r-2 border-blue-300">{data.marca}</td>
@@ -247,8 +252,8 @@ export default function Pagina_Inventario() {
                     <td className="p-2 border-t border-r-2 border-blue-300">{data.agencia_origen}</td>
                     <td className="p-2 border-t border-r-2 border-blue-300">{data.agencia_actual}</td>
                     <td className="p-2 border-t border-r-2 border-blue-300">{data.estado}</td>
-                    <td className="p-2 border-t border-r-2 border-blue-300">{data.tipo_inventario}</td>
-                    <td className="p-2 border-t border-r-2 border-blue-300">{data.comentarios}</td>
+                    <td className=" border-t border-r-2 border-blue-300">{data.comentarios}</td>
+                    <td className="p-2 border-t border-r-2 border-blue-300">{formatearFecha(data.fecha_creacion)}</td>
                     <td className="p-2 border-t border-blue-300">
                       <div className="flex space-x-2">
                         <Link

@@ -34,7 +34,7 @@ const FiltroUps: React.FC<FiltroUpsProps> = ({
                             type="text"
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            placeholder="Buscar por extensión, agencia, empleado o departamento"
+                            placeholder="Buscar por agencia, nomnre, ip, modelo"
                             className="block w-full p-2 rounded-r focus:outline-none"
                         />
                         {searchTerm && (
@@ -56,6 +56,7 @@ const FiltroUps: React.FC<FiltroUpsProps> = ({
                     Agregar
                 </Link>
             </div>
+            
             {/* Selector de agencia */}
             <div className="flex-none w-1/5">
                 <select
