@@ -31,7 +31,7 @@ export interface InventarioById {
     estado_id: number;            
     usuario_id: number;           
     comentarios: string | null;   
-    fecha_creacion: string;       
+    fecha_creacion: Date | null;       
     fecha_modificacion: string;    
     tipo_inventario: string;      
     marca: string;                
@@ -54,7 +54,6 @@ export interface Post_Inventario {
     estado_id: number;
     comentarios?: string | null;
     fecha_creacion: string;
-    fecha_modificacion: string;
 }
 
 export interface Actualizar_Inventario {
@@ -68,7 +67,7 @@ export interface Actualizar_Inventario {
     estado_id: number;
     usuario_id: number;
     comentarios?: string | null;
-    fecha_modificacion: string;
+    fecha_creacion: string;
 }
 
 

@@ -241,11 +241,11 @@ const CrearControlEquipos: React.FC = () => {
                                         className="w-[270px] border-none bg-transparent text-sm text-center"
                                     />
                                     {showSuggestions && filteredAgencias.length > 0 && (
-                                        <ul className="absolute bg-white border border-gray-300 w-full max-h-40 overflow-y-auto z-10">
+                                        <ul className="absolute bg-white  border-4 border-black w-full max-h-40 overflow-y-auto z-10">
                                             {filteredAgencias.map((agencia) => (
                                                 <li
                                                     key={agencia.id}
-                                                    className="p-2 hover:bg-gray-200 cursor-pointer"
+                                                    className="p-2 hover:bg-gray-200 cursor-pointer "
                                                     onClick={() => handleAgenciaSelect(agencia.nombre + " - " + agencia.codigo)}
                                                 >
                                                     {agencia.nombre} ({agencia.codigo})

@@ -206,7 +206,7 @@ const HistorialporID: React.FC = () => {
                                 <td colSpan={3} className="p-1 border border-black w-full">Técnico: <input disabled type="text" name="tecnico" value={formData.tecnico} onChange={handleInputChange} className="w-4/5 border-none font-semibold" /></td>
                             </tr>
                             <tr>
-                                <td className="p-1 border border-black w-1/4  ">Agencia: <input disabled type="text" name="agencia" value={formData.agencia} onChange={handleInputChange} className="w-[270px] border-none bg-transparent text-sm text-center text-blue-700" /></td>
+                                <td className="p-1 border border-black w-1/4  ">Agencia: <input disabled type="text" name="agencia" value={formData.agencia} onChange={handleInputChange} className="w-[270px] border-none bg-transparent text-sm text-center " /></td>
                                 <td colSpan={3} className="p-1 border-r flex border-black w-full gap-24">
                                     {/* Área de Infraestructura y Taller */}
                                     <div className="flex items-center ">

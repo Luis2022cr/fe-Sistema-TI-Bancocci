@@ -13,6 +13,7 @@ import { IoArrowUndoOutline } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
 import SearchableSelect from '../Pruebas/SearchableSelect';
 import Alert from '../Alert';
+import { validarCampos } from './validarcampos';
 
 const CrearInventarios: React.FC = () => {
 
@@ -34,50 +35,51 @@ const CrearInventarios: React.FC = () => {
     agencias_id_actual: 0,
     estado_id: 0,
     comentarios: '',
+    fecha_creacion: '',
   });
-  
+
   const marcasSelect = useMemo(() => {
     return marcaData?.map((marca: Marca) => ({
       id: marca.id,
       label: marca.nombre,
     })) || [];
   }, [marcaData]);
-  
+
   const tipoinventarioSelect = useMemo(() => {
     return tipoInventarioData?.map((tipoinventario: TipoInventario) => ({
       id: tipoinventario.id,
       label: tipoinventario.nombre,
     })) || [];
   }, [tipoInventarioData]);
-  
+
   const modeloSelect = useMemo(() => {
     return modeloData?.map((modelo: Modelo) => ({
       id: modelo.id,
       label: modelo.nombre,
     })) || [];
   }, [modeloData]);
-  
+
   const agencias_id_origenSelect = useMemo(() => {
     return agenciaData?.map((origen: Agencia) => ({
       id: origen.id,
       label: origen.nombre,
     })) || [];
   }, [agenciaData]);
-  
+
   const agencias_id_actualSelect = useMemo(() => {
     return agenciaData?.map((actual: Agencia) => ({
       id: actual.id,
       label: actual.nombre,
     })) || [];
   }, [agenciaData]);
-  
+
   const estado_idSelect = useMemo(() => {
     return estadoData?.map((estado: Estado) => ({
       id: estado.id,
       label: estado.nombre,
     })) || [];
   }, [estadoData]);
-  
+
 
   const handleSelectChange2 = (field: 'marca_id' | 'tipo_inventario_id' | 'modelo_id' | 'estado_id' | 'agencias_id_actual' | 'agencias_id_origen', option: { id: number; label: string } | null) => {
     if (option) {
@@ -102,12 +104,26 @@ const CrearInventarios: React.FC = () => {
     e.preventDefault();
 
     const { codigo, serie, marca_id, modelo_id, tipo_inventario_id,
-      agencias_id_origen, agencias_id_actual, estado_id, comentarios } = formState;
+      agencias_id_origen, agencias_id_actual, estado_id, comentarios, fecha_creacion } = formState;
       
-    if (!codigo || !serie || !marca_id || !modelo_id || !tipo_inventario_id || !agencias_id_origen || !agencias_id_actual || !estado_id) {
-      setStatus({ ...status, error: 'Por favor, rellena todos los campos.' });
-      return;
-    }
+      const nombresAvalidar = {
+        codigo: "código",
+        serie: "serie",
+        marca_id: "marca",
+        modelo_id: "modelo",
+        tipo_inventario_id: "tipo de inventario",
+        agencias_id_origen: "agencia de origen",
+        agencias_id_actual: "agencia actual",
+        estado_id: "estado",
+        fecha_creacion: "fecha de creación",
+      };
+      
+      const error = validarCampos(formState, nombresAvalidar);
+      
+      if (error) {
+        setStatus({ ...status, error });
+        return;
+      }
 
     const nuevoInventario: Post_Inventario = {
       codigo,
@@ -118,12 +134,10 @@ const CrearInventarios: React.FC = () => {
       agencias_id_origen,
       agencias_id_actual,
       estado_id,
-
       comentarios,
-      fecha_creacion: new Date().toISOString(),
-      fecha_modificacion: new Date().toISOString(),
+      fecha_creacion: new Date(fecha_creacion).toISOString().split('T')[0],
     };
-    
+
 
     try {
       setStatus({ ...status, isLoading: true });
@@ -131,18 +145,18 @@ const CrearInventarios: React.FC = () => {
       await CrearInventario(nuevoInventario);
 
       setStatus({ error: null, isLoading: false, successMessage: 'Inventario agregado correctamente.' });
-      
+
       setFormState({
         codigo: '', serie: '', marca_id: 0, modelo_id: 0,
         tipo_inventario_id: 0, agencias_id_origen: 0,
-        agencias_id_actual: 0, estado_id: 0, comentarios: ''
+        agencias_id_actual: 0, estado_id: 0, comentarios: '', fecha_creacion: ''
       });
       Alert({
         title: 'Éxito',
         text: `Se creo el inventario con exito: ${nuevoInventario.codigo}`,
         icon: 'success',
         callback: () => navigate(-1)
-    });
+      });
 
     } catch (error) {
       const errorMessage = axios.isAxiosError(error)
@@ -191,6 +205,7 @@ const CrearInventarios: React.FC = () => {
               onChange={handleChange}
             />
           </div>
+
           <div className="col-span-1">
             <label className="block text-sm font-medium text-gray-700" htmlFor="nombre">Selecciona un Tipo de Inventario</label>
             <SearchableSelect
@@ -255,7 +270,18 @@ const CrearInventarios: React.FC = () => {
               onChange={handleChange}
             />
           </div>
-          <div className="flex justify-center items-center mt-20 col-span-2">
+          <div className="col-span-1">
+
+            <label className="block text-sm font-medium text-gray-700" htmlFor="nombre">Fecha Instalacion</label>
+            <InputText
+              type='date'
+              name="fecha_creacion"
+              value={formState.fecha_creacion}
+              placeholder="Fecha Creacion"
+              onChange={handleChange}
+            />
+          </div>
+          <div className="flex -ml-40 mr-40  items-center mt-28 col-span-2">
             <button
               className="w-1/2 h-14 hover:bg-green-500 bg-green-700 text-xl text-white py-2 rounded-full"
               disabled={status.isLoading}

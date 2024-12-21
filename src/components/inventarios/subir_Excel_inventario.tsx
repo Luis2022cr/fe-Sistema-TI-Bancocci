@@ -45,7 +45,12 @@ const ExcelInventario: React.FC = () => {
         const errorMessage = axios.isAxiosError(error)
         ? error.response?.data?.error || 'Error al agregar el inventario.'
         : 'Error al agregar el inventario.';
-      setMessage('Hubo un error al procesar tu solicitud;' + errorMessage);
+        Alert({
+          title: 'Error',
+          text: `${errorMessage}`,
+          icon: 'error',
+          callback: () => window.location.reload()
+      });
     } finally {
       setLoading(false);
     }

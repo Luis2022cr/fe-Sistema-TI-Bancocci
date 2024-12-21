@@ -1,5 +1,5 @@
 import { ObtenerInventarioConHistorial } from "@/api_conexion/servicios/inventarios"; // Asegúrate de que esta función esté correctamente implementada
-import { ServerIcon, MapPinIcon, CirclePower, CpuIcon, Hash, ServerCrash } from "lucide-react";
+import { ServerIcon, MapPinIcon, CirclePower, CpuIcon, Hash, ServerCrash, CalendarDays } from "lucide-react";
 import { useParams } from "react-router-dom";
 import Loading from "../Loading";
 import { formatearFecha } from '../campos/FormateoFecha';
@@ -12,6 +12,7 @@ import lista from "../../assets/listaReport.svg";
 import Pagination from "../Pagination";
 
 const Historial_Inventario = () => {
+    
     const { id } = useParams<{ id?: string }>();
     const NumericId = id ? parseInt(id, 10) : undefined;
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -40,8 +41,6 @@ const Historial_Inventario = () => {
 
         // Crear una hoja de trabajo para el inventario
         const worksheet = workbook.addWorksheet(`Inventario ${inventarioData.codigo}`);
-
-
 
         // Agregar una fila con el título "Información de Equipo"
         const infoTitleRow = worksheet.addRow(["Información de Equipo"]);
@@ -212,6 +211,10 @@ const Historial_Inventario = () => {
                         <div className="flex items-center">
                             <CirclePower className="w-5 h-5 mr-2 text-red-500" />
                             <span>Estado: {inventarioData.estado}</span>
+                        </div>
+                        <div className="flex items-center">
+                            <CalendarDays className="w-5 h-5 mr-2 text-cyan-500" />
+                            <span>Estado: {formatearFecha(inventarioData.fecha_creacion)}</span>
                         </div>
                     </div>
                     <div className="mt-4">
