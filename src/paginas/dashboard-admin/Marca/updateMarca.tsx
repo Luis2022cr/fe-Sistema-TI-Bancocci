@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-
 import axios from 'axios';
 import { FiLoader } from 'react-icons/fi';
-import Alert from '@/components/Alert';
 import InputText from '@/components/campos/InputForm';
 import Loading from '@/components/Loading';
 import BotonRegresar from '@/components/Regresar';
 import { ActualizarMarca, ObtenerMarcaById, Post_Marca } from '@/api_conexion/servicios/marca';
+import { Alert } from '@/components/alertService';
 
 
 const UpdateMarca: React.FC = () => {
@@ -50,12 +49,13 @@ const UpdateMarca: React.FC = () => {
             setIsLoading(true);
 
             await ActualizarMarca(numericId!, formData);
-            Alert({
-                title: 'Éxito',
-                text: `Se actualizó la marca: '${formData.nombre}'`,
-                icon: 'success',
-                callback: () => navigate(-1)
-            });
+            Alert(
+                'Éxito',
+                `Se actualizó la marca: '${formData.nombre}'`,
+                'success',
+                'Ok!',
+                () => {navigate(-1)}
+            );
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 const respuestaError = error.response?.data?.error;

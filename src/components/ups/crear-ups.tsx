@@ -2,7 +2,6 @@ import React, { useState, useMemo } from 'react';
 import { FiLoader } from 'react-icons/fi';
 import { CrearUps, Post_Ups } from '@/api_conexion/servicios/ups';
 import { useNavigate } from 'react-router-dom';
-import Alert from '../Alert';
 import InputText from '../campos/InputForm';
 import { EstadoUps, ObtenerEstadoUps, ObtenerTipoTamaño, TipoTamaño } from '@/api_conexion/servicios/estados';
 import { Agencia, ObtenerAgencia } from '@/api_conexion/servicios/agencias';
@@ -10,6 +9,7 @@ import Loading from '../Loading';
 import BotonRegresar from '../Regresar';
 import axios from 'axios';
 import SearchableSelect from '../Pruebas/SearchableSelect';
+import { Alert } from '../alertService';
 
 const CrearUpsForm: React.FC = () => {
     const navigate = useNavigate();
@@ -130,12 +130,13 @@ const CrearUpsForm: React.FC = () => {
                 successMessage: 'UPS agregado correctamente.',
                 errorMessage: null
             });
-            Alert({
-                title: 'Éxito',
-                text: `Se creo el UPS: ${formState.nombre} `,
-                icon: 'success',
-                callback: () => navigate(-1)
-            });
+            Alert(
+                'Éxito',
+                `Se creo el UPS: ${formState.nombre} `,
+                'success',
+                'Ok',
+                () =>{ navigate(-1)}
+            );
 
             // Limpiar formulario
             setFormState({

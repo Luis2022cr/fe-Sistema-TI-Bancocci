@@ -7,11 +7,11 @@ import { EstadoUps, ObtenerEstadoUps, ObtenerTipoTamaño, TipoTamaño } from '@/
 import { ObtenerUpsById, ActualizarUps } from '@/api_conexion/servicios/ups';
 import { Asterisk } from 'lucide-react';
 import { FiLoader } from 'react-icons/fi';
-import Alert from '../Alert';
 import InputText from '../campos/InputForm';
 import Loading from '../Loading';
 import BotonRegresar from '../Regresar';
 import SearchableSelect from '../Pruebas/SearchableSelect';
+import { Alert } from '../alertService';
 
 const UdpateUps = () => {
     const navigate = useNavigate();
@@ -147,12 +147,13 @@ const UdpateUps = () => {
                 errorMessage: null
             });
 
-            Alert({
-                title: 'Éxito',
-                text: `UPS ${formState.nombre} actualizada.`,
-                icon: 'success',
-                callback: () => navigate(-1)
-            });
+            Alert(
+                'Éxito',
+                `UPS ${formState.nombre} actualizada.`,
+                'success',
+                'Ok!',
+                () => { navigate(-1) }
+            );
         } catch (error) {
             const errorMessage = axios.isAxiosError(error)
                 ? error.response?.data?.error || "Error al actualizar la UPS."

@@ -6,11 +6,11 @@ import { Agencia, ObtenerAgencia } from '@/api_conexion/servicios/agencias';
 import { Departamento, ObtenerDepartamento } from '@/api_conexion/servicios/departamentos';
 import axios from 'axios';
 import { FiLoader } from 'react-icons/fi';
-import Alert from '../Alert';
 import InputText from '../campos/InputForm';
 import SearchableSelect from '../Pruebas/SearchableSelect';
 
 import BotonRegresar from '../Regresar';
+import { Alert } from '../alertService';
 
 const UpdateDirectorio: React.FC = () => {
     const { id } = useParams<{ id?: string }>();
@@ -76,12 +76,13 @@ const UpdateDirectorio: React.FC = () => {
             setIsLoading(true);
 
             await UpdateDirectorios(numericId!, formData);
-            Alert({
-                title: 'Éxito',
-                text: `Se actualizó el directorio: '${formData.extension}' empleado asignado: ${formData.empleado} `,
-                icon: 'success',
-                callback: () => navigate(-1)
-            });
+            Alert(
+                'Éxito',
+                `Se actualizó el directorio: '${formData.extension}' empleado asignado: ${formData.empleado} `,
+                'success',
+                'Ok!',
+                () => { navigate(-1) }
+            );
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 const respuestaError = error.response?.data?.error;

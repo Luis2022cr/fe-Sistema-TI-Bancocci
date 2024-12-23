@@ -4,7 +4,6 @@ import L from 'leaflet';
 import { FaPlusCircle, FaTrash } from 'react-icons/fa';
 import { BorrarPuntoMapa, ObtenerMapaUps, UPS_MAPA } from '@/api_conexion/servicios/ups-mapa';
 import Loading from '../Loading';
-import Alert from '../Alert';
 import { useEffect, useState } from 'react';
 import Modal from '../Modal';
 import CrearPuntoMapaForm from './creacionPuntoMapa';
@@ -13,6 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import onlineIconSvg from '@/assets/pingtrue.svg';
 import offlineIconSvg from '@/assets/pingFalse.svg';
 import Pagination from '../Pagination';
+import { Alert } from '../alertService';
 
 const onlineIcon = L.icon({
   iconUrl: onlineIconSvg,
@@ -62,19 +62,21 @@ const MapaCopan: React.FC = () => {
     if (confirmDelete) {
       try {
         await BorrarPuntoMapa(id);
-        Alert({
-          title: 'Éxito',
-          text: `Se borró el punto del mapa`,
-          icon: 'success',
-          callback: () => window.location.reload(),
-        });
+        Alert(
+          'Éxito',
+          `Se borró el punto del mapa`,
+          'success',
+          'Ok!',
+          () => {window.location.reload()}
+        );
       } catch (error) {
-        Alert({
-          title: 'Error',
-          text: `Hubo un problema al eliminar el punto del mapa`,
-          icon: 'error',
-          callback: () => window.location.reload(),
-        });
+        Alert(
+          'Error',
+          `Hubo un problema al eliminar el punto del mapa`,
+          'error',
+          'Ok!',
+          () => {window.location.reload()}
+        );
       }
     }
   };

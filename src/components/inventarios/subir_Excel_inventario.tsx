@@ -2,13 +2,12 @@ import React, { useState } from 'react';
 import axiosInstance from '@/api_conexion/axiosInstance';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import Alert from '../Alert';
+import { Alert } from '../alertService';
 
 const ExcelInventario: React.FC = () => {
   const [file, setFile] = useState<File | null>(null);
-  const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0] || null;
@@ -18,39 +17,51 @@ const ExcelInventario: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!file) {
-      setMessage('Por favor, selecciona un archivo.');
+      window.alert('Por favor, selecciona un archivo.');
       return;
     }
 
     setLoading(true);
-    setMessage('');
 
     try {
       const formData = new FormData();
       formData.append('file', file);
 
-       await axiosInstance.post('/importar-inventario', formData, {
+      // Send request to API to upload the file
+      await axiosInstance.post('/importar-inventario', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
 
-      Alert({
-        title: 'Éxito',
-        text: `Se subio el inventario con exito`,
-        icon: 'success',
-        callback: () => navigate(-1)
-    });
+      // Show success alert after uploading the file
+      Alert(
+        'Exito',
+        'Se subido y creo con exito el inventario',
+        'success',
+        'Ok!',
+        () => {
+           
+            navigate(-1);
+        }
+    );
+
     } catch (error) {
-        const errorMessage = axios.isAxiosError(error)
+      const errorMessage = axios.isAxiosError(error)
         ? error.response?.data?.error || 'Error al agregar el inventario.'
         : 'Error al agregar el inventario.';
-        Alert({
-          title: 'Error',
-          text: `${errorMessage}`,
-          icon: 'error',
-          callback: () => window.location.reload()
-      });
+
+      // Show error alert after failure
+      Alert(
+        'Verifique',
+        `${errorMessage}`,
+        'warning',
+        'OK!',
+        () => {
+          window.location.reload()
+        }
+    );
+    
     } finally {
       setLoading(false);
     }
@@ -94,17 +105,6 @@ const ExcelInventario: React.FC = () => {
             {loading ? 'Subiendo...' : 'Subir Archivo'}
           </button>
         </form>
-        {message && (
-          <p
-            className={`mt-4 text-center text-sm ${
-              message.includes('éxito')
-                ? 'text-green-800'
-                : 'text-orange-800'
-            }`}
-          >
-            {message}
-          </p>
-        )}
       </div>
     </div>
   );

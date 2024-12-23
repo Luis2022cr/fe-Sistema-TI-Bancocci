@@ -3,10 +3,10 @@ import { useParams, useNavigate } from 'react-router-dom';
 import {  ObtenerDepartamentoById, Post_Departamento, UpdateDepartamento } from '@/api_conexion/servicios/departamentos';
 import axios from 'axios';
 import { FiLoader } from 'react-icons/fi';
-import Alert from '@/components/Alert';
 import InputText from '@/components/campos/InputForm';
 import Loading from '@/components/Loading';
 import BotonRegresar from '@/components/Regresar';
+import { Alert } from '@/components/alertService';
 
 const UpdateDepartamentos: React.FC = () => {
     const { id } = useParams<{ id?: string }>();
@@ -47,12 +47,13 @@ const UpdateDepartamentos: React.FC = () => {
             setIsLoading(true);
 
             await UpdateDepartamento(numericId!, formData);
-            Alert({
-                title: 'Éxito',
-                text: `Se actualizó el departamento: '${formData.nombre}'`,
-                icon: 'success',
-                callback: () => navigate(-1)
-            });
+            Alert(
+                'Éxito',
+                `Se actualizó el departamento: '${formData.nombre}'`,
+                'success',
+                'Ok!',
+                () => {navigate(-1)}
+            );
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 const respuestaError = error.response?.data?.error;

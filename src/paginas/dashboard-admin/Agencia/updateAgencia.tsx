@@ -3,12 +3,12 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { ActualizarAgencias, ObtenerAgenciaById, UpdateAgencia } from '@/api_conexion/servicios/agencias';
 import axios from 'axios';
 import { FiLoader } from 'react-icons/fi';
-import Alert from '@/components/Alert';
 import InputText from '@/components/campos/InputForm';
 import Loading from '@/components/Loading';
 import SearchableSelect from '@/components/Pruebas/SearchableSelect';
 import BotonRegresar from '@/components/Regresar';
 import { Estado, ObtenerEstadoAgencia } from '@/api_conexion/servicios/estadoAgencia';
+import { Alert } from '@/components/alertService';
 
 
 const UpdateAgencias: React.FC = () => {
@@ -72,12 +72,13 @@ const UpdateAgencias: React.FC = () => {
             setIsLoading(true);
 
             await ActualizarAgencias(numericId!, formData);
-            Alert({
-                title: 'Éxito',
-                text: `Se actualizó la agencia: '${formData.nombre}' en la ubicación: ${formData.ubicacion} `,
-                icon: 'success',
-                callback: () => navigate(-1)
-            });
+            Alert(
+                'Éxito',
+                `Se actualizó la agencia: '${formData.nombre}' en la ubicación: ${formData.ubicacion} `,
+                'success',
+                'Ok!',
+                () =>{ navigate(-1)}
+            );
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 const respuestaError = error.response?.data?.error;

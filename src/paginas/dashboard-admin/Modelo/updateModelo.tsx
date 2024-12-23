@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { FiLoader } from 'react-icons/fi';
-import Alert from '@/components/Alert';
 import InputText from '@/components/campos/InputForm';
 import Loading from '@/components/Loading';
 import SearchableSelect from '@/components/Pruebas/SearchableSelect';
 import BotonRegresar from '@/components/Regresar';
 import { ActualizarModelo, ObtenerModeloById } from '@/api_conexion/servicios/modelo';
 import { Marca, ObtenerMarca } from '@/api_conexion/servicios/marca';
+import { Alert } from '@/components/alertService';
 
 const UpdateModelo: React.FC = () => {
     const { id } = useParams<{ id?: string }>();
@@ -70,12 +70,13 @@ const UpdateModelo: React.FC = () => {
         try {
             setIsLoading(true);
             await ActualizarModelo(numericId!, formData);
-            Alert({
-                title: 'Éxito',
-                text: `Se actualizó el modelo: '${formData.nombre}' `,
-                icon: 'success',
-                callback: () => navigate(-1)
-            });
+            Alert(
+                'Éxito',
+                `Se actualizó el modelo: '${formData.nombre}' `,
+                'success',
+                'Ok',
+                () =>{navigate(-1)}
+            );
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 const respuestaError = error.response?.data?.error;

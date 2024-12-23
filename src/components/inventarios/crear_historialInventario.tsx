@@ -3,8 +3,8 @@ import axios from 'axios';
 import { FiLoader } from 'react-icons/fi';
 import InputText from '../campos/InputForm';
 import { Post_Historial_Inventario, CrearHistorialInventario } from '@/api_conexion/servicios/inventarios'; 
-import Alert from '../Alert';
 import usuario from '@/assets/usuario.svg';
+import { Alert } from '../alertService';
 
 const Crear_HistorialInventario: React.FC<{ 
     inventarioId?: string, inventarioNombre?: string }> = ({ inventarioId, inventarioNombre }) => {
@@ -49,12 +49,13 @@ const Crear_HistorialInventario: React.FC<{
 
             setStatus({ error: null, isLoading: false, successMessage: "Historial agregado correctamente." });
             setFormState({ cambio_realizado: '', fecha_cambio: '' , usuario_id: `` });
-            Alert({
-                title: 'Éxito',
-                text: `Se realizó: "${formState.cambio_realizado}", al inventario: "${inventarioNombre}" `,
-                icon: 'success',
-                callback: () => window.location.reload()
-            });
+            Alert(
+                'Éxito',
+                `Se realizó: "${formState.cambio_realizado}", al inventario: "${inventarioNombre}" `,
+                'success',
+                'Ok!',
+                () => {window.location.reload()}
+            );
            
         } catch (error) {
             const errorMessage = axios.isAxiosError(error) ? error.response?.data?.error || "Error al agregar el historial." : "Error al agregar el historial.";

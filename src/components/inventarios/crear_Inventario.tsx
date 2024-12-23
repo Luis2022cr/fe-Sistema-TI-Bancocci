@@ -12,8 +12,8 @@ import InputText from '../campos/InputForm';
 import { IoArrowUndoOutline } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
 import SearchableSelect from '../Pruebas/SearchableSelect';
-import Alert from '../Alert';
 import { validarCampos } from './validarcampos';
+import { Alert } from '../alertService';
 
 const CrearInventarios: React.FC = () => {
 
@@ -151,12 +151,13 @@ const CrearInventarios: React.FC = () => {
         tipo_inventario_id: 0, agencias_id_origen: 0,
         agencias_id_actual: 0, estado_id: 0, comentarios: '', fecha_creacion: ''
       });
-      Alert({
-        title: 'Éxito',
-        text: `Se creo el inventario con exito: ${nuevoInventario.codigo}`,
-        icon: 'success',
-        callback: () => navigate(-1)
-      });
+      Alert(
+        'Éxito',
+        `Se creo el inventario con exito: ${nuevoInventario.codigo}`,
+        'success',
+        'Ok!',
+        () => {navigate(-1)}
+      );
 
     } catch (error) {
       const errorMessage = axios.isAxiosError(error)

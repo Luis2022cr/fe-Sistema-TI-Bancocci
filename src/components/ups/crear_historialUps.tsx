@@ -3,7 +3,7 @@ import axios from 'axios';
 import { FiLoader } from 'react-icons/fi';
 import InputText from '../campos/InputForm';
 import { Post_Historial_Ups, CrearHistorialUps } from '@/api_conexion/servicios/ups';
-import Alert from '../Alert';
+import { Alert } from '../alertService';
 
 const Crear_HistorialUps: React.FC<{ upsId?: string, upsNombre?: string }> = ({ upsId, upsNombre }) => {
 
@@ -48,12 +48,13 @@ const Crear_HistorialUps: React.FC<{ upsId?: string, upsNombre?: string }> = ({ 
 
             setStatus({ error: null, isLoading: false, successMessage: "Historial agregado correctamente." });
             setFormState({ cambio: '', fecha_instalacion: '', proximo_cambio: '' });
-            Alert({
-                title: 'Éxito',
-                text: `Se realizo un cambio: "${formState.cambio}", al UPS: "${upsNombre}" `,
-                icon: 'success',
-                callback: () => window.location.reload()
-            });
+            Alert(
+                'Éxito',
+                `Se realizo un cambio: "${formState.cambio}", al UPS: "${upsNombre}" `,
+                'success',
+                'Ok!',
+                () => { window.location.reload() }
+            );
 
         } catch (error) {
             const errorMessage = axios.isAxiosError(error) ? error.response?.data?.error || "Error al agregar el historial." : "Error al agregar el historial.";

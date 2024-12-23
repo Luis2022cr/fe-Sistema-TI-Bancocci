@@ -6,10 +6,10 @@ import { BorrarDirectorios } from "@/api_conexion/servicios/directorio";
 import { Link, useLocation } from "react-router-dom";
 import { ObtenerAgencia } from "@/api_conexion/servicios/agencias";
 import { ObtenerDirectorios, Directorio } from '../../api_conexion/servicios/directorio';
-import Alert from "../Alert";
 import formatExtension from "../campos/FormatoExtencion";
 import lista from "../../assets/listaReport.svg";
 import FiltroDirectorio from "./FiltroDirectorio";
+import { Alert } from "../alertService";
 
 interface ExportData {
     Extensión: string;
@@ -45,19 +45,21 @@ export default function PaginaDirectorio() {
         if (confirmDelete) {
             try {
                 await BorrarDirectorios(id);
-                Alert({
-                    title: 'Éxito',
-                    text: `Se borro el directorio: ${extension}`,
-                    icon: 'success',
-                    callback: () => window.location.reload()
-                });
+                Alert(
+                    'Éxito',
+                    `Se borro el directorio: ${extension}`,
+                    'success',
+                    'Ok',
+                    () => {window.location.reload()}
+                );
             } catch (error) {
-                Alert({
-                    title: 'Error',
-                    text: `Hubo un problema al eliminar el directorio. ${extension}`,
-                    icon: 'error',
-                    callback: () => window.location.reload()
-                });
+                Alert(
+                    'Error',
+                    `Hubo un problema al eliminar el directorio. ${extension}`,
+                    'error',
+                    'Ok',
+                    () => { window.location.reload() }
+                );
                 setError("Error al eliminar el directorio.");
             }
         }
