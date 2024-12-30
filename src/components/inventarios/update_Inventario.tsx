@@ -303,7 +303,7 @@ const EditarInventario: React.FC = () => {
             />
           </div>
 
-          <div className="flex justify-center items-center mt-20 col-span-2">
+          <div className="flex -ml-40 mr-40  items-center mt-28 col-span-2">
             <button
               className="w-1/2 h-14 hover:bg-green-500 bg-green-700 text-xl text-white py-2 rounded-full"
               disabled={status.isLoading}
