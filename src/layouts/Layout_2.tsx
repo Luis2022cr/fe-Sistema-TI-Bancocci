@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
-import Sidebar from "../components/Sidebar";
-import Header_2 from "@/components/Header_2";
+import Header_2 from "@/componentes/Header_2";
+import Sidebar from "@/componentes/Sidebar";
 
 
 export default function Layout_Login() {
