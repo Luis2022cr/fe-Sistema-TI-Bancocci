@@ -1,4 +1,4 @@
-import React, {  useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logo1 from "@/assets/logoBancocci.png";
 import { FiLoader } from "react-icons/fi";
@@ -39,6 +39,8 @@ const Login: React.FC = () => {
         navigate("/admin/main");
       } else if (rol_id === 2) {
         navigate("/ti/main");
+      } else if (rol_id === 4) {
+        navigate("/prestamos/main");
       } else {
         navigate("/");
       }
@@ -60,7 +62,7 @@ const Login: React.FC = () => {
               className="w-80 h-80"
             />
           </div>
-          
+
           <div className="bg-orange-400 w-full sm:w-8/12 md:w-6/12 lg:w-5/12 xl:w-4/12 shadow-2xl rounded-lg p-11">
             <form className="p-1" onSubmit={handleLogin}>
               <h1 className="text-white text-center text-3xl font-bold mb-6">Bienvenido</h1>
@@ -110,7 +112,7 @@ const Login: React.FC = () => {
                 )}
               </button>
             </form>
-            
+
           </div>
         </div>
       </div>
