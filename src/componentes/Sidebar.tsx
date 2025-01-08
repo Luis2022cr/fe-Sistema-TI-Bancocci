@@ -6,7 +6,7 @@ import { ObtenerNotificacionesCheck } from "@/api_conexion/servicios/notifcacion
 import { IoIosNotificationsOutline } from "react-icons/io";
 import { Settings } from "lucide-react";
 import { LuLayoutDashboard } from "react-icons/lu";
-import Loading from "@/modulo_ti/Loading";
+import Loading from "@/componentes/Loading";
 
 // Tipos para los elementos del menú
 type MenuItem = {

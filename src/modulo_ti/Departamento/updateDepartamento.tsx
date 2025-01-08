@@ -4,7 +4,7 @@ import {  ObtenerDepartamentoById, Post_Departamento, UpdateDepartamento } from 
 import axios from 'axios';
 import { FiLoader } from 'react-icons/fi';
 import InputText from '@/modulo_ti/campos/InputForm';
-import Loading from '@/modulo_ti/Loading';
+import Loading from "@/componentes/Loading";
 import BotonRegresar from '@/modulo_ti/Regresar';
 import { Alert } from '@/modulo_ti/alertService';
 

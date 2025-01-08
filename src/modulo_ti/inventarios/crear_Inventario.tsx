@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useMemo } from 'react';
-import Loading from '../Loading';
+import Loading from "@/componentes/Loading";
 import { CrearInventario, Post_Inventario } from '@/api_conexion/servicios/inventarios';
 import axios from 'axios';
 import { FiLoader } from 'react-icons/fi';

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Loading from '../../modulo_ti/Loading';
+import Loading from "@/componentes/Loading";
 import Select from 'react-select';
 import axios from 'axios';
 import { Rol, ObtenerRoles } from '@/api_conexion/servicios/roles';

@@ -8,7 +8,7 @@ import { ObtenerUpsById, ActualizarUps } from '@/api_conexion/servicios/ups';
 import { Asterisk } from 'lucide-react';
 import { FiLoader } from 'react-icons/fi';
 import InputText from '../campos/InputForm';
-import Loading from '../Loading';
+import Loading from "@/componentes/Loading";
 import BotonRegresar from '../Regresar';
 import SearchableSelect from '../Pruebas/SearchableSelect';
 import { Alert } from '../alertService';

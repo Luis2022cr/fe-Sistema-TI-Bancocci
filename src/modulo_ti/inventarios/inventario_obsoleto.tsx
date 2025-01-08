@@ -1,6 +1,6 @@
 import { Suspense, useState } from "react";
 import { PencilIcon, ClockIcon } from "lucide-react";
-import Loading from "../Loading";
+import Loading from "@/componentes/Loading";
 import { ObtenerInventariosObsoletos } from "@/api_conexion/servicios/inventarios";
 import lista from "../../assets/listaReport.svg";
 import { Link } from "react-router-dom";

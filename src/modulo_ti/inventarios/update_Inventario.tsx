@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useMemo, useContext } from 'react';
-import Loading from '../Loading';
+import Loading from "@/componentes/Loading";
 import { ObtenerInventariosById, UpdateInventario } from '@/api_conexion/servicios/inventarios';
 import axios from 'axios';
 import { FiLoader } from 'react-icons/fi';

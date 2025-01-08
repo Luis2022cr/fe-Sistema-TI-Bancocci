@@ -1,6 +1,6 @@
 import { ObtenerUPS } from "@/api_conexion/servicios/ups";
 import { PencilIcon, ClockIcon, CalendarIcon, ZapIcon, Globe, MapPin, BatteryIcon, CpuIcon } from "lucide-react";
-import Loading from '../Loading';
+import Loading from "@/componentes/Loading";
 import { Link, useParams } from "react-router-dom";
 import { formatearFecha } from "../campos/FormateoFecha";
 import { useState } from "react";

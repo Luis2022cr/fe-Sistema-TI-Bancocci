@@ -2,10 +2,10 @@ import { Building, Pencil, Hash, MapPin, CircleCheck, CircleX } from "lucide-rea
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Agencia, ObtenerAgencia } from "@/api_conexion/servicios/agencias";
-import Loading from "@/modulo_ti/Loading";
 import Pagination from "@/modulo_ti/Pagination";
 import FiltroAgencia from "@/modulo_ti/FiltroAgencias";
 import BotonRegresar from "@/modulo_ti/Regresar";
+import Loading from "@/componentes/Loading";
 
 export default function PaginaAgencias() {
     const [{ data: agenciaData, loading: loadingAgencias }] = ObtenerAgencia();

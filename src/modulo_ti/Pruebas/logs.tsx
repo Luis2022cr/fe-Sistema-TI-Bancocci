@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { ChevronDown, ChevronUp, User, Calendar, Edit, Search, X } from 'lucide-react';
 import { ObtenerLogs } from '@/api_conexion/servicios/notifcaciones';
-import Loading from '../Loading';
+import Loading from "@/componentes/Loading";
 
 export default function LogViewer() {
   const [expandedLog, setExpandedLog] = useState<number | null>(null);

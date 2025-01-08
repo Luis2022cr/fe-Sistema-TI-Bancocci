@@ -1,7 +1,7 @@
 import { ObtenerInventarioConHistorial } from "@/api_conexion/servicios/inventarios"; // Asegúrate de que esta función esté correctamente implementada
 import { ServerIcon, MapPinIcon, CirclePower, CpuIcon, Hash, ServerCrash, CalendarDays } from "lucide-react";
 import { useParams } from "react-router-dom";
-import Loading from "../Loading";
+import Loading from "@/componentes/Loading";
 import { formatearFecha } from '../campos/FormateoFecha';
 import { FaPlusCircle } from "react-icons/fa";
 import { Suspense, useState } from "react";

@@ -1,7 +1,7 @@
 import { CpuIcon, Pencil, ServerIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Loading from "@/modulo_ti/Loading";
+import Loading from "@/componentes/Loading";
 import Pagination from "@/modulo_ti/Pagination";
 import { Modelo, ObtenerModelo } from "@/api_conexion/servicios/modelo";
 import FiltroModelo from "@/modulo_ti/FiltroModelo";

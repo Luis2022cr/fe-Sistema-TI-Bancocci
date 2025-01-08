@@ -1,5 +1,5 @@
 import { ObtenerUPS, UPS } from "@/api_conexion/servicios/ups";
-import Loading from "../Loading";
+import Loading from "@/componentes/Loading";
 import { useParams } from "react-router-dom";
 import { formatearFecha } from "../campos/FormateoFecha";
 import { useState, Suspense } from "react";

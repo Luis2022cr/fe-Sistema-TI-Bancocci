@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Loading from '../Loading';
+import Loading from "@/componentes/Loading";
 import { ObtenerDirectoriosById, UpdateDirectorios, Post_Directorio } from '@/api_conexion/servicios/directorio';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Agencia, ObtenerAgencia } from '@/api_conexion/servicios/agencias';

@@ -1,7 +1,7 @@
 import { Building, Pencil } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import Loading from "@/modulo_ti/Loading";
+import Loading from "@/componentes/Loading";
 import Pagination from "@/modulo_ti/Pagination";
 import { Departamento, ObtenerDepartamento } from "@/api_conexion/servicios/departamentos";
 import FiltroDepartamento from "@/modulo_ti/FiltroDepartamento";

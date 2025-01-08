@@ -1,7 +1,7 @@
 import { Building, Pencil } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import Loading from "@/modulo_ti/Loading";
+import Loading from "@/componentes/Loading";
 import Pagination from "@/modulo_ti/Pagination";
 import { Marca, ObtenerMarca } from "@/api_conexion/servicios/marca";
 import FiltroMarca from "@/modulo_ti/FiltroMarca";

@@ -75,17 +75,14 @@ root.render(
           <Route path="/" element={<Layout_2 />}>
 
             <Route path="/" element={<EmpleadoAuth />}>
-
               <Route path="ti/main" element={<DashboardInicio />} />
               <Route path="ti/informe-ups" element={<Dashboard_Ups />} />
               <Route path="ti/inventarios-ti" element={<Dashboard_inventario />} />
               <Route path="ti/control-equipos" element={<Dashboard_Control />} />
               <Route path="ti/configuraciones" element={<Dashboard_ConfigEmpleado />} />
-
             </Route>
 
             <Route path="/" element={<AdminAuth />}>
-
               <Route path="admin/main" element={<DashboardAdmin />} />
               <Route path="ti/informes-ups" element={<Dashboard_UpsAdmin />} />
               <Route path="ti/configuraciones" element={<Dashboard_ConfigAdmin />} />
@@ -94,12 +91,10 @@ root.render(
               <Route path="admin/gestion-usuarios/editar-usuario/:id" element={<UpdateUsuario />} />
               <Route path="admin/gestion-usuarios/password/:id" element={<UpdateContraseña />} />
               <Route path="ti/logs" element={<LogViewer />} />
-
             </Route>
 
             <Route path="/" element={<TiAuth />}>
-
-            <Route path="ti/directorio" element={<Directorio />} />
+              <Route path="ti/directorio" element={<Directorio />} />
               <Route path="ti/directorio/:id" element={<UpdateDirectorio />} />
               <Route path="ti/calendario" element={<Calendario />} />
               <Route path="ti/informes-ups/:tipoTamanoId" element={<Pagina_Ups />} />
@@ -133,7 +128,6 @@ root.render(
               <Route path="ti/control-equipo" element={<Dashboard_Control_Admin />} />
               <Route path="ti/inventario/obsoleto" element={<Inventario_Obsoleto />} />
               <Route path="ti/inventario/Subir_Excel" element={<ExcelInventario />} />
-
             </Route>
 
           </Route>

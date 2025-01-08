@@ -1,6 +1,6 @@
 import { Phone, Building, User, Briefcase, Pencil, Trash } from "lucide-react";
 import { Suspense, useState } from "react";
-import Loading from "../Loading";
+import Loading from "@/componentes/Loading";
 import Pagination from "../Pagination";
 import { BorrarDirectorios } from "@/api_conexion/servicios/directorio";
 import { Link } from "react-router-dom";

@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import Loading from '../Loading';
+import Loading from "@/componentes/Loading";
 import { CrearDirectorios, Post_Directorio } from '@/api_conexion/servicios/directorio';
 import axios from 'axios';
 import { FiLoader } from 'react-icons/fi';

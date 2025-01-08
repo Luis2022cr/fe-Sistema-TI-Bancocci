@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import InputText from '../campos/InputForm';
 import { EstadoUps, ObtenerEstadoUps, ObtenerTipoTamaño, TipoTamaño } from '@/api_conexion/servicios/estados';
 import { Agencia, ObtenerAgencia } from '@/api_conexion/servicios/agencias';
-import Loading from '../Loading';
+import Loading from "@/componentes/Loading";
 import BotonRegresar from '../Regresar';
 import axios from 'axios';
 import SearchableSelect from '../Pruebas/SearchableSelect';

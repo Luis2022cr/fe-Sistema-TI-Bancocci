@@ -3,7 +3,7 @@ import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import { FaPlusCircle, FaTrash } from 'react-icons/fa';
 import { BorrarPuntoMapa, ObtenerMapaUps, UPS_MAPA } from '@/api_conexion/servicios/ups-mapa';
-import Loading from '../Loading';
+import Loading from "@/componentes/Loading";
 import { useEffect, useState } from 'react';
 import Modal from '../Modal';
 import CrearPuntoMapaForm from './creacionPuntoMapa';

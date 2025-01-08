@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { FiLoader } from 'react-icons/fi';
 import InputText from '@/modulo_ti/campos/InputForm';
-import Loading from '@/modulo_ti/Loading';
+import Loading from "@/componentes/Loading";
 import BotonRegresar from '@/modulo_ti/Regresar';
 import { ActualizarMarca, ObtenerMarcaById, Post_Marca } from '@/api_conexion/servicios/marca';
 import { Alert } from '@/modulo_ti/alertService';

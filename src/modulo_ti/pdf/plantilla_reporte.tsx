@@ -5,7 +5,7 @@ import { X } from 'lucide-react';
 import { FiLoader } from 'react-icons/fi';
 import BotonRegresar from '../Regresar';
 import { ObtenerControlById } from '@/api_conexion/servicios/controlEquipo';
-import Loading from '../Loading';
+import Loading from "@/componentes/Loading";
 import marcaAgua from '@/assets/marca-de-agua.png'
 import { useParams } from 'react-router-dom';
 import logoReporte from '@/assets/occidente-pdf.jpeg'

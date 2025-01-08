@@ -1,6 +1,6 @@
 import { User, Mail, Pencil, KeyRound, UserRoundCog, CircleUserRound} from "lucide-react";
 import { useState, useEffect } from "react";
-import Loading from "../../modulo_ti/Loading";
+import Loading from "@/componentes/Loading";
 import Pagination from "../../modulo_ti/Pagination"; 
 import { Rol , ObtenerRoles } from "@/api_conexion/servicios/roles";
 import {  Usuario, ObtenerUsuarios } from "@/api_conexion/servicios/usuarios"; 

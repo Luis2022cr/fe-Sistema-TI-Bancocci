@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ChevronDown, ChevronUp, Search, X } from "lucide-react";
-import Loading from "../Loading";
+import Loading from "@/componentes/Loading";
 import { ObtenerControlEquipo, Reparacion } from "@/api_conexion/servicios/controlEquipo";
 import { FaFilePdf } from "react-icons/fa";
 import { formatearFecha } from "../campos/FormateoFecha";

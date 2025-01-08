@@ -4,7 +4,7 @@ import 'react-calendar/dist/Calendar.css';
 import './DiseñCalendario.css';
 import { NavLink } from 'react-router-dom';
 import {  isSameDay } from 'date-fns';
-import Loading from '../Loading';
+import Loading from "@/componentes/Loading";
 import { CalendarioUps, ObtenerDatosUpsCalendario } from '@/api_conexion/servicios/estados'; // Asegúrate de que esta ruta sea correcta
 import { X } from 'lucide-react';
 import {  formatearFecha2 } from '../campos/FormateoFecha';

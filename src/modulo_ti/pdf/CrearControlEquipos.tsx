@@ -5,7 +5,7 @@ import { X } from 'lucide-react';
 import { FiLoader } from 'react-icons/fi';
 import BotonRegresar from '../Regresar';
 import { Inventario, ObtenerInventarios } from '@/api_conexion/servicios/inventarios';
-import Loading from '../Loading';
+import Loading from "@/componentes/Loading";
 import { ObtenerAgencia } from '@/api_conexion/servicios/agencias';
 import marcaAgua from '@/assets/marca-de-agua.png'
 import logoReporte from '@/assets/occidente-pdf.jpeg'

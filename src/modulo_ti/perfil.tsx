@@ -1,7 +1,7 @@
 import useAuth from '@/api_conexion/useAuth';
 import './ProfileCard.css';
 import profile from "@/assets/usuario.png";
-import Loading from './Loading';
+import Loading from "@/componentes/Loading";
 import { ObtenerPerfil } from '@/api_conexion/servicios/perfil';
 import { Link } from "react-router-dom";
 import { useEffect } from 'react';
