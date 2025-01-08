@@ -4,7 +4,7 @@ import App from './App';
 import './index.css';
 import Layout from './layouts/Layout';
 import { AuthProvider } from './api_conexion/AuthContext';
-import Layout_2 from './layouts/Layout_2';
+import Layout_TI from './layouts/Layout_TI';
 import Login from './dashboards/Login';
 import Directorio from './modulo_ti/directorio/directorio';
 import UpdateDirectorio from './modulo_ti/directorio/updateDirectorio';
@@ -55,6 +55,10 @@ import Inventario_Obsoleto from './modulo_ti/inventarios/inventario_obsoleto';
 import ExcelInventario from './modulo_ti/inventarios/subir_Excel_inventario';
 import Dashboard_ConfigEmpleado from './dashboards/dashboard-empleados/dashboard_configuraciones_empleado';
 import TiAuth from './api_conexion/seguridad/TiAuth';
+import Layout_Prestamos from './layouts/Layout_Prestamos';
+import PrestamosAuth from './api_conexion/seguridad/PrestamosAuth';
+import DashboardPrestamos from './dashboards/dashboard_prestamos/dashboard_prestamos';
+import UbicacionExpediente from './modulo_prestamos/ubicacion_historial_expediente';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
@@ -72,7 +76,7 @@ root.render(
             <Route path="ti/crear-control-equipo" element={<CrearControlEquipos />} /> {/* crear control de equipo */}
           </Route>
 
-          <Route path="/" element={<Layout_2 />}>
+          <Route path="/" element={<Layout_TI />}>
 
             <Route path="/" element={<EmpleadoAuth />}>
               <Route path="ti/main" element={<DashboardInicio />} />
@@ -131,6 +135,16 @@ root.render(
             </Route>
 
           </Route>
+
+          <Route path="/" element={<Layout_Prestamos />}>
+
+            <Route path="/" element={<PrestamosAuth />}>
+              <Route path="prestamos/main" element={<DashboardPrestamos />} />
+              <Route path="prestamos/Ubicacion_expediente" element={<UbicacionExpediente />} />
+
+            </Route>
+          </Route>
+
         </Routes>
       </BrowserRouter>
     </AuthProvider>
