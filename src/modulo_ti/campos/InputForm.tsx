@@ -1,9 +1,9 @@
 import React from 'react';
 
 interface TextFieldProps {
-    type: string;
+    type: 'text'| 'number' | 'date';
     name: string;
-    value: string;
+    value: string | number;
     placeholder: string;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }

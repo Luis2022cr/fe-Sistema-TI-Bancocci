@@ -59,6 +59,9 @@ import Layout_Prestamos from './layouts/Layout_Prestamos';
 import PrestamosAuth from './api_conexion/seguridad/PrestamosAuth';
 import DashboardPrestamos from './dashboards/dashboard_prestamos/dashboard_prestamos';
 import UbicacionExpediente from './modulo_prestamos/ubicacion_historial_expediente';
+import PaginaExpediente from './modulo_prestamos/Expedientes';
+import CrearExpediente from './modulo_prestamos/crear_Expediente';
+
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
@@ -139,7 +142,9 @@ root.render(
           <Route path="/" element={<Layout_Prestamos />}>
 
             <Route path="/" element={<PrestamosAuth />}>
-              <Route path="prestamos/main" element={<DashboardPrestamos />} />
+              <Route path="prestamos/main" element={<DashboardPrestamos />} /> 
+              <Route path="prestamos/expedientes" element={<PaginaExpediente />} />
+              <Route path="prestamos/agregar_expediente" element={<CrearExpediente />} />
               <Route path="prestamos/Ubicacion_expediente" element={<UbicacionExpediente />} />
 
             </Route>
