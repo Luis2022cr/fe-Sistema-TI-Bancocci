@@ -26,7 +26,7 @@ const DashboardPrestamos: React.FC = () => {
     <div className="h-full flex mx-6 mt-24">
       <div className="flex-1 p-4">
         <h1 className="text-3xl font-bold mb-8 text-blue-900">Bienvenido</h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mt-8">
           {Object.keys(prestamosRoutes).map((title) => (
             <DashboardButton
               key={title}

@@ -177,7 +177,7 @@ const exportToExcel = async () => {
         Regresar
       </button>
 
-      <div className="container p-4 mx-auto -mt-10">
+      <div className=" p-4 mx-auto -mt-10">
         <h1 className="mb-5 text-3xl font-bold text-center">Expedientes de Baja</h1>
 
         <div className="flex justify-end gap-6 -mt-5">
@@ -240,7 +240,7 @@ const exportToExcel = async () => {
                           <PencilIcon className="w-4 h-4" />
                         </Link>
                         <Link
-                          to={`/prestamos/historial_expediente/${data.numero_cliente}`}
+                          to={`/prestamos/historial/${data.id}`}
                           className="p-1 text-white bg-yellow-700 rounded-full"
                         >
                           <ClockIcon className="w-4 h-4" />

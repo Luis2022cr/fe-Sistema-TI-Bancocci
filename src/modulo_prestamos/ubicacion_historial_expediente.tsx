@@ -2,6 +2,8 @@ import { ExpedienteId, ObtenerExpedienteByNumeroCliente } from '@/api_conexion/s
 import Estante from './estante';
 import Loading from '@/componentes/Loading';
 import { useState } from 'react';
+import { Post_Historial_Expediente, CrearHistorialExpediente } from '@/api_conexion/servicios/historialPrestamos';
+import BotonRegresar from '@/modulo_ti/Regresar';
 
 export default function UbicacionExpediente() {
   const [expediente, setExpediente] = useState('');
@@ -12,6 +14,7 @@ export default function UbicacionExpediente() {
   const [confirmarBaja, setConfirmarBaja] = useState(false);
   const [movimiento, setMovimiento] = useState<'entrada' | 'salida' | null>(null);
   const [entregadoA, setEntregadoA] = useState('');
+  const [loadingMovimiento, setLoadingMovimiento] = useState(false);
 
   const buscarExpediente = async () => {
     if (!expediente) return;
@@ -20,40 +23,66 @@ export default function UbicacionExpediente() {
     setExpedienteData(null);
 
     try {
-      const expedienteData = await ObtenerExpedienteByNumeroCliente(Number(expediente));
+      const numeroCliente = parseInt(expediente.trim(), 10); // Convierte a número
+      const expedienteData = await ObtenerExpedienteByNumeroCliente(Number(numeroCliente));
       setExpedienteData(expedienteData);
-
     } catch (err) {
-      setError('Error al obtener los datos del expediente');
-      console.error(err); // Log error to console for debugging
+      setError(`No se pudo encontrar el expediente del cliente = ${expediente}`);
+      console.clear();
     } finally {
       setLoadingExpediente(false);
     }
   };
 
-  const registrarMovimiento = (e: React.FormEvent) => {
+  const registrarMovimiento = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!expedienteData) {
+      setError('Debe buscar un expediente antes de registrar un movimiento.');
+      return;
+    }
+
     if (darDeBaja && !confirmarBaja) {
       setConfirmarBaja(true);
       return;
     }
-    if (darDeBaja) {
-      console.log(`Expediente ${expediente} dado de baja`);
-    } else if (movimiento) {
-      console.log(
-        `Expediente ${expediente} ${movimiento === 'salida' ? 'entregado a' : 'recibido de'} ${entregadoA}`
-      );
+
+    setLoadingMovimiento(true);
+    setError(null);
+
+    try {
+      if (darDeBaja) {
+        console.log(`Expediente ${expediente} dado de baja`);
+        // Aquí podrías implementar la lógica para dar de baja el expediente, si aplica.
+      } else if (movimiento) {
+        const nuevoHistorial: Post_Historial_Expediente = {
+          expediente_id: expedienteData.id, 
+          tipo_evento: movimiento,
+          comentarios: `Expediente ${movimiento === 'salida' ? 'entregado a' : 'recibido de'} ${entregadoA}`,
+          responsable: entregadoA,
+        };
+        await CrearHistorialExpediente(nuevoHistorial);
+        console.log('Movimiento registrado:', nuevoHistorial);
+      }
+
+      setExpediente('');
+      setDarDeBaja(false);
+      setConfirmarBaja(false);
+      setMovimiento(null);
+      setEntregadoA('');
+      setExpedienteData(null);
+    } catch (err) {
+      setError('Error al registrar el movimiento.');
+      console.error(err);
+    } finally {
+      setLoadingMovimiento(false);
     }
-    setExpediente('');
-    setDarDeBaja(false);
-    setConfirmarBaja(false);
-    setMovimiento(null);
-    setEntregadoA('');
   };
 
   return (
+    <>
+    <BotonRegresar/>
     <div className="mx-5 mt-5">
-      <div className="bg-white shadow-md rounded-lg p-6 mb-8">
+      <div className="bg-white shadow-md border-2 rounded-lg p-6 mb-8">
         <h2 className="text-xl font-semibold mb-4">Buscar Expediente</h2>
         <div className="flex items-end gap-4">
           <div className="flex-grow">
@@ -62,12 +91,18 @@ export default function UbicacionExpediente() {
             </label>
             <input
               id="expediente"
-              type="text"
+              type="number"
               value={expediente}
               onChange={(e) => setExpediente(e.target.value)}
-              placeholder="Ingrese el numero de cliente"
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  e.preventDefault(); // Previene que el formulario haga un submit por defecto
+                  buscarExpediente();
+                }
+              }}
+              placeholder="Ingrese el número de cliente"
               className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-            />
+              />
           </div>
           <button
             onClick={buscarExpediente}
@@ -79,55 +114,75 @@ export default function UbicacionExpediente() {
       </div>
 
       {loadingExpediente && <Loading />}
-      {error && <div className="text-red-500">{error}</div>}
+      {error && <div className="text-red-500 mb-10">{error}</div>}
 
       {expedienteData && (
-        <div className="bg-white items-center shadow-md rounded-lg p-6 mb-8 flex flex-col md:flex-row">
-          <div className="md:w-1/2 mb-4 md:mb-0">
-            <h2 className="text-xl font-semibold mb-4">Información del Expediente</h2>
-            <div className="flex flex-col gap-y-1 mb-6">
-              <p><strong>Número de Cliente:</strong> {expedienteData.numero_cliente}</p>
-              <p><strong>Nombre de Cliente:</strong> {expedienteData.nombre_cliente}</p>
-              <p><strong>Responsable:</strong> {expedienteData.responsable}</p>
-              <p><strong>Agencia:</strong> {expedienteData.agencia}</p>
-              <p><strong>Comentarios:</strong> {expedienteData.comentarios}</p>
-            </div>
-            <h2 className="text-xl font-semibold mb-4">Ubicación</h2>
-            <div className="flex flex-col gap-y-1 mb-6">
-              <p><strong>Estante:</strong> {expedienteData.estante}</p>
-              <p><strong>Columna:</strong> {expedienteData.columna}</p>
-              <p><strong>Fila:</strong> {expedienteData.fila}</p>
-            </div>
-          </div>
-          <div className="md:w-full">
-            <Estante
-              estante={expedienteData.estante}
-              columna={expedienteData.columna}
-              fila={expedienteData.fila}
-            />
-          </div>
+  <div className="bg-white items-center shadow-md border-2 rounded-lg p-6 mb-8 flex flex-col md:flex-row">
+    <div className="md:w-1/2 mb-4 md:mb-0">
+      <h2 className="text-xl font-semibold mb-4">Información del Expediente</h2>
+      <div className="flex flex-col gap-y-1 mb-6">
+        <p><strong>Número de Cliente:</strong> {expedienteData.numero_cliente}</p>
+        <p><strong>Estado:</strong> {expedienteData.estado_nombre}</p>
+        <p><strong>Nombre de Cliente:</strong> {expedienteData.nombre_cliente}</p>
+        <p><strong>Responsable:</strong> {expedienteData.responsable}</p>
+        <p><strong>Agencia:</strong> {expedienteData.agencia}</p>
+        <p><strong>Comentarios:</strong> {expedienteData.comentarios}</p>
+      </div>
+      <h2 className="text-xl font-semibold mb-4">Ubicación</h2>
+      <div className="flex flex-col gap-y-1 mb-6">
+        {expedienteData.estado_nombre === "De baja" ? (
+          <>
+            <p className="text-red-600 font-bold text-lg">El expediente está dado de baja</p>
+            <p className="text-gray-700">
+              <strong>Última Ubicación:</strong>
+              {` Estante ${expedienteData.estante}, Columna ${expedienteData.columna}, Fila ${expedienteData.fila}`}
+            </p>
+          </>
+        ) : (
+          <>
+            <p><strong>Estante:</strong> {expedienteData.estante}</p>
+            <p><strong>Columna:</strong> {expedienteData.columna}</p>
+            <p><strong>Fila:</strong> {expedienteData.fila}</p>
+          </>
+        )}
+      </div>
+    </div>
+    <div className="md:w-full">
+      {expedienteData.estado_nombre === "De baja" ? (
+        <div className="flex justify-center items-center h-full">
+          <p className="text-red-600 font-bold text-2xl">El expediente está dado de baja</p>
         </div>
+      ) : (
+        <Estante
+          estante={expedienteData.estante}
+          columna={expedienteData.columna}
+          fila={expedienteData.fila}
+        />
       )}
+    </div>
+  </div>
+)}
 
-      <div className="bg-white shadow-md rounded-lg p-6">
+
+      <div className="bg-white shadow-md border-2 rounded-lg p-6">
         <h2 className="text-xl font-semibold mb-4">Registrar Movimiento de Expediente</h2>
         <form onSubmit={registrarMovimiento}>
           <div className="mb-4">
-            <label htmlFor="entregadoA" className="block text-sm font-medium text-gray-700 mb-1">
-              Entregado a / Recibido de
+            <label htmlFor="entregadoA" className="block text-base font-medium text-gray-700 mb-1">
+              Entregado a
             </label>
             <input
               id="entregadoA"
               type="text"
               value={entregadoA}
               onChange={(e) => setEntregadoA(e.target.value)}
-              placeholder="Nombre de la persona"
+              placeholder="Nombre del reponsable"
               required={!darDeBaja}
               className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-            />
+              />
           </div>
           <div className="mb-4 space-y-2">
-            <p className="block text-sm font-medium text-gray-700">Tipo de Movimiento (Obligatorio)</p>
+            <p className="block text-base font-medium text-gray-700">Tipo de Movimiento (Obligatorio)</p>
             <label className="flex items-center">
               <input
                 type="radio"
@@ -135,8 +190,8 @@ export default function UbicacionExpediente() {
                 onChange={() => setMovimiento('entrada')}
                 required
                 className="mr-2"
-              />
-              <span className="text-sm font-medium text-gray-700">Entrada de Expediente</span>
+                />
+              <span className="text-base font-medium text-gray-700">Entrada de Expediente</span>
             </label>
             <label className="flex items-center">
               <input
@@ -145,8 +200,8 @@ export default function UbicacionExpediente() {
                 onChange={() => setMovimiento('salida')}
                 required
                 className="mr-2"
-              />
-              <span className="text-sm font-medium text-gray-700">Salida de Expediente</span>
+                />
+              <span className="text-base font-medium text-gray-700">Salida de Expediente</span>
             </label>
           </div>
           <div className="mb-4">
@@ -163,7 +218,7 @@ export default function UbicacionExpediente() {
                 }}
                 className="mr-2"
               />
-              <span className="text-sm font-medium text-gray-700">Dar de baja el expediente</span>
+              <span className="text-base font-medium text-gray-700">Dar de baja el expediente</span>
             </label>
           </div>
           {darDeBaja && confirmarBaja && (
@@ -175,12 +230,13 @@ export default function UbicacionExpediente() {
             type="submit"
             className={`px-4 py-2 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 ${darDeBaja ? 'bg-red-600 hover:bg-red-700 focus:ring-red-500' : 'bg-green-600 hover:bg-green-700 focus:ring-green-500'
               }`}
-            disabled={!movimiento && !darDeBaja}
+              disabled={!movimiento && !darDeBaja}
           >
-            {darDeBaja ? 'Dar de Baja' : 'Registrar Movimiento'}
+            {loadingMovimiento ? 'Procesando...' : darDeBaja ? 'Dar de Baja' : 'Registrar Movimiento'}
           </button>
         </form>
       </div>
     </div>
+              </>
   );
 }

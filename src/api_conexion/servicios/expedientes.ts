@@ -2,6 +2,7 @@ import axiosInstance, { useAxios } from "../axiosInstance";
 
 
 export interface Expediente {
+    id: number;
     numero_cliente: string;
     nombre_cliente: string;
     estado_id: number;
@@ -21,9 +22,11 @@ export interface Expediente {
 
 
 export interface ExpedienteId {
+    id: number;
     numero_cliente: string;
     nombre_cliente: string;
     agencia_id: number;
+    estado_nombre: string;
     estante: number;
     columna: number;
     fila: number;
@@ -100,8 +103,8 @@ export const ObtenerExpedienteById = (id: number) => {
      return response;
 };
 
-export const ObtenerExpedienteByNumeroCliente = async (id: number): Promise<ExpedienteId> => {
-    const response = await axiosInstance.get(`/expediente/${id}`); // Corregido: Usar backticks
+export const ObtenerExpedienteByNumeroCliente = async (numero_cliente: number): Promise<ExpedienteId> => {
+    const response = await axiosInstance.get(`/expediente/${numero_cliente}`);
     return response.data;
 };
 

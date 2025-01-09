@@ -9,15 +9,12 @@ import telefono from "@/assets/telefono.svg";
 import planta from "@/assets/planta.svg";
 import { InventarioRouteKeys, inventarioRoutes } from "@/api_conexion/routesConfig";
 import DashboardButton from "../DashboardButton";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Dashboard_inventario: React.FC = () => {
   useEffect(() => {
     document.title = "Empleado - Sistema TI Bancocci";
   }, []);
-  const location = useLocation();
-  const isDashboardEmpleados = location.pathname.includes('/empleado');
-  const dashboardPath = isDashboardEmpleados ? '/empleado' : '/administracion';
 
   const getIconByTitle = (title: InventarioRouteKeys) => {
     switch (title) {
@@ -48,10 +45,10 @@ const Dashboard_inventario: React.FC = () => {
   return (
     <div className="h-full mx-6 ">
       <div className="flex justify-between items-center mt-6">
-             <Link to={`${dashboardPath}/inventario/Subir_Excel`} className="text-blue-800 hover:text-blue-700 hover:underline">
+             <Link to={`/ti/inventario/Subir_Excel`} className="text-blue-800 hover:text-blue-700 hover:underline">
                Ingresar Excel
              </Link>
-             <Link to={`${dashboardPath}/inventario/obsoleto`} className="text-blue-800 hover:text-blue-700 hover:underline">
+             <Link to={`/ti/inventario/obsoleto`} className="text-blue-800 hover:text-blue-700 hover:underline">
                Inventario obsoleto
              </Link>
            </div>
