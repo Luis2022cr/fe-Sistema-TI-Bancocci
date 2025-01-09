@@ -1,31 +1,34 @@
-
-import { useState } from 'react';
+import { ExpedienteId, ObtenerExpedienteByNumeroCliente } from '@/api_conexion/servicios/expedientes';
 import Estante from './estante';
+import Loading from '@/componentes/Loading';
+import { useState } from 'react';
 
 export default function UbicacionExpediente() {
   const [expediente, setExpediente] = useState('');
-  const [ubicacion, setUbicacion] = useState<{
-    estante: number;
-    columna: number;
-    fila: number;
-    numeroCliente: string;
-    nombreCliente: string;
-  } | null>(null);
-  const [entregadoA, setEntregadoA] = useState('');
-  const [movimiento, setMovimiento] = useState<'entrada' | 'salida' | null>(null);
+  const [expedienteData, setExpedienteData] = useState<ExpedienteId | null>(null);
+  const [loadingExpediente, setLoadingExpediente] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [darDeBaja, setDarDeBaja] = useState(false);
   const [confirmarBaja, setConfirmarBaja] = useState(false);
+  const [movimiento, setMovimiento] = useState<'entrada' | 'salida' | null>(null);
+  const [entregadoA, setEntregadoA] = useState('');
 
-  const buscarUbicacion = () => {
-    // Aquí iría la lógica para buscar la ubicación real del expediente
-    // Por ahora, generamos datos aleatorios
-    setUbicacion({
-      estante: Math.floor(Math.random() * 10) + 1,
-      columna: Math.floor(Math.random() * 3) + 1,
-      fila: Math.floor(Math.random() * 5) + 1,
-      numeroCliente: Math.floor(Math.random() * 10000).toString().padStart(4, '0'),
-      nombreCliente: 'Cliente Ejemplo',
-    });
+  const buscarExpediente = async () => {
+    if (!expediente) return;
+    setLoadingExpediente(true);
+    setError(null);
+    setExpedienteData(null);
+
+    try {
+      const expedienteData = await ObtenerExpedienteByNumeroCliente(Number(expediente));
+      setExpedienteData(expedienteData);
+
+    } catch (err) {
+      setError('Error al obtener los datos del expediente');
+      console.error(err); // Log error to console for debugging
+    } finally {
+      setLoadingExpediente(false);
+    }
   };
 
   const registrarMovimiento = (e: React.FormEvent) => {
@@ -34,19 +37,18 @@ export default function UbicacionExpediente() {
       setConfirmarBaja(true);
       return;
     }
-    // Aquí iría la lógica para registrar el movimiento o dar de baja
     if (darDeBaja) {
       console.log(`Expediente ${expediente} dado de baja`);
     } else if (movimiento) {
-      console.log(`Expediente ${expediente} ${movimiento === 'salida' ? 'entregado a' : 'recibido de'} ${entregadoA}`);
+      console.log(
+        `Expediente ${expediente} ${movimiento === 'salida' ? 'entregado a' : 'recibido de'} ${entregadoA}`
+      );
     }
-    // Reiniciar el formulario
     setExpediente('');
-    setUbicacion(null);
-    setEntregadoA('');
-    setMovimiento(null);
     setDarDeBaja(false);
     setConfirmarBaja(false);
+    setMovimiento(null);
+    setEntregadoA('');
   };
 
   return (
@@ -63,43 +65,49 @@ export default function UbicacionExpediente() {
               type="text"
               value={expediente}
               onChange={(e) => setExpediente(e.target.value)}
-              placeholder="Ej: 1234"
+              placeholder="Ingrese el numero de cliente"
               className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
             />
           </div>
           <button
-            onClick={buscarUbicacion}
-            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-            >
+            onClick={buscarExpediente}
+            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+          >
             Buscar
           </button>
         </div>
       </div>
 
-      {ubicacion && (
+      {loadingExpediente && <Loading />}
+      {error && <div className="text-red-500">{error}</div>}
+
+      {expedienteData && (
         <div className="bg-white items-center shadow-md rounded-lg p-6 mb-8 flex flex-col md:flex-row">
-          {/* Contenedor izquierdo para la información del cliente */}
           <div className="md:w-1/2 mb-4 md:mb-0">
-              <h2 className="text-xl font-semibold mb-4">Información del Expediente</h2>
+            <h2 className="text-xl font-semibold mb-4">Información del Expediente</h2>
             <div className="flex flex-col gap-y-1 mb-6">
-              <p><strong>Número de Cliente:</strong> {ubicacion.numeroCliente}</p>
-              <p><strong>Nombre de Cliente:</strong> {ubicacion.nombreCliente}</p>
+              <p><strong>Número de Cliente:</strong> {expedienteData.numero_cliente}</p>
+              <p><strong>Nombre de Cliente:</strong> {expedienteData.nombre_cliente}</p>
+              <p><strong>Responsable:</strong> {expedienteData.responsable}</p>
+              <p><strong>Agencia:</strong> {expedienteData.agencia}</p>
+              <p><strong>Comentarios:</strong> {expedienteData.comentarios}</p>
             </div>
-              <h2 className="text-xl font-semibold mb-4">Ubicacion</h2>
+            <h2 className="text-xl font-semibold mb-4">Ubicación</h2>
             <div className="flex flex-col gap-y-1 mb-6">
-              <p><strong>Estante:</strong> {ubicacion.estante}</p>
-              <p><strong>Columna:</strong> {ubicacion.columna}</p>
-              <p><strong>Fila:</strong> {ubicacion.fila}</p> 
+              <p><strong>Estante:</strong> {expedienteData.estante}</p>
+              <p><strong>Columna:</strong> {expedienteData.columna}</p>
+              <p><strong>Fila:</strong> {expedienteData.fila}</p>
             </div>
           </div>
-
-          {/* Contenedor derecho para el estante */}
           <div className="md:w-full">
-            <Estante estante={ubicacion.estante} columna={ubicacion.columna} fila={ubicacion.fila} />
+            <Estante
+              estante={expedienteData.estante}
+              columna={expedienteData.columna}
+              fila={expedienteData.fila}
+            />
           </div>
         </div>
       )}
-
 
       <div className="bg-white shadow-md rounded-lg p-6">
         <h2 className="text-xl font-semibold mb-4">Registrar Movimiento de Expediente</h2>
@@ -116,7 +124,7 @@ export default function UbicacionExpediente() {
               placeholder="Nombre de la persona"
               required={!darDeBaja}
               className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-              />
+            />
           </div>
           <div className="mb-4 space-y-2">
             <p className="block text-sm font-medium text-gray-700">Tipo de Movimiento (Obligatorio)</p>
@@ -137,7 +145,7 @@ export default function UbicacionExpediente() {
                 onChange={() => setMovimiento('salida')}
                 required
                 className="mr-2"
-                />
+              />
               <span className="text-sm font-medium text-gray-700">Salida de Expediente</span>
             </label>
           </div>
@@ -154,7 +162,7 @@ export default function UbicacionExpediente() {
                   setConfirmarBaja(false);
                 }}
                 className="mr-2"
-                />
+              />
               <span className="text-sm font-medium text-gray-700">Dar de baja el expediente</span>
             </label>
           </div>
@@ -166,9 +174,9 @@ export default function UbicacionExpediente() {
           <button
             type="submit"
             className={`px-4 py-2 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 ${darDeBaja ? 'bg-red-600 hover:bg-red-700 focus:ring-red-500' : 'bg-green-600 hover:bg-green-700 focus:ring-green-500'
-            }`}
+              }`}
             disabled={!movimiento && !darDeBaja}
-            >
+          >
             {darDeBaja ? 'Dar de Baja' : 'Registrar Movimiento'}
           </button>
         </form>
@@ -176,4 +184,3 @@ export default function UbicacionExpediente() {
     </div>
   );
 }
-

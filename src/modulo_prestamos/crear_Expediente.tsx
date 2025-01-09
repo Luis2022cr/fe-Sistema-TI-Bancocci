@@ -25,9 +25,9 @@ const VistaCrearExpediente: React.FC = () => {
     nombre_cliente: '',
     estado_id: 0,
     agencia_id: 0,
-    estante: 0,
-    columna: 0,
-    fila: 0,
+    estante: '',
+    columna: '',
+    fila: '',
     comentarios: '',
     responsable: '',
 
@@ -85,7 +85,6 @@ const VistaCrearExpediente: React.FC = () => {
         estante: "estante",
         columna: "columna",
         fila: "fila",
-        comentarios: "comentarios",
         responsable: "responsable",
       };
       
@@ -122,9 +121,9 @@ const VistaCrearExpediente: React.FC = () => {
         nombre_cliente: '',
         estado_id: 0,
         agencia_id: 0,
-        estante: 0, 
-        columna: 0,
-        fila: 0,
+        estante: '', 
+        columna: '',
+        fila: '',
         comentarios: '',
         responsable: '',
       });
@@ -260,7 +259,7 @@ const VistaCrearExpediente: React.FC = () => {
             />
           </div>
           
-          <div className="flex -ml-40 mr-40  items-center mt-28 col-span-2">
+          <div className="flex ml-56 mr-40 w-96 items-center mt-28 col-span-2">
             <button
               className="w-1/2 h-14 hover:bg-green-500 bg-green-700 text-xl text-white py-2 rounded-full"
               disabled={status.isLoading}
