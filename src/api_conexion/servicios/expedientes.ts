@@ -34,6 +34,19 @@ export interface ExpedienteId {
     usuario: string;
 }
 
+export interface ExpedienteById {
+    numero_cliente: string;
+    nombre_cliente: string;
+    estado_id: number;
+    agencia_id: number;
+    estante: number;
+    columna: number;
+    fila: number;
+    comentarios?: string | null;
+    responsable: string
+    
+}
+
 export interface Post_Expediente {
     numero_cliente: string;
     nombre_cliente: string;
@@ -46,6 +59,20 @@ export interface Post_Expediente {
     responsable: string
 }
 
+
+export interface Actualizar_Expediente {
+    numero_cliente: string;
+    nombre_cliente: string;
+    estado_id: number;
+    agencia_id: number;
+    estante: number;
+    columna: number;
+    fila: number;
+    comentarios?: string | null;
+    responsable: string
+}
+
+
 export const ObtenerExpediente = () => {
     const response = useAxios<Expediente[]>({
         url: `/expedientes`,
@@ -55,14 +82,23 @@ export const ObtenerExpediente = () => {
     return response;
 };
 
-// export const ObtenerExpedienteById = (id: number) => {
-//     const response = useAxios<ExpedienteId>({
-//       url: `/expediente/${id}`,
-//     },{
-//       useCache: false,
-//     });
-//     return response;
-//   };
+export const ObtenerExpedienteDeBaja = () => {
+    const response = useAxios<Expediente[]>({
+        url: `/expedientes_de_baja`,
+    }, {
+        useCache: false,
+    });
+    return response;
+};
+
+export const ObtenerExpedienteById = (id: number) => {
+     const response = useAxios<ExpedienteById>({
+       url: `/expediente/${id}`,
+     },{
+      useCache: false,
+   });
+     return response;
+};
 
 export const ObtenerExpedienteByNumeroCliente = async (id: number): Promise<ExpedienteId> => {
     const response = await axiosInstance.get(`/expediente/${id}`); // Corregido: Usar backticks
@@ -72,5 +108,10 @@ export const ObtenerExpedienteByNumeroCliente = async (id: number): Promise<Expe
 
 export const CrearExpediente = async (nuevoExpediente: Post_Expediente): Promise<Post_Expediente> => {
     const response = await axiosInstance.post('/agregar_expedientes', nuevoExpediente);
+    return response.data;
+};
+
+export const UpdateExpediente = async (id: number, nuevoExpediente: Actualizar_Expediente): Promise<Actualizar_Expediente> => {
+    const response = await axiosInstance.put(`/editar_expediente/${id}`, nuevoExpediente);
     return response.data;
 };

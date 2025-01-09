@@ -5,7 +5,7 @@ export const adminRoutes = {
   "Directorio TI": "/ti/directorio",
   "Inventario TI": "/ti/inventario-ti",
   "Entrada y salida Equipo": "/ti/control-equipo",
-  "Otros": "/ti/configuraciones",
+  "Otros": "/ti/configuracion",
 } as const;
 
 export type AdminRouteKeys = keyof typeof adminRoutes;
@@ -100,7 +100,7 @@ export type ControlRouteKeys = keyof typeof controlRoutes;
 // Rutas del Dashboard de Prestamos
 export const prestamosRoutes = {
   "Expedientes Prestamos": "/prestamos/expedientes",
-  "Ubicacion Expediente": "/prestamos/Ubicacion_expediente",
+  "Ubicación Expediente": "/prestamos/Ubicacion_expediente",
 } as const;
 
 export type PrestamosRouteKeys = keyof typeof prestamosRoutes;

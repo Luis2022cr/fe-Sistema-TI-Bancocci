@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import ups from "@/assets/ups.svg";
-import directorio from "@/assets/directorio.svg";
+import expediente from "@/assets/Expediente.png";
+import Bexpediente from "@/assets/Bexpediente.png";
 import { PrestamosRouteKeys, prestamosRoutes } from "@/api_conexion/routesConfig";
 import DashboardButton from "../DashboardButton";
 
@@ -13,9 +13,9 @@ const DashboardPrestamos: React.FC = () => {
     switch (title) {
 
       case "Expedientes Prestamos":
-        return <img src={ups} alt="ups" width={150} height={150} />;
-      case "Ubicacion Expediente":
-        return <img src={directorio} alt="directorio" width={150} height={150} />;
+        return <img src={expediente} alt="ups" width={150} height={150} />;
+      case "Ubicación Expediente":
+        return <img src={Bexpediente} alt="directorio" width={150} height={150} />;
 
       default:
         return null;
