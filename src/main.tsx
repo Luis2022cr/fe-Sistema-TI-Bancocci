@@ -61,7 +61,7 @@ import DashboardPrestamos from './dashboards/dashboard_prestamos/dashboard_prest
 import UbicacionExpediente from './modulo_prestamos/ubicacion_historial_expediente';
 import PaginaExpediente from './modulo_prestamos/Expedientes';
 import CrearExpediente from './modulo_prestamos/crear_Expediente';
-
+import PerfilPrestamos from './modulo_prestamos/perfil_prestamos';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
@@ -146,6 +146,7 @@ root.render(
               <Route path="prestamos/expedientes" element={<PaginaExpediente />} />
               <Route path="prestamos/agregar_expediente" element={<CrearExpediente />} />
               <Route path="prestamos/Ubicacion_expediente" element={<UbicacionExpediente />} />
+              <Route path="prestamos/perfil" element={<PerfilPrestamos />} />
 
             </Route>
           </Route>

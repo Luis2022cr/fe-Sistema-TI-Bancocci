@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface TextFieldProps {
-    type: 'text'| 'number' | 'date';
+    type: 'text' | 'number' | 'date';
     name: string;
     value: string | number;
     placeholder: string;
