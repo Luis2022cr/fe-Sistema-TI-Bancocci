@@ -1,16 +1,15 @@
 import { Suspense, useState  } from "react";
 import { PencilIcon, ClockIcon } from "lucide-react";
 import Loading from "@/componentes/Loading";
-import { ObtenerExpediente } from "@/api_conexion/servicios/expedientes"; 
+import { ObtenerExpedienteDeBaja } from "@/api_conexion/servicios/expedientes"; 
 import lista from "../assets/listaReport.svg";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { IoArrowUndoOutline } from "react-icons/io5";
 import { ObtenerAgencia } from "@/api_conexion/servicios/agencias";
-import FiltroExpediente from "./FiltroExpediente";
 import { formatearFecha } from "@/modulo_ti/campos/FormateoFecha";
 import Pagination from "@/modulo_ti/Pagination";
-
+import FiltroExpedienteBaja from "./FiltroExpedienteBaja";
 
 interface ExportData {
   Numero_Cliente: string;
@@ -34,7 +33,7 @@ export default function PaginaExpediente() {
   const [{ data: agenciaData, loading: loadingAgencias }] = ObtenerAgencia();
   const navigate = useNavigate();
   
-  const [{ data: expedienteData, loading: loadingExpediente }] = ObtenerExpediente();
+  const [{ data: expedienteData, loading: loadingExpediente }] = ObtenerExpedienteDeBaja();
 
   const [selectedAgencia] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState("");
@@ -99,7 +98,7 @@ const exportToExcel = async () => {
   // Definir los encabezados
   worksheet.columns = [
     { header: "", key: "Numero_Cliente", width: 20 },
-    { header: " ", key: "Nombre_Cliente", width: 30 },
+    { header: "", key: "Nombre_Cliente", width: 30 },
     { header: "", key: "Estado", width: 15 },
     { header: "", key: "Agencia", width: 20 },
     { header: "", key: "Estante", width: 10 },
@@ -121,9 +120,11 @@ const exportToExcel = async () => {
       pattern: "solid",
       fgColor: { argb: "22C55E" },
     };
+    
 
     // Expandir el nombre de la agencia para que ocupe varias columnas
-    worksheet.mergeCells(agenciaRow.number, 1, agenciaRow.number, worksheet.columns.length);
+    worksheet.mergeCells(agenciaRow.number, 1, agenciaRow.number, 11); 
+
 
     // Agregar los encabezados solo una vez después del nombre de la agencia
     worksheet.addRow([
@@ -154,8 +155,8 @@ const exportToExcel = async () => {
   const blob = new Blob([buffer], { type: "application/octet-stream" });
   const url = URL.createObjectURL(blob);
 
-  const nombreAgencia = selectedAgencia ? selectedAgencia.replace(/\s+/g, "_") : "general";
-  const nombreArchivo = `expediente_${nombreAgencia}.xlsx`;
+  const nombreAgencia = selectedAgencia ? selectedAgencia.replace(/\s+/g, "_") : "de baja";
+  const nombreArchivo = `expedientes_${nombreAgencia}.xlsx`;
 
   const a = document.createElement("a");
   a.href = url;
@@ -177,14 +178,10 @@ const exportToExcel = async () => {
       </button>
 
       <div className="container p-4 mx-auto -mt-10">
-        <h1 className="mb-5 text-3xl font-bold text-center">Expedientes</h1>
-        <div className="flex justify-between items-center mt-6">
-       <Link to={`/prestamos/expedientes_de_baja`} className="text-blue-800 text-xl hover:text-blue-700 hover:underline">
-           Expedientes de Baja
-      </Link>
-        </div> 
+        <h1 className="mb-5 text-3xl font-bold text-center">Expedientes de Baja</h1>
+
         <div className="flex justify-end gap-6 -mt-5">
-        
+          
           <Suspense fallback={<Loading />}>
             <div className="flex justify-end mt-5 mb-5">
               <button
@@ -196,11 +193,10 @@ const exportToExcel = async () => {
                 Generar Reporte
               </button>
             </div>
-            
           </Suspense>
         </div>
-         
-        <FiltroExpediente
+
+        <FiltroExpedienteBaja
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}
         />
@@ -218,6 +214,8 @@ const exportToExcel = async () => {
                   <th className="p-2 text-center border-r-2 border-blue-300">Agencia</th>
                   <th className="p-2 text-center border-r-2 border-blue-300">Comentarios</th>
                   <th className="p-2 text-center border-r-2 border-blue-300">Fecha Entrada</th>
+                  <th className="p-2 text-center border-r-2 border-blue-300">Fecha Salida</th>
+                  <th className="p-2 text-center border-r-2 border-blue-300">Responsable</th>
                   <th className="p-2 text-center">Acciones</th>
                 </tr>
               </thead>
@@ -231,6 +229,8 @@ const exportToExcel = async () => {
                     <td className="p-2 border-t border-r-2 border-blue-300">{data.agencia}</td>
                     <td className="p-2 border-t border-r-2 border-blue-300">{data.comentarios}</td>
                     <td className="p-2 border-t border-r-2 border-blue-300">{formatearFecha(data.fecha_entrada)}</td>
+                    <td className="p-2 border-t border-r-2 border-blue-300">{formatearFecha(data.fecha_salida)}</td>
+                    <td className="p-2 border-t border-r-2 border-blue-300">{data.responsable}</td>
                     <td className="p-2 border-t border-blue-300">
                       <div className="flex space-x-2">
                         <Link

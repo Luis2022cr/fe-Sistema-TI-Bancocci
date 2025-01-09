@@ -1,7 +1,6 @@
 import React from "react";
 import { Search, X } from "lucide-react";
-import { FaPlusCircle } from "react-icons/fa";
-import { Link } from "react-router-dom";
+
 
 interface FiltroExpedienteProps {
     searchTerm: string;
@@ -39,16 +38,7 @@ const FiltroExpediente: React.FC<FiltroExpedienteProps> = ({
                         )}
                     </div>
                 </div>
-                <div className="flex-none">
-                    <Link
-                        to={`/prestamos/agregar_expediente`}
-                        className="flex items-center gap-3 p-1 mt-1 text-center text-white bg-green-700 rounded-full w-28 hover:bg-green-600"
-                    >
-                        <FaPlusCircle />
-                        Agregar
-                    </Link>
-                   
-                </div>
+                
             </div>
         </>
     );

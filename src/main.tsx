@@ -62,6 +62,8 @@ import UbicacionExpediente from './modulo_prestamos/ubicacion_historial_expedien
 import PaginaExpediente from './modulo_prestamos/Expedientes';
 import CrearExpediente from './modulo_prestamos/crear_Expediente';
 import PerfilPrestamos from './modulo_prestamos/perfil_prestamos';
+import EditarExpediente from './modulo_prestamos/update_Expediente';
+import ExpedientesDeBaja from './modulo_prestamos/ExpedientesDeBaja';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
@@ -92,7 +94,7 @@ root.render(
             <Route path="/" element={<AdminAuth />}>
               <Route path="admin/main" element={<DashboardAdmin />} />
               <Route path="ti/informes-ups" element={<Dashboard_UpsAdmin />} />
-              <Route path="ti/configuraciones" element={<Dashboard_ConfigAdmin />} />
+              <Route path="ti/configuracion" element={<Dashboard_ConfigAdmin />} />
               <Route path="ti/inventario-ti" element={<Dashboard_inventarioAdmin />} />
               <Route path="admin/gestion-usuarios" element={<GestionUsuarios />} />
               <Route path="admin/gestion-usuarios/editar-usuario/:id" element={<UpdateUsuario />} />
@@ -144,7 +146,9 @@ root.render(
             <Route path="/" element={<PrestamosAuth />}>
               <Route path="prestamos/main" element={<DashboardPrestamos />} /> 
               <Route path="prestamos/expedientes" element={<PaginaExpediente />} />
+              <Route path="prestamos/expedientes_de_baja" element={<ExpedientesDeBaja />} /> 
               <Route path="prestamos/agregar_expediente" element={<CrearExpediente />} />
+              <Route path="prestamos/editar_expediente/:id" element={<EditarExpediente />} />
               <Route path="prestamos/Ubicacion_expediente" element={<UbicacionExpediente />} />
               <Route path="prestamos/perfil" element={<PerfilPrestamos />} />
 
