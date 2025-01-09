@@ -99,7 +99,7 @@ export type ControlRouteKeys = keyof typeof controlRoutes;
 
 // Rutas del Dashboard de Prestamos
 export const prestamosRoutes = {
-  "Expedientes Prestamos": "/prestamos/main",
+  "Expedientes Prestamos": "/prestamos/expedientes",
   "Ubicacion Expediente": "/prestamos/Ubicacion_expediente",
 } as const;
 
