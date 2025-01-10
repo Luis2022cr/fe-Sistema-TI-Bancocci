@@ -225,7 +225,7 @@ export default function PaginaExpediente() {
                     <td className="p-2 border-t border-blue-300">
                       <div className="flex space-x-2">
                         <Link
-                          to={`/prestamos/editar_expediente/${data.numero_cliente}`}
+                          to={`/prestamos/editar_expediente/${data.id}`}
                           className="p-1 text-white bg-orange-500 rounded-full"
                         >
                           <PencilIcon className="w-4 h-4" />

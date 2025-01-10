@@ -174,7 +174,9 @@ const EditarExpediente: React.FC = () => {
               value={formState.numero_cliente}
               placeholder="Número de Cliente"
               onChange={handleChange}
+              
             />
+             
           </div>
           <div className="col-span-1">
             <label className="block text-sm font-medium text-gray-700" htmlFor="nombre">Nombre Cliente</label>
@@ -184,6 +186,7 @@ const EditarExpediente: React.FC = () => {
               value={formState.nombre_cliente}
               placeholder="Nombre de Cliente"
               onChange={handleChange}
+              
             />
           </div>
          
@@ -258,7 +261,7 @@ const EditarExpediente: React.FC = () => {
           </div>
         
 
-          <div className="flex  mr-40  items-center mt-28 col-span-2">
+          <div className="flex ml-56 mr-40  items-center mt-28 col-span-2">
             <button
               className="w-1/2 h-14 hover:bg-green-500 bg-green-700 text-xl text-white py-2 rounded-full"
               disabled={status.isLoading}

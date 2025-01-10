@@ -96,7 +96,7 @@ export const ObtenerExpedienteDeBaja = () => {
 
 export const ObtenerExpedienteById = (id: number) => {
      const response = useAxios<ExpedienteById>({
-       url: `/expediente/${id}`,
+       url: `/expedientes/${id}`,
      },{
       useCache: false,
    });
