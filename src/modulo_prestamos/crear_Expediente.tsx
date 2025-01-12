@@ -63,9 +63,36 @@ const VistaCrearExpediente: React.FC = () => {
   });
 
   const handleChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => setFormState((prev) => ({ ...prev, [e.target.name]: e.target.value })),
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const { name, value } = e.target;
+      
+      // Reseteamos el error antes de aplicar nuevas validaciones
+      setStatus((prev) => ({ ...prev, error: null }));
+  
+       // Verificamos si el valor ingresado es 0 para estante, columna, fila, y numero_cliente
+    const camposAValidar = ["estante", "columna", "fila", "numero_cliente"];
+    if (camposAValidar.includes(name) && value === '0') {
+      setStatus((prev) => ({ ...prev, error: `${name.charAt(0).toUpperCase() + name.slice(1)} no puede ser 0` }));
+      return; // No actualiza el valor si es 0
+    }
+      // Validar que 'columna' no sea mayor que 3
+      if (name === "columna" && parseInt(value) > 3) {
+        setStatus((prev) => ({ ...prev, error: "La columna no puede ser mayor a 3" }));
+        return; // No actualiza el valor si es mayor a 3
+      }
+  
+      // Validar que 'fila' no sea mayor que 6
+      if (name === "fila" && parseInt(value) > 6) {
+        setStatus((prev) => ({ ...prev, error: "La fila no puede ser mayor a 6" }));
+        return; // No actualiza el valor si es mayor a 6
+      }
+  
+      // Si todo es válido, actualizamos el estado
+      setFormState((prev) => ({ ...prev, [name]: value }));
+    },
     []
   );
+  
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -215,27 +242,33 @@ const VistaCrearExpediente: React.FC = () => {
           />
           </div>
           <div className="col-span-1">
-
-          <label className="block text-sm font-medium text-gray-700" htmlFor="nombre">Columna</label>
-          <InputText
-            type='number'
-            name="columna"
-            value={formState.columna}
-            placeholder="Columna"
-            onChange={handleChange}
-          />
+            <label className="block text-sm font-medium text-gray-700" htmlFor="nombre">Columna</label>
+            <InputText
+              type='number'
+              name="columna"
+              value={formState.columna}
+              placeholder="Columna"
+              onChange={handleChange}
+            />
+            {status.error && status.error.includes("columna") && (
+              <p className="text-red-500 text-xs">{status.error}</p>
+            )}
           </div>
+
           <div className="col-span-1">
-
-          <label className="block text-sm font-medium text-gray-700" htmlFor="nombre">Fila</label>
-          <InputText
-            type='number'
-            name="fila"
-            value={formState.fila}
-            placeholder="Fila"
-            onChange={handleChange}
-          />
+            <label className="block text-sm font-medium text-gray-700" htmlFor="nombre">Fila</label>
+            <InputText
+              type='number'
+              name="fila"
+              value={formState.fila}
+              placeholder="Fila"
+              onChange={handleChange}
+            />
+            {status.error && status.error.includes("fila") && (
+              <p className="text-red-500 text-xs">{status.error}</p>
+            )}
           </div>
+
           <div className="col-span-1">
 
           <label className="block text-sm font-medium text-gray-700" htmlFor="nombre">Responsable</label>
