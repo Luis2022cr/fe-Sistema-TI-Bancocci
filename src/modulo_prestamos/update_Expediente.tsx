@@ -169,8 +169,8 @@ const EditarExpediente: React.FC = () => {
           <div className="col-span-1">
             <label className="block text-sm font-medium text-gray-700" htmlFor="nombre">Número Cliente</label>
             <InputText
-              type='text'
-              name="nombre_cliente"
+              type='number'
+              name="numero_cliente"
               value={formState.numero_cliente}
               placeholder="Número de Cliente"
               onChange={handleChange}

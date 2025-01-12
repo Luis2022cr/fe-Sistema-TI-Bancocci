@@ -46,3 +46,15 @@ export const ObtenerExpedienteConHistorial = (id?: number) => {
     });
     return response;
 };
+
+export interface Cambiar_Estado {
+    id_expediente: number,
+    nuevo_estado: number,
+    comentario: string,
+    entregadoA: string,
+}
+
+export const actualizarEstadoExpediente = async (nuevoestado: Cambiar_Estado): Promise<Cambiar_Estado> => {
+    const response = await axiosInstance.put('/cambio_estado_comentario', nuevoestado);
+    return response.data;
+};

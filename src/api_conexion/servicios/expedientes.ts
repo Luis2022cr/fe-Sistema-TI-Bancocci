@@ -27,6 +27,7 @@ export interface ExpedienteId {
     nombre_cliente: string;
     agencia_id: number;
     estado_nombre: string;
+    estado_id: number;
     estante: number;
     columna: number;
     fila: number;
